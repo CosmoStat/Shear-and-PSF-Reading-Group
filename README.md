@@ -6,7 +6,7 @@ Notes and tools derived from reading groups sessions
 ## Goals of the Paper
 
 1. Show the theoretical and practical caveats of KSB.
-2. Suggest an amelioration of KSB.
+2. Suggest improvements to KSB.
 
 ## Main Results and Conclusion
 
@@ -48,7 +48,8 @@ greater for large amplitude values.
 ## Notations Clarification
 
 1. The angular coordinates are solid angles so they have two components. These
-coordinates can be assimilated to linear coordinates.
+coordinates can be approximated by linear coordinates because the angles are
+very small.
 2. The star in eq. 12 stands for the conjugate.
 3. Rewriting eq.48-50:
   i. (eq. 48) $$\chi = f\left( \tilde{g}, \chi^{s}\right)$$
