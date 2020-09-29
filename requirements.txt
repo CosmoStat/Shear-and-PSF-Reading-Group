@@ -2,4 +2,3 @@ jupyter-book
 matplotlib
 numpy
 scipy
-voila
