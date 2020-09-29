@@ -5,7 +5,7 @@ author                      : Samuel Farrens  # The author of the book
 copyright                   : "2020"  # Copyright year to be placed in the footer
 logo                        : logo.png  # A path to the book logo
 # Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
-exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
+exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", "*_interact*"]
 
 #######################################################################################
 # Execution settings
