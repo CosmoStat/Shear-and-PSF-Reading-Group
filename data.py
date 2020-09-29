@@ -27,7 +27,7 @@ diag_down = rotate_image(hline, -45)
 circle = hline + vline
 circle_off = np.roll(np.roll(circle, 1), 1, axis=0)
 
-data_list = {'Horizontal Line': hline,
+data_dict = {'Horizontal Line': hline,
              'Vertical Line': vline,
              'Diagonal Line (Up)': diag_up,
              'Diagonal Line (Down)': diag_down,

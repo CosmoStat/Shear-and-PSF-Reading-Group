@@ -1,6 +1,13 @@
-- file: intro
-- file: content
-  sections:
-    - file: markdown
-    - file: notebooks
-    - file: moments
+- file: home
+  numbered: true
+
+- part: Introduction
+  chapters:
+    - file: run_code
+
+- part: Shape Measurement
+  chapters:
+    - file: moments-intro
+      sections:
+        - file: moments-basic
+        - file: moments-append
