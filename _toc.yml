@@ -3,7 +3,7 @@
 
 - part: Introduction
   chapters:
-    - file: contributors
+    - file: about
     - file: run_code
 
 - part: Shape Measurement
@@ -13,7 +13,16 @@
         - file: moments-basic
         - file: moments-weighted
         - file: moments-append
+        - file: moments-ref
     - file: moments-methods
       sections:
         - file: ksb
         - file: ksb-variants
+        - file: viola2011
+        - file: moments-methods-ref
+
+- part: Contributing
+  chapters:
+    - file: contributors
+    - file: guidelines
+    - file: style
