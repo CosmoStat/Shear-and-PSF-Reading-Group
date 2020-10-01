@@ -5,7 +5,7 @@ author                      : CosmoStat  # The author of the book
 copyright                   : "2020"  # Copyright year to be placed in the footer
 logo                        : logo.png  # A path to the book logo
 # Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
-exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", "*_interact*"]
+exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", "*_interact*", README.md]
 
 #######################################################################################
 # Execution settings
@@ -58,7 +58,7 @@ launch_buttons:
 repository:
   url                       : https://github.com/sfarrens/Shear-and-PSF-Reading-Group  # The URL to your book's repository
   # path_to_book              : shear  # A path to your book's folder, relative to the repository root.
-  branch                    : book  # Which branch of the repository should be used when creating links
+  branch                    : master  # Which branch of the repository should be used when creating links
 
 #######################################################################################
 # Advanced and power-user settings
