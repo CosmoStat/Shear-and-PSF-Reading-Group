@@ -20,6 +20,13 @@
         - file: ksb-variants
         - file: viola2011
         - file: moments-methods-ref
+    - file: model-into
+    - file: shape-bias
+      sections:
+        - file: model-bias
+        - file: noise-bias
+        - file: model-noise-bias
+        - file: shape-bias-ref
 
 - part: Contributing
   chapters:
