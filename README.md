@@ -62,13 +62,13 @@ To add a bibliography page:
 
 2. Create a markdown file ending with `-ref.md` (for the sake of consistency) and include the following.
 
-```markdown
+````markdown
 # References
 
 ```{bibliography} ./z_<FILE_NAME>.bib
 :all:
 ```
-```
+````
 
 where `<FILE_NAME>` is the name of your `.bib` file.
 
