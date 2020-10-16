@@ -1,0 +1,12 @@
+name: shear
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - jupyter
+  - matplotlib
+  - numpy
+  - pyqt
+  - scipy
+  - pip:
+    - jupyter-book
