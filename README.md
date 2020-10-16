@@ -67,7 +67,7 @@ To add a bibliography page:
 
 ```{bibliography} ./z_<FILE_NAME>.bib
 :all:
-    ```
+```
 ```
 
 where `<FILE_NAME>` is the name of your `.bib` file.
