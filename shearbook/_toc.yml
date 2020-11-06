@@ -3,33 +3,33 @@
 
 - part: Introduction
   chapters:
-    - file: about
-    - file: run_code
+    - file: intro/about
+    - file: intro/run_code
 
 - part: Shape Measurement
   chapters:
-    - file: moments-intro
+    - file: moments/moments-intro
       sections:
-        - file: moments-basic
-        - file: moments-weighted
-        - file: moments-append
-        - file: moments-ref
-    - file: moments-methods
+        - file: moments/moments-basic
+        - file: moments/moments-weighted
+        - file: moments/moments-append
+        - file: moments/moments-ref
+    - file: methods/moments-methods
       sections:
-        - file: ksb
-        - file: ksb-variants
-        - file: viola2011
-        - file: moments-methods-ref
+        - file: methods/ksb
+        - file: methods/ksb-variants
+        - file: methods/viola2011
+        - file: methods/moments-methods-ref
     - file: model-into
-    - file: shape-bias
+    - file: bias/shape-bias
       sections:
-        - file: model-bias
-        - file: noise-bias
-        - file: model-noise-bias
-        - file: shape-bias-ref
+        - file: bias/model-bias
+        - file: bias/noise-bias
+        - file: bias/model-noise-bias
+        - file: bias/shape-bias-ref
 
 - part: Contributing
   chapters:
-    - file: contributors
-    - file: guidelines
-    - file: style
+    - file: contrib/contributors
+    - file: contrib/guidelines
+    - file: contrib/style

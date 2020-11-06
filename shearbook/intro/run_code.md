@@ -10,7 +10,7 @@ required for production ready software.
 
 Clicking the rocket logo on the top right of a given page
 
-![rocket](_static/rocket.png)
+![rocket](../_static/rocket.png)
 
  will provide a drop-down menu with options to launch the page as a Jupyter notebook on [Binder](https://mybinder.org/) or [Google Colab](https://colab.research.google.com/). A third option labelled "Live Code" will use [TheBe](https://thebe.readthedocs.io/en/latest/) with a Binder backend to enable the code cells to be executed directly within the page.
 
@@ -26,4 +26,4 @@ Some pages provide the option to launch an "interactive version" of the notebook
 
 Alternatively, all of the relevant pages can be downloaded as Jupyter notebooks using the download button on the top right.
 
-![rocket](_static/download.png)
+![rocket](../_static/download.png)

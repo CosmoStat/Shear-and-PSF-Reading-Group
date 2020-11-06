@@ -2,7 +2,7 @@ from os import getcwd
 from yaml import safe_load
 
 
-with open(f'{getcwd()}/_config.yml', 'r') as stream:
+with open(f'{getcwd()}/../_config.yml', 'r') as stream:
     config = safe_load(stream)
 
 repo = config.get('repository')
