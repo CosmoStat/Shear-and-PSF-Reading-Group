@@ -32,10 +32,21 @@ $ conda activate shear
 To build the book locally run
 
 ```bash
-$ jupyter-book build .
+$ jupyter-book build shearbook
 ```
 
 in the root of the directory. This will build the HTML files and provide a link to the `index.html` so that you can view the book in your browser.
+
+## Cleaning
+
+Similarly, to clean the locally builded files run
+
+```bash
+$ jupyter-book clean shearbook
+```
+
+in the root directory. This will remove the `_build` directory.
+
 
 ## Adding Content
 
