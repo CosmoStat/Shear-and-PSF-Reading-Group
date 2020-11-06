@@ -89,7 +89,7 @@ If you prepare an additional interactive version (*i.e.* with widgets) of a give
 
 ```python
 from IPython.display import Markdown as md
-from interact import get_url, binder_badge
+from shrbk.interact import get_url, binder_badge
 
 # Provide binder badge
 md('<a href="{}" target="_blank"><img src="{}"></a>'.format(get_url('<FILE_NAME>'), binder_badge))

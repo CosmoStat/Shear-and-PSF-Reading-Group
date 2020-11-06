@@ -7,5 +7,5 @@ setup(
     author='ShearBook Authors',
     description='Shear book ccompanying code',
     packages=find_packages(),    
-    install_requires=['numpy', 'scipy', 'matplotlib'],
+    install_requires=['numpy', 'scipy', 'matplotlib', 'jupyter-book'],
 )
