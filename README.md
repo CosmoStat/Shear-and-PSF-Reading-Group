@@ -65,7 +65,7 @@ To add a bibliography page:
 ````markdown
 # References
 
-```{bibliography} ./z_<FILE_NAME>.bib
+```{bibliography} _bibliography/z_<FILE_NAME>.bib
 :all:
 ```
 ````
