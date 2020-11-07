@@ -17,7 +17,7 @@ To build the book you will need the following packages.
 You can install them as follows
 
 ```bash
-$ pip install -r requirements.txt
+$ python -m pip install -r requirements.txt
 ```
 
 alternatively you can build the `shear` conda environment.
@@ -25,6 +25,21 @@ alternatively you can build the `shear` conda environment.
 ```bash
 $ conda env create -f environment.yml
 $ conda activate shear
+```
+
+## Install the `shrbk` library 
+
+`shrbk` is the library made for this book. 
+Install it ither in development mode
+
+```bash
+$ python -m pip install -e .
+```
+
+or plainly
+
+```bash
+$ python -m pip install .
 ```
 
 ## Building
