@@ -32,3 +32,9 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./_build/html
           publish_branch: dev-pages
+
+      - name: Update gh-pages submodules
+        uses: uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - run: git submodule update --init --recursive
