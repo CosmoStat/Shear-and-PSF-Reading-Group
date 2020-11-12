@@ -57,7 +57,7 @@ launch_buttons:
 
 repository:
   url                       : https://github.com/CosmoStat/Shear-and-PSF-Reading-Group  # The URL to your book's repository
-  # path_to_book              : shear  # A path to your book's folder, relative to the repository root.
+  path_to_book              : shearbook  # A path to your book's folder, relative to the repository root.
   branch                    : develop  # Which branch of the repository should be used when creating links
 
 #######################################################################################
