@@ -1,0 +1,4 @@
+[submodule "develop"]
+	path = develop
+	url = https://github.com/CosmoStat/Shear-and-PSF-Reading-Group.git
+	branch = dev-pages
