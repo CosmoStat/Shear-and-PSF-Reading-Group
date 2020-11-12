@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches:
+     - develop
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+          python -m pip install .
+
+      - name: Build Book
+        run: |
+          jupyter-book build shearbook
+
+      - name: Deploy Development Pages
+        uses: peaceiris/actions-gh-pages@v3.5.9
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: shearbook/_build/html
+          publish_branch: dev-pages
+
+      - name: Update Submodule on GH-Pages
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+      - run: |
+          git submodule init
+          git submodule update --remote --merge
+          git submodule status
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add develop
+          git commit -m "updated dev-pages submodule"
+          git push origin gh-pages

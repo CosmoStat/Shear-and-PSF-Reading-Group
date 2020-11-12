@@ -27,7 +27,7 @@ jobs:
         run: |
           jupyter-book build shearbook
 
-      - name: GitHub Pages action
+      - name: Deploy Pages
         uses: peaceiris/actions-gh-pages@v3.5.9
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
