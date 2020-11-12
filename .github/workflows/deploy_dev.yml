@@ -1,13 +1,12 @@
 name: CI
 
 on:
-  pull_request:
+  push:
     branches:
-     - master
      - develop
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,3 +25,10 @@ jobs:
       - name: Build Book
         run: |
           jupyter-book build .
+
+      - name: Deploy Dev Pages
+        uses: peaceiris/actions-gh-pages@v3.5.9
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_build/html
+          publish_branch: dev-pages
