@@ -33,3 +33,7 @@
     - file: contributors
     - file: guidelines
     - file: style
+
+- part: Test
+  chapters:
+    - file: test.md
