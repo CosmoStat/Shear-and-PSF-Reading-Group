@@ -1,13 +1,8 @@
 from os import getcwd
 from yaml import safe_load
 
-
-with open(f'{getcwd()}/_config.yml', 'r') as stream:
-    config = safe_load(stream)
-
-repo = config.get('repository')
-
-binder_badge = (
+REPO_NAME = "Shear-and-PSF-Reading-Group"
+BINDER_BADGE = (
     'https://img.shields.io/badge/launch-binder-579aca.svg?logo=data:image/'
     'png;base64,iVBORw0KGgoAAAANSUhEUgAAAFkAAABZCAMAAABi1XidAAAB8lBMVEX//'
     '/9XmsrmZYH1olJXmsr1olJXmsrmZYH1olJXmsr1olJXmsrmZYH1olL1olJXmsr1olJXmsr'
@@ -46,13 +41,19 @@ binder_badge = (
     )
 
 
-def get_url(file_name):
+def get_url(file_name, user='CosmoStat', branch='develop'):
+    """Get the Binder url for an interactive notebook in this repo"""
 
-    binder = 'https://mybinder.org/v2/gh'
-    git_repo = repo['url'].split('github.com')[1]
-    branch = repo['branch']
-    suffix = '_interact.ipynb'
+    binder = f'https://mybinder.org/v2/gh/{user}/{REPO_NAME}'
 
-    url = (f'{binder}{git_repo}/{branch}/?urlpath=tree/{file_name}{suffix}')
+    if not file_name.endswith('.ipynb'):
+        file_name = f'{file_name}.ipynb'
+
+    url = (f'{binder}/{branch}/?urlpath=tree/notebooks/{file_name}')
 
     return url
+
+
+def make_html_binder_button(url):
+    """Return a HTML Binder button that links to the provided url"""
+    return f'<a href=\"{url}\" target=\"_blank\"><img src=\"{BINDER_BADGE}\"></a>'
