@@ -100,14 +100,14 @@ where `<FILE_NAME>` is the name of your `.bib` file.
 
 ### Interactive Notebooks
 
-If you prepare an additional interactive version (*i.e.* with widgets) of a given notebook you should name it `<FILE_NAME>_interact.ipynb`. This file should not be included in `_toc.yml`. Instead you can include the following in your standard notebook.
+If you prepare an additional interactive version (*i.e.* with widgets) of a given notebook, place it in the `notebooks` directory and reference it in the text as follows
 
 ```python
-from IPython.display import Markdown as md
-from shrbk.interact import get_url, binder_badge
+from IPython.display import Markdown
+from shrbk.interact import get_url, make_html_binder_button
 
 # Provide binder badge
-md('<a href="{}" target="_blank"><img src="{}"></a>'.format(get_url('<FILE_NAME>'), binder_badge))
+Markdown(make_html_binder_button(get_url('<notebook_name>.ipynb'))
 ```
 
 This will embed a Binder badge that links to the interactive notebook.
