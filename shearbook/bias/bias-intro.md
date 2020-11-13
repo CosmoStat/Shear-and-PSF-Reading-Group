@@ -1,4 +1,4 @@
-# Shape Measurement Biases
+# Shear Biases
 
 In this section we will take a look at sources of bias that arise when measuring galaxy shapes.
 

@@ -20,13 +20,20 @@
         - file: methods/ksb-variants
         - file: methods/viola2011
         - file: methods/moments-methods-ref
-    - file: model-into
-    - file: bias/shape-bias
+    - file: model/model-intro
+      sections:
+        - file: model/model-ref
+
+- part: Bias and Calibration
+  chapters:
+    - file: bias/bias-intro
       sections:
         - file: bias/model-bias
         - file: bias/noise-bias
-        - file: bias/model-noise-bias
-        - file: bias/shape-bias-ref
+        - file: bias/bias-ref
+    - file: calibration/calibration-intro
+      sections:
+        - file: calibration/calibration-ref
 
 - part: Contributing
   chapters:
