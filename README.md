@@ -17,7 +17,7 @@ To build the book you will need the following packages.
 You can install them as follows
 
 ```bash
-$ pip install -r requirements.txt
+$ python -m pip install -r requirements.txt
 ```
 
 alternatively you can build the `shear` conda environment.
@@ -27,15 +27,41 @@ $ conda env create -f environment.yml
 $ conda activate shear
 ```
 
+## Install the `shrbk` library 
+
+`shrbk` is the library made for this book. 
+Install it ither in development mode
+
+```bash
+$ python -m pip install -e .
+```
+
+or plainly
+
+```bash
+$ python -m pip install .
+```
+
 ## Building
 
 To build the book locally run
 
 ```bash
-$ jupyter-book build .
+$ jupyter-book build shearbook
 ```
 
 in the root of the directory. This will build the HTML files and provide a link to the `index.html` so that you can view the book in your browser.
+
+## Cleaning
+
+Similarly, to clean the locally builded files run
+
+```bash
+$ jupyter-book clean shearbook
+```
+
+in the root directory. This will remove the `_build` directory.
+
 
 ## Adding Content
 
@@ -65,7 +91,7 @@ To add a bibliography page:
 ````markdown
 # References
 
-```{bibliography} ./z_<FILE_NAME>.bib
+```{bibliography} _bibliography/z_<FILE_NAME>.bib
 :all:
 ```
 ````
@@ -74,14 +100,14 @@ where `<FILE_NAME>` is the name of your `.bib` file.
 
 ### Interactive Notebooks
 
-If you prepare an additional interactive version (*i.e.* with widgets) of a given notebook you should name it `<FILE_NAME>_interact.ipynb`. This file should not be included in `_toc.yml`. Instead you can include the following in your standard notebook.
+If you prepare an additional interactive version (*i.e.* with widgets) of a given notebook, place it in the `notebooks` directory and reference it in the text as follows
 
 ```python
-from IPython.display import Markdown as md
-from interact import get_url, binder_badge
+from IPython.display import Markdown
+from shrbk.interact import get_url, make_html_binder_button
 
 # Provide binder badge
-md('<a href="{}" target="_blank"><img src="{}"></a>'.format(get_url('<FILE_NAME>'), binder_badge))
+Markdown(make_html_binder_button(get_url('<notebook_name>.ipynb'))
 ```
 
 This will embed a Binder badge that links to the interactive notebook.

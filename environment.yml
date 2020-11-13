@@ -6,7 +6,6 @@ dependencies:
   - jupyter
   - matplotlib
   - numpy
-  - pyqt
   - scipy
   - pip:
     - jupyter-book

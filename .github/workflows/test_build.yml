@@ -20,8 +20,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python -m pip install -r requirements.txt
+          python -m pip install .
 
       - name: Build Book
         run: |
-          jupyter-book build .
+          jupyter-book build shearbook
