@@ -1,3 +1,0 @@
-# ShearBook
-
-Under development
