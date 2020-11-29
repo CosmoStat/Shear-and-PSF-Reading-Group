@@ -1,0 +1,46 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    " (sec:measuring-bias)=\n",
+    "# Measuring Bias\n",
+    "\n",
+    "In this section we will discuss several methods to measure shear bias.\n",
+    "\n",
+    "\n",
+    "## Shear bias from individual galaxies\n",
+    "\n",
+    "{cite}`PKSB17` present a shape-noise-free shear bias estimator from individual simulated galaxies. The principle is similar to the metacalibration technique: A small shear is applied to a galaxy image, and the response matrix of the measured ellipticity to the shear is determined by finite differences.\n",
+    "\n",
+    "In general, the shear estimate for a single galaxy is dominated by shape noise. To beat down this noise, traditional methods use a very large number of galaxies. Some additional improvement can be gained by using rotated versions of the same galaxy, such that the sum of the intrinsic ellipticities is zero. The resulting shear estimate has a reduced variance.\n",
+    "\n",
+    "However, this does not account for the variance from the measured ellipticity, which does not only depend on the intrinsic one, but on the PSF, pixel noise, etc. In addition, all versions of the rotated galaxy need to be detected and have an measured shape, and therefore, selection biases are difficult to quantify with this method.\n",
+    "\n",
+    "To reduce shape noise (to virtually zero), {cite}`PKSB17` uses the same noise realisation is used for each sheared, and the unsheared image. The resulting estimate of the response per galaxy is highly precise. It is still not very accurate, since the measured value depends on the noise realisation. To increase the accuracy, a large number of simulated galaxies with different noise realisations is required. These galaxies are however anyway simulated to cover the large parameter space of galaxy properties."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 4
+}
