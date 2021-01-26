@@ -1,68 +1,113 @@
-# Biases in, and corrections to, KSB shear measurements. Viola et al, 2010
-Notes and tools derived from reading groups sessions
+# Shear Book
 
-[arxiv link](https://arxiv.org/abs/1006.2470)
+Welcome to the Shear and PSF reading group repository!
 
-## Goals of the Paper
+The following steps will help you get set up to contribute to the book.
 
-1. Show the theoretical and practical caveats of KSB.
-2. Suggest improvements to KSB.
+## Requirements
 
-## Main Results and Conclusion
+To build the book you will need the following packages.
 
-1. The assumptions in KSB introduce biaises especially for large amplitude
-values.
-2. Rewriting correctly the Taylor expansion of the ellipticity up to the third
-order (see KSB3) gives results with biaises smaller by orders of magnitude.
-3. The PSF corrections in KSB are not accurate however they partially cancel
-other biaises.
+- [numpy](https://numpy.org/)
+- [scipy](https://www.scipy.org/)
+- [matplotlib](https://matplotlib.org/)
+- [Jupyter](https://jupyter.org/)
+- [Jupyter Book](https://jupyterbook.org/intro.html)
 
-## Definitions and Equations
+You can install them as follows
 
-*. Reduced shear, g: (eq. 7)
-*. Complex ellipticity, $\chi$: (eq. 10)
-*. Shear responsivity $\epsilon$: (eq. 14)
-*. KSB (eq. 32)
-*. KSB1 (eq. 34)
-*. KSBtr (eq.36)
-*. KSB3 (eq. 44)
-*. Inverse Problem (eq. 50)
-*. Circular PSF Formula (eq. 58)
-*. Anisotropic PSf Formula (eq. 67)
+```bash
+$ python -m pip install -r requirements.txt
+```
 
-> The reduced shear, g, is preferred over the shear responsivity,
-$\epsilon$, for its robustness to noise in the data.
+alternatively you can build the `shear` conda environment.
 
-## Assumptions in KSB
-1. The reduced shear, g, is constant and the ellipticity average is null,
-$\left< \chi \right>=0$ (see eq. 12).
-2. Many Taylor expansions like in the reduced shear, g (see eq. 29).
-> Taylor expansions gives a polynomial approximation around a certain reference
-value. The further from the reference we evaluate the expansion the bigger the
-biais. In this paper, since the reference value is zero, the biais will be
-greater for large amplitude values.
+```bash
+$ conda env create -f environment.yml
+$ conda activate shear
+```
 
-3. Assume equality between (eq. 27) and (eq. 28).
-4. The PSF has at most slight anisotropies, it is mostly circular.
+## Install the `shrbk` library
 
-## Notations Clarification
+`shrbk` is the library made for this book.
+Install it ither in development mode
 
-1. The angular coordinates are solid angles so they have two components. These
-coordinates can be approximated by linear coordinates because the angles are
-very small.
-2. The star in eq. 12 stands for the conjugate.
-3. Rewriting eq.48-50:
-  i. (eq. 48) $$\chi = f\left( \tilde{g}, \chi^{s}\right)$$
-  ii. (eq. 49) $$\chi = h \left( \chi^{obs}\right)$$
-  iii. (eq. 50) $$\chi^{obs} = h^{-1}\left[ f \left( \tilde{g}, h\left(\chi^{obs}\right)\right)\right]$$
+```bash
+$ python -m pip install -e .
+```
 
-  where $\chi^{s}$ is the intrinsic ellipticity of the galaxy, $\chi^{obs}$ is
-  the ellipticity of the lensed galaxy and $\chi$ is the ellipticity of the
-  convoluted and lensed galaxy.
-4. In (eq. 51): $$\chi^{sh}_{\alpha} = \chi_{\alpha} + \chi^{s}_{\alpha}$$
-5. In (eq. 52): the asterisk, *, in $P^{sm,*}$ is to indicate the PSF.
-Explanation: * --> star --> dirac --> PSF --> illuminati
+or plainly
 
-## Implementation
+```bash
+$ python -m pip install .
+```
 
-[Link](https://github.com/pmelchior/shapelens/blob/master/src/KSB.cc) to Peter Melchior implementation of KSB codes in C.
+## Building
+
+To build the book locally run
+
+```bash
+$ jupyter-book build shearbook
+```
+
+in the root of the directory. This will build the HTML files and provide a link to the `index.html` so that you can view the book in your browser.
+
+## Cleaning
+
+Similarly, to clean the locally builded files run
+
+```bash
+$ jupyter-book clean shearbook
+```
+
+in the root directory. This will remove the `_build` directory.
+
+
+## Adding Content
+
+### New Pages
+
+To create a new page simply write a new markdown file or Jupyter notebook and the file name to the `_toc.yml` file to specify where the page should be included in the book.
+
+*e.g.* For a file called `new_content.md` you would add
+
+```yaml
+- file: new_content
+```
+
+to the appropriate section of `_toc.yml`.
+
+See the [Jupyter Book documentation](https://jupyterbook.org/content/content-blocks.html) for tips on including special content blocks, equations and references.
+
+### Bibliography
+
+To add a bibliography page:
+
+1. Create a new `.bib` file with standard BibTeX content.  
+> Be sure to prefix the file name with `z_` as this will ensure that the file is sourced after the content files. This makes it possible to cite papers across multiple pages.
+
+2. Create a markdown file ending with `-ref.md` (for the sake of consistency) and include the following.
+
+````markdown
+# References
+
+```{bibliography} _bibliography/z_<FILE_NAME>.bib
+:all:
+```
+````
+
+where `<FILE_NAME>` is the name of your `.bib` file.
+
+### Interactive Notebooks
+
+If you prepare an additional interactive version (*i.e.* with widgets) of a given notebook, place it in the `notebooks` directory and reference it in the text as follows
+
+```python
+from IPython.display import Markdown
+from shrbk.interact import get_url, make_html_binder_button
+
+# Provide binder badge
+Markdown(make_html_binder_button(get_url('<notebook_name>.ipynb'))
+```
+
+This will embed a Binder badge that links to the interactive notebook.
