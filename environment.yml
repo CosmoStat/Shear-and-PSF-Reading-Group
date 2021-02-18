@@ -7,5 +7,6 @@ dependencies:
   - matplotlib
   - numpy
   - scipy
+  - galsim
   - pip:
     - jupyter-book
