@@ -10,7 +10,7 @@
   chapters:
     - file: psf/psf-intro
       sections:
-        - file: psf/psf-origins
+        - file: psf/psf-origins-nb
     - file: psf/psf-modelling
       sections:
         - file: psf/non-parametric-model
