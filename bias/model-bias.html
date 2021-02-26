@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1.1. Model Bias &#8212; Shear Book</title>
     
-  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
     
   <link rel="stylesheet"
@@ -34,20 +34,17 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
 
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -55,6 +52,8 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="1.2. Noise Bias" href="noise-bias.html" />
@@ -110,6 +109,51 @@
   <a class="reference internal" href="../intro/run_code.html">
    2. Running Code Examples
   </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Point Spread Function
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../psf/psf-intro.html">
+   1. Introduction to the PSF
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/psf-origins-nb.html">
+     1.1. Sources of the PSF
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../psf/psf-modelling.html">
+   2. PSF Modelling
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/non-parametric-model.html">
+     2.1. Non-parametric
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/parametric-model.html">
+     2.2. Parametric
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/psf-models-ref.html">
+     2.3. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
 </ul>
 <p class="caption collapsible-parent">
@@ -406,7 +450,7 @@
 <p>In this section we will look into the concept of model bias.</p>
 <div class="section" id="definition">
 <h2><span class="section-number">1.1.1. </span>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
-<p>Model bias is a source of bias in shape estimation for <a class="reference internal" href="../model/model-intro.html#sec-model-fitting"><span class="std std-ref">model fitting methods</span></a>. Model bias arises when the true shape of the galaxy in question is not sufficiently well represneted by the fitted model. In other words, real galaxy morphologies are often more complicated than the models used to fit them, which leads to a bias in the shapes recovered.</p>
+<p>Model bias is a source of bias in shape estimation for <a class="reference external" href="sec:model-fitting">model fitting methods</a>. Model bias arises when the true shape of the galaxy in question is not sufficiently well represneted by the fitted model. In other words, real galaxy morphologies are often more complicated than the models used to fit them, which leads to a bias in the shapes recovered.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Model bias is also refferred to as <em>underfitting bias</em>.</p>
@@ -417,17 +461,17 @@
 <p>To isolate the effects of model bias one needs to know the true underlying model of a galaxy image and then to attempt to fit various differnt models to this image.</p>
 <div class="tip admonition">
 <p class="admonition-title">Example</p>
-<p><a class="bibtex reference internal" href="bias-ref.html#mnras-441-2528k" id="id1">[KacprzakBridleRowe+14]</a> modelled a “true” galaxy as  a single Sérsic profile with a given index <span class="math notranslate nohighlight">\(n\)</span> then fit profiles with various different Sérsic indices to demonstrate the impact on the ellipticity values recovered.</p>
-<div class="figure align-default" id="id2">
+<p><a href="#id1"><span class="problematic" id="id2">:cite:`2014MNRAS.441.2528K`</span></a> modelled a “true” galaxy as  a single Sérsic profile with a given index <span class="math notranslate nohighlight">\(n\)</span> then fit profiles with various different Sérsic indices to demonstrate the impact on the ellipticity values recovered.</p>
+<div class="figure align-default" id="id3">
 <a class="reference internal image-reference" href="../_images/kacprazak_bias.jpg"><img alt="../_images/kacprazak_bias.jpg" src="../_images/kacprazak_bias.jpg" style="height: 400px;" /></a>
-<p class="caption"><span class="caption-number">Fig. 1.1 </span><span class="caption-text">Galaxy ellipticity estimated when a wrong Sérsic index <span class="math notranslate nohighlight">\(S_j\)</span> is used. True
-ellipticity was <span class="math notranslate nohighlight">\(e_{true}^1 = 0.2\)</span>. True Sérsic index was 1. Additionally, a star marks the true Sérsic index, to guide the eye. Magenta dash-dotted line with cross dot markers shows the model bias; ellipticity estimated by a fit with Sérsic <span class="math notranslate nohighlight">\(S_j\)</span> in the absence of noise. Blue and red lines with <span class="math notranslate nohighlight">\(+\)</span> and <span class="math notranslate nohighlight">\(×\)</span> markers, respectively, show the mean ellipticity measured from galaxy image with added noise, when: (1) galaxy image has the true Sérsic index, (2) galaxy image is the best fit with Sérsic index <span class="math notranslate nohighlight">\(S_j\)</span> .</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+<p class="caption"><span class="caption-number">Fig. 1.11 </span><span class="caption-text">Galaxy ellipticity estimated when a wrong Sérsic index <span class="math notranslate nohighlight">\(S_j\)</span> is used. True
+ellipticity was <span class="math notranslate nohighlight">\(e_{true}^1 = 0.2\)</span>. True Sérsic index was 1. Additionally, a star marks the true Sérsic index, to guide the eye. Magenta dash-dotted line with cross dot markers shows the model bias; ellipticity estimated by a fit with Sérsic <span class="math notranslate nohighlight">\(S_j\)</span> in the absence of noise. Blue and red lines with <span class="math notranslate nohighlight">\(+\)</span> and <span class="math notranslate nohighlight">\(×\)</span> markers, respectively, show the mean ellipticity measured from galaxy image with added noise, when: (1) galaxy image has the true Sérsic index, (2) galaxy image is the best fit with Sérsic index <span class="math notranslate nohighlight">\(S_j\)</span> .</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
 </div>
 </div>
 </div>
 <div class="section" id="impact-of-model-bias">
 <h2><span class="section-number">1.1.3. </span>Impact of Model Bias<a class="headerlink" href="#impact-of-model-bias" title="Permalink to this headline">¶</a></h2>
-<p><a class="bibtex reference internal" href="bias-ref.html#mnras-441-2528k" id="id3">[KacprzakBridleRowe+14]</a> claim that, while model bias can be quite variable, it averages to a small value.</p>
+<p><a href="#id4"><span class="problematic" id="id5">:cite:`2014MNRAS.441.2528K`</span></a> claim that, while model bias can be quite variable, it averages to a small value.</p>
 </div>
 <div class="section" id="correcting-for-model-bias">
 <h2><span class="section-number">1.1.4. </span>Correcting for Model Bias<a class="headerlink" href="#correcting-for-model-bias" title="Permalink to this headline">¶</a></h2>
@@ -483,7 +527,7 @@ ellipticity was <span class="math notranslate nohighlight">\(e_{true}^1 = 0.2\)<
     </div>
 
     
-  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
 
 
     

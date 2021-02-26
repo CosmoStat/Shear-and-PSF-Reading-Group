@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1.2. Noise Bias &#8212; Shear Book</title>
     
-  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
     
   <link rel="stylesheet"
@@ -34,20 +34,17 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
 
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -110,6 +107,51 @@
   <a class="reference internal" href="../intro/run_code.html">
    2. Running Code Examples
   </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Point Spread Function
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../psf/psf-intro.html">
+   1. Introduction to the PSF
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/psf-origins-nb.html">
+     1.1. Sources of the PSF
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../psf/psf-modelling.html">
+   2. PSF Modelling
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/non-parametric-model.html">
+     2.1. Non-parametric
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/parametric-model.html">
+     2.2. Parametric
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/psf-models-ref.html">
+     2.3. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
 </ul>
 <p class="caption collapsible-parent">
@@ -411,7 +453,7 @@
 <p>In this section we will look into the concept of noise bias.</p>
 <div class="section" id="definition">
 <h2><span class="section-number">1.2.1. </span>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
-<p>Noise bias is a source of bias in shape estimation. Noise bias arises due to the non-linear relationship between images pixels and the true shape of a galaxy. All definitions of ellipticity are non-linear as they include a ratio of the semi-major and semi-minor axes of the object in question. This non-linearity induces a bias when the noise is propagated (see <em>e.g.</em> <a class="bibtex reference internal" href="bias-ref.html#mnras-424-2757m" id="id1">[MelchiorViola12]</a> for details).</p>
+<p>Noise bias is a source of bias in shape estimation. Noise bias arises due to the non-linear relationship between images pixels and the true shape of a galaxy. All definitions of ellipticity are non-linear as they include a ratio of the semi-major and semi-minor axes of the object in question. This non-linearity induces a bias when the noise is propagated (see <em>e.g.</em> <a href="#id1"><span class="problematic" id="id2">:cite:`2012MNRAS.424.2757M`</span></a> for details).</p>
 </div>
 <div class="section" id="sources-of-noise">
 <h2><span class="section-number">1.2.2. </span>Sources of Noise<a class="headerlink" href="#sources-of-noise" title="Permalink to this headline">¶</a></h2>
@@ -430,8 +472,8 @@
 </div>
 <div class="section" id="model-and-noise-bias-interaction">
 <h2><span class="section-number">1.2.5. </span>Model and Noise Bias Interaction<a class="headerlink" href="#model-and-noise-bias-interaction" title="Permalink to this headline">¶</a></h2>
-<p>Images that contain a significant amount of noise, for which an imperfect model is used to fit the galaxy shape, can be impacted by an additional bias effect caused by the interaction between noise bias and <a class="reference internal" href="model-bias.html#sec-model-bias"><span class="std std-ref">model bias</span></a> .</p>
-<p><a class="bibtex reference internal" href="bias-ref.html#mnras-441-2528k" id="id2">[KacprzakBridleRowe+14]</a> attempted to isolate this interaction component to quantify its impact. While tests with a toy model indicated that the level this effect could be up to a few percent, tests on more realistic COSMOS images showed that this term is very small and often consistent with zero.</p>
+<p>Images that contain a significant amount of noise, for which an imperfect model is used to fit the galaxy shape, can be impacted by an additional bias effect caused by the interaction between noise bias and <a class="reference external" href="sec:model-bias">model bias</a> .</p>
+<p><a href="#id3"><span class="problematic" id="id4">:cite:`2014MNRAS.441.2528K`</span></a> attempted to isolate this interaction component to quantify its impact. While tests with a toy model indicated that the level this effect could be up to a few percent, tests on more realistic COSMOS images showed that this term is very small and often consistent with zero.</p>
 </div>
 </div>
 
@@ -484,7 +526,7 @@
     </div>
 
     
-  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
 
 
     

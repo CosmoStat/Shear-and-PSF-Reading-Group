@@ -1,0 +1,838 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1.1. Sources of the PSF &#8212; Shear Book</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. PSF Modelling" href="psf-modelling.html" />
+    <link rel="prev" title="1. Introduction to the PSF" href="psf-intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Shear Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../home.html">
+   Cosmic Shear
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/about.html">
+   1. About This Book
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/run_code.html">
+   2. Running Code Examples
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Point Spread Function
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="psf-intro.html">
+   1. Introduction to the PSF
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     1.1. Sources of the PSF
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="psf-modelling.html">
+   2. PSF Modelling
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="non-parametric-model.html">
+     2.1. Non-parametric
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="parametric-model.html">
+     2.2. Parametric
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="psf-models-ref.html">
+     2.3. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Shape Measurement
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../moments/moments-intro.html">
+   1. Introduction to Moments
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../moments/moments-basic.html">
+     1.1. Moments Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../moments/moments-weighted.html">
+     1.2. Weighted Moments
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../moments/moments-append.html">
+     1.3. Appendix
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../moments/moments-ref.html">
+     1.4. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../methods/moments-methods.html">
+   2. Moments-Based Methods
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../methods/ksb.html">
+     2.1. KSB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../methods/ksb-variants.html">
+     2.2. KSB Variants
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../methods/viola2011.html">
+     2.3. Biases in, and corrections to, KSB shear measurements. Viola et al, 2010
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../methods/moments-methods-ref.html">
+     2.4. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../model/model-intro.html">
+   3. Model-Fitting Methods
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../model/model-ref.html">
+     3.1. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Bias and Calibration
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../bias/bias-intro.html">
+   1. Shear Biases
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../bias/model-bias.html">
+     1.1. Model Bias
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../bias/noise-bias.html">
+     1.2. Noise Bias
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../bias/bias-ref.html">
+     1.3. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../calibration/calibration-intro.html">
+   2. Shear Calibration
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../calibration/calibration-ref.html">
+     2.1. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Contributing
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contrib/contributors.html">
+   1. Contributors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contrib/guidelines.html">
+   2. Contribution Guidelines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contrib/style.html">
+   3. Style Guidelines
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/psf/psf-origins-nb.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/CosmoStat/Shear-and-PSF-Reading-Group"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/CosmoStat/Shear-and-PSF-Reading-Group/issues/new?title=Issue%20on%20page%20%2Fpsf/psf-origins-nb.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/CosmoStat/Shear-and-PSF-Reading-Group/edit/develop/shearbook/psf/psf-origins-nb.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/CosmoStat/Shear-and-PSF-Reading-Group/develop?urlpath=tree/shearbook/psf/psf-origins-nb.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/CosmoStat/Shear-and-PSF-Reading-Group/blob/develop/shearbook/psf/psf-origins-nb.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#definition">
+   1.1.1. Definition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#contributors-to-the-psf">
+   1.1.2. Contributors to the PSF
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#optic-level">
+     1.1.2.1. Optic level
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ground-based">
+     1.1.2.2. Ground-based
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#space-based">
+     1.1.2.3. Space-based
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#detector-level">
+     1.1.2.4. Detector level
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples-of-psfs">
+   1.1.3. Examples of PSFs
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">galsim</span> <span class="k">as</span> <span class="nn">gs</span>
+<span class="kn">from</span> <span class="nn">shrbk.plot_psfs</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mf">505e6</span><span class="n">a9ba45c</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">galsim</span> <span class="k">as</span> <span class="nn">gs</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">shrbk.plot_psfs</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;galsim&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="sources-of-the-psf">
+<h1><span class="section-number">1.1. </span>Sources of the PSF<a class="headerlink" href="#sources-of-the-psf" title="Permalink to this headline">¶</a></h1>
+<p>In this section we give the definition of the PSF and go through the different contributors of the PSF.</p>
+<div class="section" id="definition">
+<h2><span class="section-number">1.1.1. </span>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
+<p>We can vaguely define the Point Spread Function as the response of imaging system to a point source. The concept of PSF is used throughout many imaging applications, some of them are astronomical imaging and medical imaging. Depending on the science application the definition and its sources may vary. However, they all include the <a class="reference external" href="https://en.wikipedia.org/wiki/Diffraction">diffraction</a> phenomena. The fact of having a non-infinite lens sets a limit on the resolution of the imaging system.</p>
+<p>We will focus on PSFs for astronomical imaging and analyze its main sources.</p>
+</div>
+<div class="section" id="contributors-to-the-psf">
+<h2><span class="section-number">1.1.2. </span>Contributors to the PSF<a class="headerlink" href="#contributors-to-the-psf" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="optic-level">
+<h3><span class="section-number">1.1.2.1. </span>Optic level<a class="headerlink" href="#optic-level" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Mirrors</strong></p>
+<ul>
+<li><p><em>Aberrations</em></p>
+<ul>
+<li><p>There are imperfections in the curvature of mirrors producing different types of aberrations. These introduce optical path differences for the incoming light rays producing features in the PSF.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="figure align-default" id="psf-wavefron-aberrations">
+<a class="reference internal image-reference" href="../_images/psf_wavefron_aberrations.png"><img alt="../_images/psf_wavefron_aberrations.png" src="../_images/psf_wavefron_aberrations.png" style="height: 300px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.1 </span><span class="caption-text">Illustration of the optical path differences in a lens. Note that current telescopes are build with <em>mirrors</em> but the illustration shows a <em>lens</em>. Credit: Austin Roorda.</span><a class="headerlink" href="#psf-wavefron-aberrations" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="psf-typical-aberrations">
+<a class="reference internal image-reference" href="../_images/psf-typical-aberrations.png"><img alt="../_images/psf-typical-aberrations.png" src="../_images/psf-typical-aberrations.png" style="height: 150px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.2 </span><span class="caption-text">Typical aberrations with simulated in-focus stars with typical seeing. Credit: Aaron Roodman.</span><a class="headerlink" href="#psf-typical-aberrations" title="Permalink to this image">¶</a></p>
+</div>
+<ul class="simple">
+<li><p><strong>Mirrors</strong></p>
+<ul>
+<li><p><em>Size</em></p>
+<ul>
+<li><p>The size of the main mirror has a direct implicance to the size of the PSF. Following the diffraction theory, the larger the mirror for the lens, the smaller size the PSF should have. There are practical limitations on the maximal sizes of mirrors that are due to the manufacturing process.</p></li>
+</ul>
+</li>
+<li><p><em>Polishing effects</em></p>
+<ul>
+<li><p>The polishing of the mirrors aims to have a perfectly smooth surface. However, the manufacturing process is not perfect and small errors remain in the surface of the mirrors. They are sometimes referred to as <em>surface errors</em>.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="figure align-default" id="psf-hst-surface-errors">
+<a class="reference internal image-reference" href="../_images/psf-HST-surface-errors.png"><img alt="../_images/psf-HST-surface-errors.png" src="../_images/psf-HST-surface-errors.png" style="height: 200px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.3 </span><span class="caption-text">Surface errors estimated for the Hubble Space Telescope. They are in the range of +/- 30nm. Credit: <a href="#id1"><span class="problematic" id="id2">:cite:`krist2011`</span></a>.</span><a class="headerlink" href="#psf-hst-surface-errors" title="Permalink to this image">¶</a></p>
+</div>
+<ul class="simple">
+<li><p><strong>Optical system</strong></p>
+<ul>
+<li><p><em>Misalignment</em></p>
+<ul>
+<li><p>Misalignement of optical elements can cause a defocus of the system.  For example, in Figure 7 and 8 from <a href="#id3"><span class="problematic" id="id4">:cite:`jee2011`</span></a> one can see the effects of Charge-Coupled Devices (CCD) misalignements on the focal plane on a simulation of the LSST mission <a href="#id5"><span class="problematic" id="id6">:cite:`LSST2009`</span></a>.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="figure align-default" id="psf-misalignments">
+<a class="reference internal image-reference" href="../_images/psf-misalignments.png"><img alt="../_images/psf-misalignments.png" src="../_images/psf-misalignments.png" style="height: 400px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.4 </span><span class="caption-text">Simulated focal plane of LSST. We used the CCD assembly/fabrication specification in Table 1 to generate the LSST focal plane tiled by 189 CCDs. Credit: <a href="#id7"><span class="problematic" id="id8">:cite:`jee2011`</span></a>.</span><a class="headerlink" href="#psf-misalignments" title="Permalink to this image">¶</a></p>
+</div>
+<ul class="simple">
+<li><p><strong>Optical system</strong></p>
+<ul>
+<li><p><em>Scattered light</em></p>
+<ul>
+<li><p>It consist of spuriours reflections within the optical system and the detector. An example for the HST mission can be found in Fig 3 in <a href="#id9"><span class="problematic" id="id10">:cite:`krist1995c`</span></a>.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Optical system</strong></p>
+<ul>
+<li><p><em>Wavelength dependency</em></p>
+<ul>
+<li><p>The optical system is composed by several elements where some of them can be non-ideal refractive elements. This means that they introdcuce a wavelength dependance variation.</p></li>
+</ul>
+</li>
+<li><p><em>Obscurations</em></p>
+<ul>
+<li><p>Depending on the optical system design it might require arms to sustain the camera or even superposing mirrors that block each other. These obscurations modify the shape of the PSF and vary depending on the source’s angle of incidence. They are 3D structures that are projected on the 2D pupil plane.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="figure align-default" id="psf-hst-obscurations">
+<a class="reference internal image-reference" href="../_images/psf-HST-obscurations.png"><img alt="../_images/psf-HST-obscurations.png" src="../_images/psf-HST-obscurations.png" style="height: 200px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.5 </span><span class="caption-text">Projected obscurations of the Hubble Space Telescope. Credit: <a href="#id11"><span class="problematic" id="id12">:cite:`krist2011`</span></a>.</span><a class="headerlink" href="#psf-hst-obscurations" title="Permalink to this image">¶</a></p>
+</div>
+<ul class="simple">
+<li><p><strong>Filters</strong></p>
+<ul>
+<li><p>Passband</p>
+<ul>
+<li><p>The filters serve to select the wavelengths incoming to the detector. Ideally they would be a perfect band-pass filter, begin one at the desired wavelength range and zero on the other wavelengths. However, it is not possible to manufacture an ideal filter. A real one does not have an abrupt transition, meaning that there are out-of-band contributions. It is also non-flat, meanining that the passband is near the unity but it changes with the wavelength. See this <a class="reference external" href="https://www.cadc-ccda.hia-iha.nrc-cnrc.gc.ca/en/megapipe/docs/filt.html">page</a> to visualise some examples of filters.</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="figure align-default" id="psf-filters">
+<a class="reference internal image-reference" href="../_images/psf-filters.png"><img alt="../_images/psf-filters.png" src="../_images/psf-filters.png" style="height: 300px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.6 </span><span class="caption-text">MegaCam filter set transmission for broad band filters u, g, r, i and z. Credit: <a class="reference external" href="https://www.cfht.hawaii.edu/Instruments/Imaging/Megacam/specsinformation.html">CFHT</a>.</span><a class="headerlink" href="#psf-filters" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="ground-based">
+<h3><span class="section-number">1.1.2.2. </span>Ground-based<a class="headerlink" href="#ground-based" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Atmosphere</strong></p>
+<ul>
+<li><p>The atmosphere plays a central role in ground-based observations. The refractive index of the atmosphere varies rapidly with the position generating different optical paths for the incoming light. As a consequence, the way it affects the PSF changes if we consider short-term exposures or long-term exposures. It also depends of the incoming wavelength. See <a href="#id13"><span class="problematic" id="id14">:cite:`jee2011`</span></a> for a first study on the Legacy Survey of Space and Time  (LSST) from the Vera C. Rubin Observatory.</p></li>
+</ul>
+</li>
+</ul>
+<div class="figure align-default" id="psf-atmospheric-screen">
+<a class="reference internal image-reference" href="../_images/psf-atmospheric-screen.png"><img alt="../_images/psf-atmospheric-screen.png" src="../_images/psf-atmospheric-screen.png" style="height: 300px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.7 </span><span class="caption-text">Six layers of Kolmogorov/von Karman phase screens used for the atmospheric turbulence model. These phase screens represent the variations of the refractive index for different heights in the atmosphere. Credit: <a href="#id15"><span class="problematic" id="id16">:cite:`jee2011`</span></a>.</span><a class="headerlink" href="#psf-atmospheric-screen" title="Permalink to this image">¶</a></p>
+</div>
+<ul class="simple">
+<li><p><strong>Observing environment</strong></p>
+<ul>
+<li><p>The temperature differences in the telescope environment as well as the wind speed and direction on the surroundings of the telescope can affect its image quality. See <a href="#id17"><span class="problematic" id="id18">:cite:`salmon2009`</span></a> for a study on the Canada-France-Hawaii Telescope (CFHT).</p></li>
+</ul>
+</li>
+</ul>
+<div class="figure align-default" id="psf-dome-seeing">
+<a class="reference internal image-reference" href="../_images/psf-dome-seeing.png"><img alt="../_images/psf-dome-seeing.png" src="../_images/psf-dome-seeing.png" style="height: 300px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.8 </span><span class="caption-text">Frame of the <a class="reference external" href="https://www.youtube.com/watch?v=HU1i6JzvIzY">video</a> that shows a Giant Magellan Telescope’s simulation of refractive index variations as a function of temperature and wind speed and direction.</span><a class="headerlink" href="#psf-dome-seeing" title="Permalink to this image">¶</a></p>
+</div>
+</div>
+<div class="section" id="space-based">
+<h3><span class="section-number">1.1.2.3. </span>Space-based<a class="headerlink" href="#space-based" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Guiding errors</strong></p>
+<ul>
+<li><p>The satellite should remain perfectly still during an exposure. This is not the case and there exist a pointing error making the exposure the integration of the varyign satellite pointing. It sometimes referred as <em>Jitter</em> or <em>Attitude and Orbit Control System</em>.</p></li>
+</ul>
+</li>
+<li><p><strong>Thermal variations</strong></p>
+<ul>
+<li><p>The satellite experiences time where the sun is closer or were it is eclipsed by other object. This can occasionate high temperature changes in the space telescope. These temperature variations dilate and contract the optical system making it change of state as a function of temperature. It is sometimes to as <em>telescope’s breathing</em> for its repetitive pattern due to the orbits. See <a href="#id19"><span class="problematic" id="id20">:cite:`nino2007`</span></a> for an HST study of temperature variations.</p></li>
+</ul>
+</li>
+<li><p><strong>Polarisation</strong></p>
+<ul>
+<li><p>Starlight can be naturally polarised by galactic foreground dust. The different polarisations that the incoming light has can interact differently with refractive elements of the optical system. This occasionates variations that are polarisation dependent. This source is currently being studied.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="detector-level">
+<h3><span class="section-number">1.1.2.4. </span>Detector level<a class="headerlink" href="#detector-level" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Undersampling and pixelation</strong></p>
+<ul>
+<li><p>Many detectors, specially space-based ones, are undersampled or not Nyquist sampled. Generally, several exposures of the same object with small shifts are taken in order to super-resolve the object. The pixelation effect, the fact of using a limited number of pixels also affects the PSF and will impact the shear measurements. See <a href="#id21"><span class="problematic" id="id22">:cite:`high2007`</span></a> for a study of pixelation effects in weak lensing. See Section 3.5 and Figure 4 from <a href="#id23"><span class="problematic" id="id24">:cite:`krist2011`</span></a> for an analysis of these effects on the HST telescope.</p></li>
+</ul>
+</li>
+</ul>
+<div class="figure align-default" id="psf-pixelation">
+<a class="reference internal image-reference" href="../_images/psf-pixelation.png"><img alt="../_images/psf-pixelation.png" src="../_images/psf-pixelation.png" style="height: 300px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.9 </span><span class="caption-text">On top, the computed 336 nm HST PSF prior to pixellation. Below it is the PSF centered at the middle of a pixel and in the corner, integrated over the WFPC2 WF pixel area, shown at the same spatial scale. Credit: <a href="#id25"><span class="problematic" id="id26">:cite:`krist2011`</span></a>.</span><a class="headerlink" href="#psf-pixelation" title="Permalink to this image">¶</a></p>
+</div>
+<ul class="simple">
+<li><p><strong>Charge Diffusion Effect</strong></p>
+<ul>
+<li><p>There is a charge diffusion of the electrons between the pixels. It depends on the depth of the substrate and on the wavelength. It varies in the field of view as seen in <a href="#id27"><span class="problematic" id="id28">:cite:`krist2003`</span></a> on a study for the HST mission. It can be modelled as a varying convolutional kernel.</p></li>
+</ul>
+</li>
+</ul>
+<div class="figure align-default" id="psf-charge-difussion-effects">
+<a class="reference internal image-reference" href="../_images/psf-charge-difussion-effects.png"><img alt="../_images/psf-charge-difussion-effects.png" src="../_images/psf-charge-difussion-effects.png" style="height: 200px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 1.10 </span><span class="caption-text">Surface fits to the measured WFC charge diffusion blur kernel widths shown over the entire field of view (WFC1 &amp; WFC2 butted together). The images are scaled to the same linear range. Credit <a href="#id29"><span class="problematic" id="id30">:cite:`krist2003`</span></a>.</span><a class="headerlink" href="#psf-charge-difussion-effects" title="Permalink to this image">¶</a></p>
+</div>
+<ul class="simple">
+<li><p><strong>Charge Transfer Inefficiency</strong></p>
+<ul>
+<li><p>This phenomenon describes the inefficiency of transfering the charge when reading CCD detectors. It can be caused by charged particle radiation damage in space-based detectors. See <a href="#id31"><span class="problematic" id="id32">:cite:`rhodes2010`</span></a> and <a href="#id33"><span class="problematic" id="id34">:cite:`massey2009`</span></a>for studies of this phenomenon.</p></li>
+</ul>
+</li>
+<li><p><strong>Brighter Fatter Effect</strong></p>
+<ul>
+<li><p>Each pixel in an camera is not independent of each other. One charge starts accumulating it modifies boundary pixel’s electric fields. This occasionates a variation of the PSF size as a function of the flux and the wavelength. See <a href="#id35"><span class="problematic" id="id36">:cite:`guyonnet2015`</span></a> for a study and a model of the effect.</p></li>
+</ul>
+</li>
+<li><p><strong>Quantum efficiency</strong></p>
+<ul>
+<li><p>This effect describes the ratio of created electrons from the number of incoming photons. It depends on the wavelength and on the detector’s technology.</p></li>
+</ul>
+</li>
+<li><p><strong>Other effects</strong></p>
+<ul>
+<li><p>Analog-to-Digital Unit non-linearity</p></li>
+<li><p>Thermal noise</p></li>
+<li><p>Background estimation and subtraction</p></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="examples-of-psfs">
+<h2><span class="section-number">1.1.3. </span>Examples of PSFs<a class="headerlink" href="#examples-of-psfs" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Airy PSF</strong></p></li>
+</ul>
+<p>If we dispose of an optical system with an aberration-free lens with a circular aperture, the resulting PSF would be the Airy disk <a class="reference external" href="https://en.wikipedia.org/wiki/Airy_disk">ref</a>. Its only contributor would be the diffraction phenomena.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> 
+<span class="n">lam</span> <span class="o">=</span> <span class="mi">700</span>    <span class="c1"># nm (r-band most used band for weak lensing aplications)</span>
+<span class="n">diam</span> <span class="o">=</span> <span class="mf">1.0</span>    <span class="c1"># meters</span>
+<span class="n">image_size</span> <span class="o">=</span> <span class="mi">51</span> <span class="c1"># pixels</span>
+<span class="n">pixel_scale</span> <span class="o">=</span> <span class="mf">0.04</span>  <span class="c1"># arcsec / pixel</span>
+
+<span class="n">airy</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">Airy</span><span class="p">(</span><span class="n">lam</span><span class="o">=</span><span class="n">lam</span><span class="p">,</span> <span class="n">diam</span><span class="o">=</span><span class="n">diam</span><span class="p">,</span> <span class="n">scale_unit</span><span class="o">=</span><span class="n">gs</span><span class="o">.</span><span class="n">arcsec</span><span class="p">)</span>
+<span class="n">airy_psf</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">ImageF</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">airy</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">airy_psf</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">pixel_scale</span><span class="p">)</span>
+
+<span class="n">plot_psf</span><span class="p">(</span><span class="n">airy_psf</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/psf-origins-nb_6_0.png" src="../_images/psf-origins-nb_6_0.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Ground-based PSF</strong></p></li>
+</ul>
+<p>The PSFs observed with a ground-based optical system generally include the effects of the atmosphere. It can be seen as a varying low-pass filter so the PSFs will look more like blobs where the finer details were averaged by the atmosphere. We use a Moffat profile to model this type of PSF <a class="reference external" href="https://en.wikipedia.org/wiki/Moffat_distribution">ref</a> for a long-exposure of a ground-based detector.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psf_beta</span> <span class="o">=</span> <span class="mf">5.</span>       <span class="c1"># dimensionless parameter</span>
+<span class="n">psf_re</span> <span class="o">=</span> <span class="mf">1.0</span>       <span class="c1"># arcsec</span>
+<span class="n">pixel_scale</span> <span class="o">=</span> <span class="mf">0.3</span>  <span class="c1"># arcsec / pixel</span>
+
+<span class="n">moffat</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">Moffat</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="n">psf_beta</span><span class="p">,</span> <span class="n">half_light_radius</span><span class="o">=</span><span class="n">psf_re</span><span class="p">)</span>
+<span class="n">moffat_psf</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">ImageF</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">moffat</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">moffat_psf</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">pixel_scale</span><span class="p">)</span>
+
+<span class="n">plot_psf</span><span class="p">(</span><span class="n">moffat_psf</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/psf-origins-nb_8_0.png" src="../_images/psf-origins-nb_8_0.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Space-based PSF</strong></p></li>
+</ul>
+<p>The PSF observed by a space telescope is not affected by the atmosphere. That is one of the main motivations of space surveys. This is why they will be closer to the diffraction limit. The main contribution of these PSFs are the aberrations of the optical system.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">psf_D</span> <span class="o">=</span> <span class="mf">2.4</span>            <span class="c1"># meters</span>
+<span class="n">psf_lam</span> <span class="o">=</span> <span class="mf">700.0</span>        <span class="c1"># nanometers; note that OpticalPSF will automatically convert units to</span>
+                       <span class="c1"># get lam/diam in units of arcsec, unless told otherwise.  In this case,</span>
+                       <span class="c1"># that is (900e-9m / 2.4m) * 206265 arcsec/rad = 0.077 arcsec.</span>
+<span class="n">psf_obsc</span> <span class="o">=</span> <span class="mf">0.125</span>       <span class="c1"># (0.3m / 2.4m) = 0.125</span>
+<span class="n">psf_nstruts</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">psf_strut_thick</span> <span class="o">=</span> <span class="mf">0.07</span>
+<span class="n">psf_strut_angle</span> <span class="o">=</span> <span class="mi">15</span> <span class="o">*</span> <span class="n">gs</span><span class="o">.</span><span class="n">degrees</span>
+
+<span class="n">psf_defocus</span> <span class="o">=</span> <span class="mf">0.04</span>     <span class="c1"># The aberrations are all taken to be quite modest here.</span>
+<span class="n">psf_astig1</span> <span class="o">=</span> <span class="mf">0.03</span>      <span class="c1">#</span>
+<span class="n">psf_astig2</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.01</span>
+<span class="n">psf_coma1</span> <span class="o">=</span> <span class="mf">0.02</span>
+<span class="n">psf_coma2</span> <span class="o">=</span> <span class="mf">0.04</span>
+<span class="n">psf_trefoil1</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.02</span>
+<span class="n">psf_trefoil2</span> <span class="o">=</span> <span class="mf">0.04</span>
+
+<span class="n">pixel_scale</span> <span class="o">=</span> <span class="mf">0.02</span>
+
+<span class="n">optical</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">OpticalPSF</span><span class="p">(</span>
+                <span class="n">lam</span><span class="o">=</span><span class="n">psf_lam</span><span class="p">,</span> <span class="n">diam</span><span class="o">=</span><span class="n">psf_D</span><span class="p">,</span> <span class="n">obscuration</span><span class="o">=</span><span class="n">psf_obsc</span><span class="p">,</span>
+                <span class="n">nstruts</span><span class="o">=</span><span class="n">psf_nstruts</span><span class="p">,</span> <span class="n">strut_thick</span><span class="o">=</span><span class="n">psf_strut_thick</span><span class="p">,</span> <span class="n">strut_angle</span><span class="o">=</span><span class="n">psf_strut_angle</span><span class="p">,</span>
+                <span class="n">defocus</span><span class="o">=</span><span class="n">psf_defocus</span><span class="p">,</span> <span class="n">astig1</span><span class="o">=</span><span class="n">psf_astig1</span><span class="p">,</span> <span class="n">astig2</span><span class="o">=</span><span class="n">psf_astig2</span><span class="p">,</span>
+                <span class="n">coma1</span><span class="o">=</span><span class="n">psf_coma1</span><span class="p">,</span> <span class="n">coma2</span><span class="o">=</span><span class="n">psf_coma2</span><span class="p">,</span> <span class="n">trefoil1</span><span class="o">=</span><span class="n">psf_trefoil1</span><span class="p">,</span> <span class="n">trefoil2</span><span class="o">=</span><span class="n">psf_trefoil2</span><span class="p">)</span>
+    
+
+<span class="n">optical_psf</span> <span class="o">=</span> <span class="n">gs</span><span class="o">.</span><span class="n">ImageF</span><span class="p">(</span><span class="n">image_size</span><span class="p">,</span> <span class="n">image_size</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">optical</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">optical_psf</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">pixel_scale</span><span class="p">)</span>
+
+<span class="n">plot_psf</span><span class="p">(</span><span class="n">optical_psf</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/psf-origins-nb_10_0.png" src="../_images/psf-origins-nb_10_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "CosmoStat/Shear-and-PSF-Reading-Group",
+            ref: "develop",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./psf"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="psf-intro.html" title="previous page"><span class="section-number">1. </span>Introduction to the PSF</a>
+    <a class='right-next' id="next-link" href="psf-modelling.html" title="next page"><span class="section-number">2. </span>PSF Modelling</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By CosmoStat<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

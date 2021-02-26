@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1.1. Moments Basics &#8212; Shear Book</title>
     
-  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
     
   <link rel="stylesheet"
@@ -34,20 +34,17 @@
     <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
     <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
 
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe,.cell"
@@ -55,6 +52,8 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="1.2. Weighted Moments" href="moments-weighted.html" />
@@ -110,6 +109,51 @@
   <a class="reference internal" href="../intro/run_code.html">
    2. Running Code Examples
   </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Point Spread Function
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../psf/psf-intro.html">
+   1. Introduction to the PSF
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/psf-origins-nb.html">
+     1.1. Sources of the PSF
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../psf/psf-modelling.html">
+   2. PSF Modelling
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/non-parametric-model.html">
+     2.1. Non-parametric
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/parametric-model.html">
+     2.2. Parametric
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/psf-models-ref.html">
+     2.3. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
  </li>
 </ul>
 <p class="caption collapsible-parent">
@@ -459,7 +503,7 @@
 </div>
 <div class="section" id="example-data">
 <h2><span class="section-number">1.1.1. </span>Example Data<a class="headerlink" href="#example-data" title="Permalink to this headline">¶</a></h2>
-<p>Let’s begin by looking at some dummy images with properties we can easily discern by eye. We will use the <code class="docutils literal notranslate"><span class="pre">data_dict</span></code> imported from <code class="docutils literal notranslate"><span class="pre">data.py</span></code> (see <a class="reference internal" href="moments-append.html#content-appendix"><span class="std std-ref">appendix</span></a>) and print the available keys.</p>
+<p>Let’s begin by looking at some dummy images with properties we can easily discern by eye. We will use the <code class="docutils literal notranslate"><span class="pre">data_dict</span></code> imported from <code class="docutils literal notranslate"><span class="pre">data.py</span></code> (see <a class="reference external" href="content:appendix">appendix</a>) and print the available keys.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">data_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -516,7 +560,7 @@ Circle (Off-Centre)
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>Here we assume that the object is isolated so that the surface brightness can be measured across the whole image (see <em>e.g.</em> <a class="bibtex reference internal" href="moments-ref.html#bartelmannschneider-01" id="id1">[BartelmannSchneider01]</a>). We will revist this point in the next section.</p>
+<p>Here we assume that the object is isolated so that the surface brightness can be measured across the whole image (see <em>e.g.</em> <a href="#id1"><span class="problematic" id="id2">:cite:`BartelmannSchneider:01`</span></a>). We will revist this point in the next section.</p>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -700,7 +744,12 @@ Circle (Off-Centre)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/moments-basic_26_0.png" src="../_images/moments-basic_26_0.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-10-335bc2a7755b&gt;:10: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  num = (q[0, 0] - q[1, 1] + 2 * np.complex(0, q[0, 1]))
+</pre></div>
+</div>
+<img alt="../_images/moments-basic_26_1.png" src="../_images/moments-basic_26_1.png" />
 </div>
 </div>
 </div>
@@ -779,12 +828,17 @@ Circle (Off-Centre)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/moments-basic_32_0.png" src="../_images/moments-basic_32_0.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ipython-input-10-335bc2a7755b&gt;:10: DeprecationWarning: `np.complex` is a deprecated alias for the builtin `complex`. To silence this warning, use `complex` by itself. Doing this will not modify any behavior and is safe. If you specifically wanted the numpy scalar type, use `np.complex128` here.
+Deprecated in NumPy 1.20; for more details and guidance: https://numpy.org/devdocs/release/1.20.0-notes.html#deprecations
+  num = (q[0, 0] - q[1, 1] + 2 * np.complex(0, q[0, 1]))
+</pre></div>
+</div>
+<img alt="../_images/moments-basic_32_1.png" src="../_images/moments-basic_32_1.png" />
 </div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Refer to the <a class="reference internal" href="moments-append.html#content-appendix"><span class="std std-ref">appendix</span></a> to see how the input images are produced.</p>
+<p>Refer to the <a class="reference external" href="content:appendix">appendix</a> to see how the input images are produced.</p>
 </div>
 </div>
 </div>
@@ -839,7 +893,7 @@ Circle (Off-Centre)
     </div>
 
     
-  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
 
 
     
