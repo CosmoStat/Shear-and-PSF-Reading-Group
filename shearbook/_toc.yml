@@ -6,6 +6,17 @@
     - file: intro/about
     - file: intro/run_code
 
+- part: Point Spread Function
+  chapters:
+    - file: psf/psf-intro
+      sections:
+        - file: psf/psf-origins-nb
+    - file: psf/psf-modelling
+      sections:
+        - file: psf/non-parametric-model
+        - file: psf/parametric-model
+        - file: psf/psf-models-ref
+
 - part: Shape Measurement
   chapters:
     - file: moments/moments-intro
