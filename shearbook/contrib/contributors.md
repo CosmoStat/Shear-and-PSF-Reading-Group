@@ -24,3 +24,10 @@ This book has benefitted from significant contributions from the following peopl
 **Institute:** [CosmoStat](http://www.cosmostat.org/)  
 **Website:** [cosmostat.org/people/fadi-nammour](http://www.cosmostat.org/people/fadi-nammour)  
 ```
+
+- <a href="https://github.com/thuiop" target="_blank"><img src="https://avatars.githubusercontent.com/u/1338337?s=460&u=ef80b1ac47f6f80564708dffc636d387253df5c5&v=4" height=50> @thuiop</a>
+
+```{toggle}
+**Name:** Thomas Sainrat  
+**Institute:** Undergraduate student
+```

@@ -6,6 +6,10 @@
     - file: intro/about
     - file: intro/run_code
 
+- part: Preprocessing
+  chapters:
+    - file: preprocessing/deblending
+
 - part: Point Spread Function
   chapters:
     - file: psf/psf-intro
