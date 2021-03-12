@@ -1,0 +1,787 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1.3. Blending bias &#8212; Shear Book</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.7d483ff0a819d6edff12ce0b1ead3928.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1.4. References" href="bias-ref.html" />
+    <link rel="prev" title="1.2. Noise Bias" href="noise-bias.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  <img src="../_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Shear Book</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../home.html">
+   Cosmic Shear
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Introduction
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/about.html">
+   1. About This Book
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/run_code.html">
+   2. Running Code Examples
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Preprocessing
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../preprocessing/deblending.html">
+   1. Deblending
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Point Spread Function
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../psf/psf-intro.html">
+   1. Introduction to the PSF
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/psf-origins-nb.html">
+     1.1. Sources of the PSF
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../psf/psf-modelling.html">
+   2. PSF Modelling
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/non-parametric-model.html">
+     2.1. Non-parametric
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/parametric-model.html">
+     2.2. Parametric
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/psf-models-ref.html">
+     2.3. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Shape Measurement
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../moments/moments-intro.html">
+   1. Introduction to Moments
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../moments/moments-basic.html">
+     1.1. Moments Basics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../moments/moments-weighted.html">
+     1.2. Weighted Moments
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../moments/moments-append.html">
+     1.3. Appendix
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../moments/moments-ref.html">
+     1.4. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../methods/moments-methods.html">
+   2. Moments-Based Methods
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../methods/ksb.html">
+     2.1. KSB
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../methods/ksb-variants.html">
+     2.2. KSB Variants
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../methods/viola2011.html">
+     2.3. Biases in, and corrections to, KSB shear measurements. Viola et al, 2010
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../methods/moments-methods-ref.html">
+     2.4. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../model/model-intro.html">
+   3. Model-Fitting Methods
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../model/model-ref.html">
+     3.1. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Bias and Calibration
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active collapsible-parent">
+  <a class="reference internal" href="bias-intro.html">
+   1. Shear Biases
+  </a>
+  <ul class="current collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="model-bias.html">
+     1.1. Model Bias
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="noise-bias.html">
+     1.2. Noise Bias
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     1.3. Blending bias
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="bias-ref.html">
+     1.4. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../calibration/calibration-intro.html">
+   2. Shear Calibration
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../calibration/calibration-ref.html">
+     2.1. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Contributing
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contrib/contributors.html">
+   1. Contributors
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contrib/guidelines.html">
+   2. Contribution Guidelines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../contrib/style.html">
+   3. Style Guidelines
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/bias/blending-bias.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/CosmoStat/Shear-and-PSF-Reading-Group"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/CosmoStat/Shear-and-PSF-Reading-Group/issues/new?title=Issue%20on%20page%20%2Fbias/blending-bias.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/CosmoStat/Shear-and-PSF-Reading-Group/edit/develop/shearbook/bias/blending-bias.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+            <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                    data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                    title="Fullscreen mode"><i
+                        class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/CosmoStat/Shear-and-PSF-Reading-Group/develop?urlpath=tree/shearbook/bias/blending-bias.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/CosmoStat/Shear-and-PSF-Reading-Group/blob/develop/shearbook/bias/blending-bias.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i>
+            Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#definition">
+   1.3.1. Definition
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#shape-measurement-impact-through-examples">
+   1.3.2. Shape measurement impact through examples
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#unblended-case">
+     1.3.2.1. Unblended case
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#blended-case">
+     1.3.2.2. Blended case
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#blended-case-with-different-shear">
+     1.3.2.3. Blended case with different shear
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#deblending">
+     1.3.2.4. Deblending
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#quantifying-blending-bias">
+   1.3.3. Quantifying blending bias
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#selection-bias-due-to-blending">
+   1.3.4. Selection bias due to blending
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">galsim</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">shrbk.data</span> <span class="kn">import</span> <span class="n">get_galaxy_image</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">61</span><span class="n">b5ceaf3e8a</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">galsim</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">shrbk.data</span> <span class="kn">import</span> <span class="n">get_galaxy_image</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;galsim&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="blending-bias">
+<span id="section-blendingbias"></span><h1><span class="section-number">1.3. </span>Blending bias<a class="headerlink" href="#blending-bias" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="definition">
+<h2><span class="section-number">1.3.1. </span>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
+<p>Blending bias is present when working with crowded fields. It is defined as the bias that arise due to the presence of other galaxies near the one which is being measured. It can have two origins : either the neighbour galaxies directly impact the measured shape, or if blended galaxies are removed from the sample it may give rise to a selection bias.</p>
+</div>
+<div class="section" id="shape-measurement-impact-through-examples">
+<h2><span class="section-number">1.3.2. </span>Shape measurement impact through examples<a class="headerlink" href="#shape-measurement-impact-through-examples" title="Permalink to this headline">¶</a></h2>
+<p>Here we will show the impact of unrecognized blends on shape measurement. For simplicity, we will use a simple exponential profil for galaxies, and apply shear to each of the galaxies. We also convolve the galaxies with a simple Moffat PSF profile.</p>
+<div class="section" id="unblended-case">
+<h3><span class="section-number">1.3.2.1. </span>Unblended case<a class="headerlink" href="#unblended-case" title="Permalink to this headline">¶</a></h3>
+<p>First we generate a central galaxy, whose shape will be measured using the KSB method. It will be used as a reference to compare with the cases where there is actual blending.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_central</span><span class="p">,</span> <span class="n">image_psf</span> <span class="o">=</span> <span class="n">get_galaxy_image</span><span class="p">(</span><span class="n">gal_flux</span><span class="o">=</span><span class="mf">1.e5</span><span class="p">,</span><span class="n">gal_r0</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span><span class="n">g1</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">g2</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">psf_beta</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">psf_re</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                                            <span class="n">pixel_scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_central</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">image_central</span><span class="p">,</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results : g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/blending-bias_4_0.png" src="../_images/blending-bias_4_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results : g1 =  0.103 , g2 =  0.206
+Shear measurement error : δg1 =  2.824 %, δg2 =  2.811 %
+</pre></div>
+</div>
+</div>
+</div>
+<p>Then we generate a companion galaxy with which it will be blended.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_companion</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_galaxy_image</span><span class="p">(</span><span class="n">gal_flux</span><span class="o">=</span><span class="mf">3.e4</span><span class="p">,</span><span class="n">gal_r0</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">g1</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">g2</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">psf_beta</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">psf_re</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                                            <span class="n">pixel_scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">shift_x</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span><span class="n">shift_y</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_companion</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/blending-bias_6_0.png" src="../_images/blending-bias_6_0.png" />
+</div>
+</div>
+<p>We will first generate a scene where the two galaxies are far apart from each other. Observe that the shape measurement is unaffected by the presence of the companion galaxy.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blended_scene</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">ImageD</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
+<span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_central</span>
+<span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_companion</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">blended_scene</span><span class="p">,</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results : g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/blending-bias_8_0.png" src="../_images/blending-bias_8_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results : g1 =  0.103 , g2 =  0.206
+Shear measurement error : δg1 =  2.824 %, δg2 =  2.811 %
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we plot the light profile of the image along the x axis, we can see that the two profiles are completely separated here.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">profile_central</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">image_central</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">profile_companion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">image_companion</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">profile_blended</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_blended</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Blended scene&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_central</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Central galaxy&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_companion</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Companion galaxy&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;x axis profile&quot;</span><span class="p">)</span>
+<span class="n">profile_central</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">image_central</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">profile_companion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">image_companion</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">profile_blended</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_blended</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Blended scene&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_central</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Central galaxy&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_companion</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Companion galaxy&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;y axis profile&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;x-large&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/blending-bias_10_0.png" src="../_images/blending-bias_10_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="blended-case">
+<h3><span class="section-number">1.3.2.2. </span>Blended case<a class="headerlink" href="#blended-case" title="Permalink to this headline">¶</a></h3>
+<p>Now, we will generate a scene where the galaxies truly overlap each other. We regenerate the image of the companion galaxy closer to the central one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_companion</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_galaxy_image</span><span class="p">(</span><span class="n">gal_flux</span><span class="o">=</span><span class="mf">3.e4</span><span class="p">,</span><span class="n">gal_r0</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">g1</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">g2</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">psf_beta</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">psf_re</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                                            <span class="n">pixel_scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">shift_x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">shift_y</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now carry the measurement on the blended image. Notice how the measurement is largely affected by the presence of the companion galaxy near the central one.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blended_scene</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">ImageD</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
+<span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_central</span>
+<span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_companion</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">blended_scene</span><span class="p">,</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results : g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/blending-bias_14_0.png" src="../_images/blending-bias_14_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results : g1 =  0.07 , g2 =  0.296
+Shear measurement error : δg1 =  -30.452 %, δg2 =  47.837 %
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can plot again the light profile and see how the profiles overlap : there are no longer two separate peaks but instead only one with two “subpeaks”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">profile_central</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">image_central</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">profile_companion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">image_companion</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">profile_blended</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_blended</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Blended scene&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_central</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Central galaxy&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_companion</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Companion galaxy&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;x axis profile&quot;</span><span class="p">)</span>
+<span class="n">profile_central</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">image_central</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">profile_companion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">image_companion</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">profile_blended</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_blended</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Blended scene&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_central</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Central galaxy&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">256</span><span class="p">)),</span><span class="n">profile_companion</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Companion galaxy&quot;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;y axis profile&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;x-large&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/blending-bias_16_0.png" src="../_images/blending-bias_16_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="blended-case-with-different-shear">
+<h3><span class="section-number">1.3.2.3. </span>Blended case with different shear<a class="headerlink" href="#blended-case-with-different-shear" title="Permalink to this headline">¶</a></h3>
+<p>Bias due to blended galaxies is hard to estimate, as it not only depends on the presence of the neighbour but also on its shear, which may be different if the two galaxies are situated at different redshifts. We can see it by modifying the shear of the companion galaxy in the previous scene.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_companion</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_galaxy_image</span><span class="p">(</span><span class="n">gal_flux</span><span class="o">=</span><span class="mf">3.e4</span><span class="p">,</span><span class="n">gal_r0</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">g1</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">g2</span><span class="o">=-</span><span class="mf">0.3</span><span class="p">,</span><span class="n">psf_beta</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">psf_re</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+                                            <span class="n">pixel_scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">shift_x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">shift_y</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blended_scene</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">ImageD</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
+<span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_central</span>
+<span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_companion</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">blended_scene</span><span class="p">,</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results : g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">(</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement bias : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/blending-bias_19_0.png" src="../_images/blending-bias_19_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results : g1 =  0.11 , g2 =  0.28
+Shear measurement bias : δg1 =  9.585 %, δg2 =  39.905 %
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="deblending">
+<h3><span class="section-number">1.3.2.4. </span>Deblending<a class="headerlink" href="#deblending" title="Permalink to this headline">¶</a></h3>
+<p>One of the ways of dealing with the problem is called “deblending”, ie trying to separate the images of the different galaxies and perform shape measurement on those images. We explore how deblending can be carried out in <a class="reference internal" href="../preprocessing/deblending.html#section-deblending"><span class="std std-ref">Deblending</span></a>.</p>
+</div>
+</div>
+<div class="section" id="quantifying-blending-bias">
+<h2><span class="section-number">1.3.3. </span>Quantifying blending bias<a class="headerlink" href="#quantifying-blending-bias" title="Permalink to this headline">¶</a></h2>
+<p>To date, many weak lensing analysis have been carried using only very basic deblending solutions, eg Source Extractor, or rejecting altogether blended samples. However, this approach will become impractical with next generation surveys, as they are deeper than the previous one, resulting in more galaxies being detected leading to more blending ; according to <a href="#id1"><span class="problematic" id="id2">:cite:`Bosch2018`</span></a>, 58% of the HSC detections correspond to blended objects.
+A key recurrent issue with blending is the fact that it is impossible to detect all the blends ; this means that one should calibrate not only for detected blends but also for unrecognized blends, adding to the difficulty of the problem ; there is also evidence of bias induced by blended objects which have higher magnitude than the threshold and hence are not detected.</p>
+<p>Some papers have analyzed the bias due to blending :</p>
+<ul class="simple">
+<li><p><a href="#id3"><span class="problematic" id="id4">:cite:`Dawson2016`</span></a> has tried to estimate the impact of blending in real data from HSC, using HST higher resolution data to identify ambiguous blends (when only one object is detected). They estimate, using conservative assumptions, that those undetected blends increase the measured shear variance by (1) increasing the variance of the galaxy ellipticities and (2) decreasing the total number of observed objects. They find an increase in the shear noise of 14% when considering galaxies up to magnitude 27, and by 7% when limiting the magnitude to 25.3 (corresponding to the LSST “Gold” Sample).</p></li>
+<li><p><a href="#id5"><span class="problematic" id="id6">:cite:`Mandelbaum2018`</span></a> presents calibration experiments for HSC, using HST data from the COSMOS catalog for simulating HSC images. Using two different samples, one removing the neighbours and the other keeping them, they identify a multiplicative bias due to blending ranging from 4% to 10%. They also show how cutting at a higher magnitude increases the multiplicative bias due to blending.</p></li>
+<li><p><a href="#id7"><span class="problematic" id="id8">:cite:`Sheldon2020`</span></a> present a modification of <span style="font-variant:small-caps;">Metacalibration</span> to calibrate specifically for blending bias, called <span style="font-variant:small-caps;">Metadetection</span> ; in the paper they obtain a 3.5% for LSST Y10 simulations using the standard <span style="font-variant:small-caps;">Metacalibration</span>, and only 0.15% using <span style="font-variant:small-caps;">Metadetection</span> . They also measured the multiplicative bias as a function of the distance separating the blended galaxies ; they report that the main point of failure both for <span style="font-variant:small-caps;">Metacalibration</span> and <span style="font-variant:small-caps;">Metadetection</span>  is at intermediate distances (1.5 arcseconds), when the blending is ambiguous, meaning that the objects are sometimes identified as two objects and sometimes only one by the detection algorithm (<span style="font-variant:small-caps;">Metadetection</span> is still much better than <span style="font-variant:small-caps;">Metacalibration</span> at this scale). Please note that the simulations from this paper use the same shear for all the sources and thus do not account for the possible bias due to different shears for different redshifts.</p></li>
+<li><p><a href="#id9"><span class="problematic" id="id10">:cite:`DESY3Blending`</span></a> establishes a formal framework for dealing with blended galaxies at different redshifts, assuming that they may have different shear. In constant shear simulation, using <span style="font-variant:small-caps;">Metacalibration</span> for shape measurement, they report a multiplicative bias of around 2% in their fiducial simulation, dropping to 0.4% in a simulation where no objects are blended. They also show that a having blended objects with a different shear (corresponding to the case where the objects are at different redshifts) induce a bias in the <span style="font-variant:small-caps;">Metacalibration</span> measurement.</p></li>
+</ul>
+</div>
+<div class="section" id="selection-bias-due-to-blending">
+<h2><span class="section-number">1.3.4. </span>Selection bias due to blending<a class="headerlink" href="#selection-bias-due-to-blending" title="Permalink to this headline">¶</a></h2>
+<p>One of the ways to avoid dealing with blended galaxies is to reject them before carrying shape measurement. While we have seen in the previous section that this is not a good idea for new surveys due to the very large proportion of blended galaxies, it may also be a source of bias in previous weak lensing analysis, inducing a selection bias.</p>
+<p>Namely, <a href="#id11"><span class="problematic" id="id12">:cite:`Hartlap2011`</span></a> describe two effects of rejecting blended galaxies. First, the redshift distribution is modified : galaxies at low redshift tend to be larger and are thus more prone to blending, meaning that rejecting them leads to a shift in the distribution towards higher redshifts. The second effect is more severe : the rejection of galaxy is density dependent, as an higher density of matter tends to lead to more galaxies, and thus more blending and more rejected galaxies. The opposite is true in underdense regions. This can induce a bias as high as a few percents on shear correlation statistics, potentially having large consequences on the results of weak lensing analysis.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "CosmoStat/Shear-and-PSF-Reading-Group",
+            ref: "develop",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./bias"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+        <div class='prev-next-bottom'>
+            
+    <a class='left-prev' id="prev-link" href="noise-bias.html" title="previous page"><span class="section-number">1.2. </span>Noise Bias</a>
+    <a class='right-next' id="next-link" href="bias-ref.html" title="next page"><span class="section-number">1.4. </span>References</a>
+
+        </div>
+        
+        </div>
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By CosmoStat<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
