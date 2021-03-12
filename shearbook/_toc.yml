@@ -6,6 +6,10 @@
     - file: intro/about
     - file: intro/run_code
 
+- part: Preprocessing
+  chapters:
+    - file: preprocessing/deblending
+
 - part: Point Spread Function
   chapters:
     - file: psf/psf-intro
@@ -41,6 +45,7 @@
       sections:
         - file: bias/model-bias
         - file: bias/noise-bias
+        - file: bias/blending-bias
         - file: bias/bias-ref
     - file: calibration/calibration-intro
       sections:
