@@ -8,6 +8,7 @@
 
 - part: Preprocessing
   chapters:
+    - file: preprocessing/astrometry
     - file: preprocessing/deblending
 
 - part: Point Spread Function
@@ -17,9 +18,14 @@
         - file: psf/psf-origins-nb
     - file: psf/psf-modelling
       sections:
+        - file: psf/star-selection
         - file: psf/non-parametric-model
         - file: psf/parametric-model
         - file: psf/psf-models-ref
+    - file: psf/psf-validation
+      sections:
+        - file: psf/rho-statistics
+        - file: psf/psf-validation-ref
 
 - part: Shape Measurement
   chapters:
