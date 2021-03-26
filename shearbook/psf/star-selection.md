@@ -7,7 +7,7 @@ In progress!
 ## Size-Magnitude Plane
 
 ```{note}
-How to identify the stallar locus with emphasis on the purity of the sample.
+How to identify the stellar locus with emphasis on the purity of the sample.
 ```
 
 ### Binary Stars
