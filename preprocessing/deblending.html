@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>1. Deblending &#8212; Shear Book</title>
+    <title>2. Deblending &#8212; Shear Book</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -26,7 +26,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.c441f2ba0852f4cabcb80105e3a46ae6.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e7340bb3dbd8dde6db86f25597f54a1b.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -55,7 +55,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="1. Introduction to the PSF" href="../psf/psf-intro.html" />
-    <link rel="prev" title="2. Running Code Examples" href="../intro/run_code.html" />
+    <link rel="prev" title="1. Astrometry" href="astrometry.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -115,9 +115,14 @@
  </span>
 </p>
 <ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="astrometry.html">
+   1. Astrometry
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   1. Deblending
+   2. Deblending
   </a>
  </li>
 </ul>
@@ -147,18 +152,42 @@
   </a>
   <ul class="collapse-ul">
    <li class="toctree-l2">
+    <a class="reference internal" href="../psf/star-selection.html">
+     2.1. Star Selection
+    </a>
+   </li>
+   <li class="toctree-l2">
     <a class="reference internal" href="../psf/non-parametric-model.html">
-     2.1. Non-parametric
+     2.2. Non-parametric
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../psf/parametric-model.html">
-     2.2. Parametric
+     2.3. Parametric
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../psf/psf-models-ref.html">
-     2.3. References
+     2.4. References
+    </a>
+   </li>
+  </ul>
+  <i class="fas fa-chevron-down">
+  </i>
+ </li>
+ <li class="toctree-l1 collapsible-parent">
+  <a class="reference internal" href="../psf/psf-validation.html">
+   3. PSF Validation
+  </a>
+  <ul class="collapse-ul">
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/rho-statistics.html">
+     3.1. Rho Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="../psf/psf-validation-ref.html">
+     3.2. References
     </a>
    </li>
   </ul>
@@ -432,12 +461,12 @@
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#definition">
-   1.1. Definition
+   2.1. Definition
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#basic-deblending">
-   1.2. Basic deblending
+   2.2. Basic deblending
   </a>
  </li>
 </ul>
@@ -476,13 +505,13 @@
 </div>
 </div>
 <div class="section" id="deblending">
-<span id="section-deblending"></span><h1><span class="section-number">1. </span>Deblending<a class="headerlink" href="#deblending" title="Permalink to this headline">¶</a></h1>
+<span id="section-deblending"></span><h1><span class="section-number">2. </span>Deblending<a class="headerlink" href="#deblending" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="definition">
-<h2><span class="section-number">1.1. </span>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.1. </span>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
 <p>Blending is a phenomenon that happens in astronomical images when several objects are aligned when seen from Earth ; this causes the objects to be superposed on the images, making analysis of said objects difficult. Blending is of particular importance for weak lensing analysis, and even more so in next generation surveys which reach deeper magnitudes, tending to have more blended objects. This section is dedicated to methods which aim at recovering separate images of the objects in a blended scene ; you can find more about the impact of blending on shear measurement in <a class="reference internal" href="../bias/blending-bias.html#section-blendingbias"><span class="std std-ref">Blending bias</span></a>.</p>
 </div>
 <div class="section" id="basic-deblending">
-<h2><span class="section-number">1.2. </span>Basic deblending<a class="headerlink" href="#basic-deblending" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">2.2. </span>Basic deblending<a class="headerlink" href="#basic-deblending" title="Permalink to this headline">¶</a></h2>
 <p>Here we will explore one of the most basic ways of doing deblending, using the software Source Extractor (<a href="#id1"><span class="problematic" id="id2">:cite:`SExtractor`</span></a>), which assigns each pixel to a source, which of course is not a perfect solution but is relatively easy to implement. Here is what the result looks like, using the package sep (<a href="#id3"><span class="problematic" id="id4">:cite:`Barbary2016`</span></a>), a python implementation of Source Extractor. We will reuse the same examples from <a class="reference internal" href="../bias/blending-bias.html#section-blendingbias"><span class="std std-ref">Blending bias</span></a> and use shear measurement results as a comparison.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -667,7 +696,7 @@ Shear measurement error : δg1 =  31.717 %, δg2 =  -34.571 %
         
         <div class='prev-next-bottom'>
             
-    <a class='left-prev' id="prev-link" href="../intro/run_code.html" title="previous page"><span class="section-number">2. </span>Running Code Examples</a>
+    <a class='left-prev' id="prev-link" href="astrometry.html" title="previous page"><span class="section-number">1. </span>Astrometry</a>
     <a class='right-next' id="next-link" href="../psf/psf-intro.html" title="next page"><span class="section-number">1. </span>Introduction to the PSF</a>
 
         </div>
