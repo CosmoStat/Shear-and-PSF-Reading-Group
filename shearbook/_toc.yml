@@ -49,8 +49,10 @@
   chapters:
     - file: bias/bias-intro
       sections:
+        - file: bias/bias-definition
         - file: bias/model-bias
         - file: bias/noise-bias
+        - file: bias/measuring-bias
         - file: bias/blending-bias
         - file: bias/bias-ref
     - file: calibration/calibration-intro

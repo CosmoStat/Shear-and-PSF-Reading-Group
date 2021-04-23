@@ -30,7 +30,7 @@ $ conda activate shear
 ## Install the `shrbk` library 
 
 `shrbk` is the library made for this book. 
-Install it ither in development mode
+Install it either in development mode
 
 ```bash
 $ python -m pip install -e .
