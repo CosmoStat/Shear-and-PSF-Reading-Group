@@ -17,33 +17,21 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-# Import dependencies
 import numpy as np
-from shrbk.plot import *
-from shrbk.data import * 
-from IPython.display import Markdown as md
-from shrbk.interact import get_url, make_html_binder_button
-
-# Provide binder badge
-url = get_url('moments.ipynb')
-md(make_html_binder_button(url))
+import galsim
+import matplotlib.pyplot as plt
+import sep
+from shrbk.data import get_galaxy_image
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m<ipython-input-1-5bcbd37c88fe>[0m in [0;36m<module>[0;34m[0m
-[1;32m      2[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      3[0m [0;32mfrom[0m [0mshrbk[0m[0;34m.[0m[0mplot[0m [0;32mimport[0m [0;34m*[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 4[0;31m [0;32mfrom[0m [0mshrbk[0m[0;34m.[0m[0mdata[0m [0;32mimport[0m [0;34m*[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      5[0m [0;32mfrom[0m [0mIPython[0m[0;34m.[0m[0mdisplay[0m [0;32mimport[0m [0mMarkdown[0m [0;32mas[0m [0mmd[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      6[0m [0;32mfrom[0m [0mshrbk[0m[0;34m.[0m[0minteract[0m [0;32mimport[0m [0mget_url[0m[0;34m,[0m [0mmake_html_binder_button[0m[0;34m[0m[0;34m[0m[0m
-
-[0;32m/opt/hostedtoolcache/Python/3.8.9/x64/lib/python3.8/site-packages/shrbk/data.py[0m in [0;36m<module>[0;34m[0m
+[0;32m<ipython-input-1-97828b1b1c05>[0m in [0;36m<module>[0;34m[0m
 [1;32m      1[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
 [0;32m----> 2[0;31m [0;32mimport[0m [0mgalsim[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      3[0m [0;32mfrom[0m [0mscipy[0m[0;34m.[0m[0mndimage[0m [0;32mimport[0m [0mrotate[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0;34m[0m[0m
-[1;32m      5[0m [0;34m[0m[0m
+[0m[1;32m      3[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;32mimport[0m [0msep[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0;32mfrom[0m [0mshrbk[0m[0;34m.[0m[0mdata[0m [0;32mimport[0m [0mget_galaxy_image[0m[0;34m[0m[0;34m[0m[0m
 
 [0;31mModuleNotFoundError[0m: No module named 'galsim'
 ModuleNotFoundError: No module named 'galsim'
