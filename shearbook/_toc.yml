@@ -55,6 +55,7 @@
         - file: bias/bias-ref
     - file: calibration/calibration-intro
       sections:
+        - file: calibration/metadetection
         - file: calibration/calibration-ref
 
 - part: Contributing
