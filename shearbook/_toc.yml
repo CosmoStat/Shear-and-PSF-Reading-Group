@@ -5,6 +5,7 @@
   chapters:
     - file: intro/about
     - file: intro/run_code
+    - file: intro/weak_lensing
 
 - part: Shape Measurement
   chapters:
@@ -34,6 +35,10 @@
     - file: calibration/calibration-intro
       sections:
         - file: calibration/calibration-ref
+
+- part: Appendix
+  chapters:
+    - file: appendix/taylor_series
 
 - part: Contributing
   chapters:
