@@ -49,6 +49,8 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="1.3. Appendix" href="moments-append.html" />
@@ -103,6 +105,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/run_code.html">
    2. Running Code Examples
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/weak_lensing.html">
+   3. Weak Lensing
   </a>
  </li>
 </ul>
@@ -255,18 +262,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../methods/ksb-variants.html">
-     2.2. KSB Variants
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../methods/viola2011.html">
-     2.3. Biases in, and corrections to, KSB shear measurements. Viola et al, 2010
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../methods/moments-methods-ref.html">
-     2.4. References
+     2.2. References
     </a>
    </li>
   </ul>
@@ -348,6 +345,18 @@
     </a>
    </li>
   </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/taylor_series.html">
+   1. Taylor Series for Approximations
+  </a>
  </li>
 </ul>
 <p class="caption">
@@ -480,6 +489,19 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#weight-dependent-measures">
+   1.2.1. Weight dependent measures
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -490,9 +512,207 @@
                 
   <div class="section" id="weighted-moments">
 <span id="content-weighted"></span><h1><span class="section-number">1.2. </span>Weighted Moments<a class="headerlink" href="#weighted-moments" title="Permalink to this headline">¶</a></h1>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>In progress!</p>
+<p>Observed galaxy images are corrupted by noise. Straightforward measures of ellipticity on such images lack robustness, see figure below for example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">get_centroid</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    
+    <span class="c1"># Sum flux over x and y individually</span>
+    <span class="n">sum_i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+    
+    <span class="c1"># Get range of x and y values</span>
+    <span class="n">ranges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">])</span>
+    
+    <span class="c1"># Calculate centroids</span>
+    <span class="n">cents</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sum_i</span> <span class="o">*</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">cents</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_moments</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    
+    <span class="n">centroid</span> <span class="o">=</span> <span class="n">get_centroid</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">ranges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">])</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">centroid</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">centroid</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span> <span class="o">*</span> <span class="n">xi</span> <span class="o">*</span> <span class="n">xj</span><span class="p">)</span> <span class="k">for</span> <span class="n">xi</span> <span class="ow">in</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">xj</span> <span class="ow">in</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)])</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;complex&#39;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">q</span>
+
+<span class="k">def</span> <span class="nf">get_ellipticity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;chi&#39;</span><span class="p">):</span>
+    
+    <span class="c1"># Calculate moments</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">get_moments</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    
+    <span class="c1"># Calculate the image size.</span>
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Calculate the numerator</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">complex</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span>
+    
+    <span class="c1"># Calculate the denominator</span>
+    <span class="n">den</span> <span class="o">=</span> <span class="n">r2</span>
+    
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;epsilon&#39;</span><span class="p">:</span>
+        <span class="n">den</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">q</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    
+    <span class="c1"># Calculate the ellipticity/polarisation</span>
+    <span class="n">ellip</span> <span class="o">=</span> <span class="n">num</span> <span class="o">/</span> <span class="n">den</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">([</span><span class="n">ellip</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">ellip</span><span class="o">.</span><span class="n">imag</span><span class="p">],</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1">#load toy image and generate noisy image</span>
+<span class="n">star_clean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;star.npy&#39;</span><span class="p">)</span>
+<span class="n">n_row</span><span class="p">,</span><span class="n">n_col</span> <span class="o">=</span> <span class="n">star_clean</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">star_noisy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">star_clean</span><span class="p">)</span>
+<span class="n">noise_coord</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_row</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="n">n_col</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">star_noisy</span><span class="p">[</span><span class="n">noise_coord</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1">#estimate ellipticities</span>
+<span class="n">e_clean</span> <span class="o">=</span> <span class="n">get_ellipticity</span><span class="p">(</span><span class="n">star_clean</span><span class="p">)</span>
+<span class="n">e_noisy</span> <span class="o">=</span> <span class="n">get_ellipticity</span><span class="p">(</span><span class="n">star_noisy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ellipticity  of  the  clean star  image : </span><span class="si">{:.4f}</span><span class="s1">+i</span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">e_clean</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ellipticity  of  the  noisy star  image : </span><span class="si">{:.4f}</span><span class="s1">+i</span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">e_noisy</span><span class="p">))</span>
+
+<span class="c1">#compute deviation</span>
+<span class="n">e_clean_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">e_clean</span><span class="p">)</span>
+<span class="n">e_noisy_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">e_noisy</span><span class="p">)</span>
+<span class="n">deviation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">e_noisy_norm</span><span class="o">-</span><span class="n">e_clean_norm</span><span class="p">)</span><span class="o">/</span><span class="n">e_clean_norm</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+
+<span class="c1">#show image</span>
+<span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;bone&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">star_clean</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Clean star  image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">star_noisy</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Noisy star  image&#39;</span><span class="p">)</span>
+<span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">noise_coord</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">lw</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">circle</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The noisy star and the clean star images are binary images.&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;They differ from each other by one pixel on the bottom right of the noisy star image.&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;This pixel induces a difference in ellipticity estimation of : </span><span class="si">{:.1f}</span><span class="s1">% between the two images&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">deviation</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ellipticity  of  the  clean star  image : -0.0040+i0.1980
+Ellipticity  of  the  noisy star  image : -0.0050+i0.2190
+</pre></div>
+</div>
+<img alt="../_images/moments-weighted_1_1.png" src="../_images/moments-weighted_1_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The noisy star and the clean star images are binary images.
+They differ from each other by one pixel on the bottom right of the noisy star image.
+This pixel induces a difference in ellipticity estimation of : 10.6% between the two images
+</pre></div>
+</div>
+</div>
+</div>
+<p>One way to have more robust measurements is to reduce the weight of the pixels containing only noise in the image before computing the moments. For this purpose we use a weighting window <span class="math notranslate nohighlight">\(W\)</span> to define the weighted quadrupole moments of an image as follows:</p>
+<div class="math notranslate nohighlight" id="equation-weighted-moments">
+<span class="eqno">(1.11)<a class="headerlink" href="#equation-weighted-moments" title="Permalink to this equation">¶</a></span>\[
+    Q_{w,k_1 k_2} = \frac{\sum_{x,y} W(x,y) I(x,y) (k_1 - \bar{k_1})(k_2 - \bar{k_2})}{\sum_{x,y} W(x,y) I(x,y)}
+\]</div>
+<p>with <span class="math notranslate nohighlight">\(k_1,k_2 \in \{x,y\}\)</span>.</p>
+<div class="section" id="weight-dependent-measures">
+<h2><span class="section-number">1.2.1. </span>Weight dependent measures<a class="headerlink" href="#weight-dependent-measures" title="Permalink to this headline">¶</a></h2>
+<p>In equation <a class="reference internal" href="#equation-weighted-moments">(1.11)</a> the output varies with <span class="math notranslate nohighlight">\(W\)</span> which means that the resulting shape estimation also varies depending on <span class="math notranslate nohighlight">\(W\)</span> see example below. Usually the window is chosen to be the best fit of a 2D Gaussian on the galaxy image. The expression of 2D isotropic Gaussian window centered in 0 is :
+$<span class="math notranslate nohighlight">\(
+W(p) = \frac{1}{2\pi} \exp\left(-\frac{\|p\|^2}{2}\right)
+\)</span><span class="math notranslate nohighlight">\(
+with \)</span>p=(x,y)<span class="math notranslate nohighlight">\(. Once the centroid, \)</span>\bar{p}=\left(\bar{x},\bar{y}\right)<span class="math notranslate nohighlight">\( and the scaling factor \)</span>\sigma<span class="math notranslate nohighlight">\( are defined for a specific image, the window is translated and rescaled as :
+\)</span><span class="math notranslate nohighlight">\(
+W\left(\frac{p-\bar{p}}{\sigma}\right) \quad.
+\)</span>$</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In the case of isotropic windows, only the norm of the point considered is required and the value of the window can be noted as <span class="math notranslate nohighlight">\(W(\|p\|^2)\)</span>.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">draw_gaussian</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">x_c</span><span class="p">,</span> <span class="n">y_c</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+    
+    <span class="c1"># compute centered grid</span>
+    <span class="n">ranges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">shape</span><span class="p">])</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x_c</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="n">ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_c</span><span class="p">)</span>
+    
+    <span class="c1"># shift it to match centroid</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">e1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="n">e2</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">y</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">e1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="n">e2</span><span class="o">/</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span>
+    
+    <span class="c1"># compute elliptical gaussian</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x1</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y1</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span><span class="p">))</span>
+
+<span class="n">w50</span> <span class="o">=</span> <span class="n">draw_gaussian</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">58</span><span class="p">,</span> <span class="p">(</span><span class="mi">96</span><span class="p">,</span><span class="mi">96</span><span class="p">))</span>
+<span class="n">w80</span> <span class="o">=</span> <span class="n">draw_gaussian</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">48</span><span class="p">,</span><span class="mi">58</span><span class="p">,</span> <span class="p">(</span><span class="mi">96</span><span class="p">,</span><span class="mi">96</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w50</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Small Gaussian Window&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w40</span><span class="o">*</span><span class="n">star_noisy</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Windowed Star Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w80</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Big Gaussian Window&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">w80</span><span class="o">*</span><span class="n">star_noisy</span><span class="p">,</span><span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Windowed Star Image&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/moments-weighted_3_0.png" src="../_images/moments-weighted_3_0.png" />
+<img alt="../_images/moments-weighted_3_1.png" src="../_images/moments-weighted_3_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#estimate ellipticities</span>
+<span class="n">e_w0</span> <span class="o">=</span> <span class="n">get_ellipticity</span><span class="p">(</span><span class="n">w50</span><span class="o">*</span><span class="n">star_noisy</span><span class="p">)</span>
+<span class="n">e_w80</span> <span class="o">=</span> <span class="n">get_ellipticity</span><span class="p">(</span><span class="n">w80</span><span class="o">*</span><span class="n">star_noisy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ellipticity  of  the star  image with a small window: </span><span class="si">{:.4f}</span><span class="s1">+i</span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">e_w50</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ellipticity  of  the star  image with a large window: </span><span class="si">{:.4f}</span><span class="s1">+i</span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">e_w80</span><span class="p">))</span>
+
+<span class="c1">#compute deviation</span>
+<span class="n">e_w50_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">e_w50</span><span class="p">)</span>
+<span class="n">e_w80_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">e_w80</span><span class="p">)</span>
+<span class="n">deviation_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">e_w50_norm</span><span class="o">-</span><span class="n">e_w80_norm</span><span class="p">)</span><span class="o">/</span><span class="n">e_w80_norm</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The choice of the window induces a difference in ellipticity estimation of : </span><span class="si">{:.1f}</span><span class="s1">% between the two images&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">deviation_w</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ellipticity  of  the star  image with a small window: -0.0080+i0.0810
+Ellipticity  of  the star  image with a large window: -0.0070+i0.1150
+The choice of the window induces a difference in ellipticity estimation of : 29.4% between the two images
+</pre></div>
+</div>
+</div>
+</div>
+<p>The bias induced by the weighting window can be corrected, for more details see [MOMENT BASED METHOD] section.</p>
 </div>
 </div>
 
@@ -543,10 +763,9 @@
 
       </div>
     </div>
-    
+  
   <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-
-    
+  
   </body>
 </html>

@@ -49,9 +49,11 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2.2. KSB Variants" href="ksb-variants.html" />
+    <link rel="next" title="2.2. References" href="moments-methods-ref.html" />
     <link rel="prev" title="2. Moments-Based Methods" href="moments-methods.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -103,6 +105,11 @@
  <li class="toctree-l1">
   <a class="reference internal" href="../intro/run_code.html">
    2. Running Code Examples
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/weak_lensing.html">
+   3. Weak Lensing
   </a>
  </li>
 </ul>
@@ -255,18 +262,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="ksb-variants.html">
-     2.2. KSB Variants
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="viola2011.html">
-     2.3. Biases in, and corrections to, KSB shear measurements. Viola et al, 2010
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="moments-methods-ref.html">
-     2.4. References
+     2.2. References
     </a>
    </li>
   </ul>
@@ -348,6 +345,18 @@
     </a>
    </li>
   </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/taylor_series.html">
+   1. Taylor Series for Approximations
+  </a>
  </li>
 </ul>
 <p class="caption">
@@ -480,6 +489,36 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#standard-ksb">
+   2.1.1. Standard KSB
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#handling-the-weighting-window">
+     2.1.1.1. Handling the  Weighting Window
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#handling-the-psf-effect">
+     2.1.1.2. Handling the PSF Effect
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ksb-in-practice">
+     2.1.1.3. KSB in practice
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -490,9 +529,144 @@
                 
   <div class="section" id="ksb">
 <h1><span class="section-number">2.1. </span>KSB<a class="headerlink" href="#ksb" title="Permalink to this headline">¶</a></h1>
+<p>In this section, we introduce the Kaiser-Squire-Broadhurst method (KSB) to measure galaxies shape using the image of the galaxy surface brightness.</p>
+<p>KSB estimates the reduced shear <span class="math notranslate nohighlight">\(g\)</span> using the polarisation <span class="math notranslate nohighlight">\(\chi\)</span>. The exact relation between these quantities is :</p>
+<div class="math notranslate nohighlight" id="equation-g-chi">
+<span class="eqno">(2.1)<a class="headerlink" href="#equation-g-chi" title="Permalink to this equation">¶</a></span>\[
+\chi^s = \frac{\chi - 2 g +g^2 \chi^\ast}{1 + | g |^2 - \Re \left( g \chi^\ast \right) } \quad,
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\chi^s\)</span> is the intrinsic (unlensed) polarisation.</p>
+<p>Assuming that the average of <span class="math notranslate nohighlight">\(\chi^s\)</span> vanishe, i.e. <span class="math notranslate nohighlight">\(\left&lt; \chi^s \right&gt;=0\)</span>, and in a certain region <span class="math notranslate nohighlight">\(g\)</span> is constant, <span class="math notranslate nohighlight">\(g\)</span> is approximated by rotating the coordinate frame such that only one of its component does not vanish:</p>
+<div class="math notranslate nohighlight">
+\[
+g \approx \frac{ \left&lt; \chi \right&gt; }{ 2 \left(1 - \sigma^2_\chi\right) } 
+          + \frac{\left&lt; \chi \right&gt;^3}{8} \frac{1 - 5\sigma^2_\chi}{ \left(1 - \sigma^2_\chi\right)^4} 
+          + \mathcal{O} \left( \left&lt; \chi \right&gt;^5 \right) \quad,
+\]</div>
+<p>with <span class="math notranslate nohighlight">\(\sigma^2_\chi\)</span> being the standard deviation of <span class="math notranslate nohighlight">\(\chi^s\)</span> distribution.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The polarisation <span class="math notranslate nohighlight">\(\chi\)</span> is used for shear measurement instead of the ellipticity <span class="math notranslate nohighlight">\(\epsilon\)</span> in Weak Lensing because in practice its estimator is less noisy.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>In progress!</p>
+<p>The approximation of <span class="math notranslate nohighlight">\(g\)</span> is done by applying a Taylor Expansion of <span class="math notranslate nohighlight">\(\chi\)</span> around 0, i.e. for small value of <span class="math notranslate nohighlight">\(\chi\)</span>, on the average of <a class="reference internal" href="#equation-g-chi">(2.1)</a>.</p>
+</div>
+<div class="section" id="standard-ksb">
+<h2><span class="section-number">2.1.1. </span>Standard KSB<a class="headerlink" href="#standard-ksb" title="Permalink to this headline">¶</a></h2>
+<p>The core idea of KSB is to deduce the reduced shear by estimating the polarisation on raw data, i.e. images blurred by a known PSF and contaminated with additive Gaussian noise, and using a weighting window on each image then apply corrections directly in the polarisation space.</p>
+<p>In the following, the PSF effect and the weighting window effect are handled separately.</p>
+<div class="section" id="handling-the-weighting-window">
+<h3><span class="section-number">2.1.1.1. </span>Handling the  Weighting Window<a class="headerlink" href="#handling-the-weighting-window" title="Permalink to this headline">¶</a></h3>
+<p>Here the polarisation <span class="math notranslate nohighlight">\(\chi\)</span> is estimated using the weighted moments <span class="math notranslate nohighlight">\(Q_w\)</span> and <span class="math notranslate nohighlight">\(\chi^s\)</span> is the unaccessible polarisation of the source observed by a perfect telescope (no PSF effect) and without any noise.</p>
+<p>By introducing the shear polarisability matrix, <span class="math notranslate nohighlight">\(P^{sh}\)</span>, a first order approximation in terms of <span class="math notranslate nohighlight">\(g\)</span> gives :</p>
+<div class="math notranslate nohighlight" id="equation-chichi">
+<span class="eqno">(2.2)<a class="headerlink" href="#equation-chichi" title="Permalink to this equation">¶</a></span>\[
+\chi - \chi^s = P^{sh} g
+\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[
+P^{sh}_{\alpha \beta} = - 2 \frac{\chi_{\alpha}L_{\beta}}{Q_{w,xx}+Q_{w,yy}} 
+                        - 2 \chi_{\alpha}\chi_{\beta}
+                        + 2 \frac{B_{\alpha \beta}}{Q_{w,xx}+Q_{w,yy}}
+                        + 2 \delta_{\alpha \beta}
+\]</div>
+<p>such that <span class="math notranslate nohighlight">\(\alpha, \beta \in \{1,2\}\)</span> the indices of the components and <span class="math notranslate nohighlight">\(\delta_{\alpha \beta}\)</span> is the Kronecker delta and</p>
+<div class="math notranslate nohighlight">
+\[
+L_\beta = \frac{1}{\sigma^2} \sum_{x,y} I(x,y) W'\left(\frac{(x,y)}{\sigma}\right) \eta_\beta
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+B_{\alpha \beta} = \frac{1}{\sigma^2} \sum_{x,y} I(x,y) W'\left(\frac{(x,y)}{\sigma}\right) \eta_\beta \eta_\beta
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(W\)</span> is the weighting window function and <span class="math notranslate nohighlight">\(\sigma\)</span> its scaling factor along with</p>
+<div class="math notranslate nohighlight">
+\[
+\eta_1 = x^2 - y^2
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+\eta_2 = 2xy.
+\]</div>
+<p>By averaing equation <a class="reference internal" href="#equation-chichi">(2.2)</a>, <span class="math notranslate nohighlight">\(\left&lt;\chi^s\right&gt; = 0\)</span> (no intrinsic alignment assumption), <span class="math notranslate nohighlight">\(\left&lt;g\right&gt; = g\)</span> (weak lensing assumption) and by multplying both sides by <span class="math notranslate nohighlight">\(\left&lt;P^{sh}\right&gt;^{-1}\)</span>, we obtain:</p>
+<div class="math notranslate nohighlight" id="equation-gpx">
+<span class="eqno">(2.3)<a class="headerlink" href="#equation-gpx" title="Permalink to this equation">¶</a></span>\[
+g = \left&lt;P^{sh}\right&gt;^{-1}\left&lt; \chi \right&gt; 
+\]</div>
+<p>Equation <a class="reference internal" href="#equation-gpx">(2.3)</a> applies when the all the sources have locally constant morphology and size. In practice, this does not hold because the sources are affected by the PSF which adds instability to the morphology and size. Commonly in cosmic-shear, the averages are interchanged:</p>
+<div class="math notranslate nohighlight" id="equation-gpx1">
+<span class="eqno">(2.4)<a class="headerlink" href="#equation-gpx1" title="Permalink to this equation">¶</a></span>\[
+\left&lt; \tilde{g} \right&gt; = \left&lt; \left(P^{sh}\right)^{-1} \chi \right&gt; 
+\]</div>
+<p>with the assumption that <span class="math notranslate nohighlight">\(\left&lt; \left( P^{sh}\right)^{-1} \chi^s \right&gt; = 0\)</span> which does not hold in reality because <span class="math notranslate nohighlight">\(P^{sh}\)</span> depends on <span class="math notranslate nohighlight">\(\chi\)</span>.</p>
+<p>Nevertheless, <span class="math notranslate nohighlight">\(\tilde{g}\)</span> is the solution to <a class="reference internal" href="#equation-chichi">(2.2)</a> with <span class="math notranslate nohighlight">\(\chi^s=0\)</span>. This corresponds to the shear of a circular source. The tru value of <span class="math notranslate nohighlight">\(g\)</span> is obtained by averaging <span class="math notranslate nohighlight">\(\tilde{g}\)</span>.</p>
+</div>
+<div class="section" id="handling-the-psf-effect">
+<h3><span class="section-number">2.1.1.2. </span>Handling the PSF Effect<a class="headerlink" href="#handling-the-psf-effect" title="Permalink to this headline">¶</a></h3>
+<p>In KSB the PSF is supposed to be almost istropic and its effects on the source polarisation are linearly modelled by:</p>
+<div class="math notranslate nohighlight">
+\[
+\chi = \chi^{obs} + \chi^{g}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\chi\)</span> is the polarisation that would have been observed without the PSF effect (it is the same <span class="math notranslate nohighlight">\(\chi\)</span> from the section above), <span class="math notranslate nohighlight">\(\chi^{obs}\)</span> is the polarisation observed by the telescope and <span class="math notranslate nohighlight">\(\chi^g\)</span> contains the effects of the PSF which expression is:</p>
+<div class="math notranslate nohighlight">
+\[
+\chi^g = P^{sm} \left( P^{sm,*}\right)^{-1} \chi^{sh,*}
+\]</div>
+<p><span class="math notranslate nohighlight">\(P^{sm}\)</span> is the smear polarizability matrix and it accounts for the effects of the isotrpic part of the PSF, <span class="math notranslate nohighlight">\(P^{sm,*}\)</span> and <span class="math notranslate nohighlight">\(\chi^{sh,*}\)</span> are respectively the smear polarizability and the polarization of a star and are used to account for the anisotropies of the PSF that are supposed to be small. The star is supposed to give an empirical estimation of the PSF near the source. The expression of the smear polarizabilty is:</p>
+<div class="math notranslate nohighlight">
+\[
+P^{sm}_{\alpha \beta}=\frac{1}{Q_{xx}+Q_{yy}}\left[ 
+                                \left( M + 2\frac{Q'_{xx}+Q'_{yy}}{\sigma^2}
+                                \right) \delta_{\alpha \beta}
+                                + G_{\alpha \beta}
+                                -\chi_\alpha \left( 2 F_\beta + L'_\beta \right)
+                               \right]
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(L'_\alpha\)</span> is equivalent to <span class="math notranslate nohighlight">\(L_\alpha\)</span> calculated with the second order derivative of the weighting window function, <span class="math notranslate nohighlight">\(Q'_{k,k}\)</span> (with <span class="math notranslate nohighlight">\(k \in {x,y}\)</span>) is equivalent to the moments weighted by the first order derivative of the weighting window function and</p>
+<div class="math notranslate nohighlight">
+\[
+M = \sum_{x,y} I(x,y) W \left( \frac{\left(x,y\right)}{\sigma} \right) \quad,
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+F_\alpha = \frac{1}{\sigma^2}\sum_{x,y} I(x,y) W' \left( \frac{\left(x,y\right)}{\sigma} \right) \eta_\alpha \quad,
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+G_{\alpha \beta} = \frac{1}{\sigma^4} \sum_{x,y} I(x,y) W'' \left( \frac{\left(x,y\right)}{\sigma} \right) \eta_\alpha \eta_\beta \quad.
+\]</div>
+</div>
+<div class="section" id="ksb-in-practice">
+<h3><span class="section-number">2.1.1.3. </span>KSB in practice<a class="headerlink" href="#ksb-in-practice" title="Permalink to this headline">¶</a></h3>
+<p>The reduced shear is estimated by removing the PSF effect then solving equation <a class="reference internal" href="#equation-gpx1">(2.4)</a>.</p>
+<p>The original KSB <a href="#id1"><span class="problematic" id="id2">:cite:`1995ApJ.KSB`</span></a> had an incorrect approximation of <span class="math notranslate nohighlight">\(g\)</span>. Many ameliorations were suggested, namely from <a href="#id3"><span class="problematic" id="id4">:cite:`2011MNRAS.410.2156V`</span></a> which pushed the approximations up to the third order. Alternative methods to KSB exist, for example there is the re-Gaussianization approach which is used in HSC <a href="#id5"><span class="problematic" id="id6">:cite:`2003MNRAS.343..459H`</span></a>.</p>
+<p>First order approximation and limited Taylor expansion induce a large bias for the points that are distant from the expansion point, for more details see the <a class="reference internal" href="../appendix/taylor_series.html"><span class="doc std std-doc">appendix on Taylor series</span></a>. This means that for high values of <span class="math notranslate nohighlight">\(g\)</span> the error is more important than for smaller values, as seen in the figure below.</p>
+<div class="figure align-default" id="ksb-shear-est">
+<a class="reference internal image-reference" href="../_images/shear_estimation.png"><img alt="../_images/shear_estimation.png" src="../_images/shear_estimation.png" style="width: 650px;" /></a>
+<p class="caption"><span class="caption-number">Fig. 2.1 </span><span class="caption-text">Shear estimation for unconvolved and almost noiseless galaxies with Sersic profile. KSB (red solidline) goes to third order approximations which are incorrect, KSB1 (violet dotted) is a first order approximation, KSBtr (green long-dashed line) is a third order approximation that is not mathematically justified and KSB3 (blue short-dashed line) is the correct third order approximation. Source <a href="#id7"><span class="problematic" id="id8">:cite:`2011MNRAS.410.2156V`</span></a>.</span><a class="headerlink" href="#ksb-shear-est" title="Permalink to this image">¶</a></p>
+</div>
+<p>Also KSB works under the hypothesis that the PSF has small anisotropies which is not always the case, specially in Radio Interferometry for example.</p>
+<p>Furthermore, the correction of the weighting window effect is approximative which adds another bias to the estimation of <span class="math notranslate nohighlight">\(g\)</span> that depends on the choice of the window parameters (e.g. <span class="math notranslate nohighlight">\(\sigma\)</span>).</p>
+<p>Finally, a C++ implementation of KSB by Peter Melchior can be found on this <a class="reference external" href="https://github.com/pmelchior/shapelens/blob/master/src/KSB.cc">GitHub repository</a>. And in the following code snippet, an example of how to use the GalSim KSB implementation to estimate the shear of a galaxy contained in <code class="docutils literal notranslate"><span class="pre">image</span></code> which was convolved by <code class="docutils literal notranslate"><span class="pre">psf</span></code> (assuming that both <code class="docutils literal notranslate"><span class="pre">image</span></code> and <code class="docutils literal notranslate"><span class="pre">psf</span></code> are numpy arrays):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">galsim</span>
+<span class="kn">from</span> <span class="nn">galsim</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">galsim.hsm</span>
+
+<span class="c1">#set pixel scale</span>
+<span class="n">scale</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="c1">#create a galsim version of the data</span>
+<span class="n">image_galsim</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span class="n">image</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span>
+<span class="n">psf_galsim</span> <span class="o">=</span> <span class="n">Image</span><span class="p">(</span><span class="n">psf</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">)</span>
+<span class="c1">#estimate the moments of the observation image</span>
+<span class="n">ell</span><span class="o">=</span><span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">image_galsim</span>
+                             <span class="p">,</span><span class="n">psf_galsim</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
@@ -522,7 +696,7 @@
         <div class='prev-next-bottom'>
             
     <a class='left-prev' id="prev-link" href="moments-methods.html" title="previous page"><span class="section-number">2. </span>Moments-Based Methods</a>
-    <a class='right-next' id="next-link" href="ksb-variants.html" title="next page"><span class="section-number">2.2. </span>KSB Variants</a>
+    <a class='right-next' id="next-link" href="moments-methods-ref.html" title="next page"><span class="section-number">2.2. </span>References</a>
 
         </div>
         
@@ -543,10 +717,9 @@
 
       </div>
     </div>
-    
+  
   <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-
-    
+  
   </body>
 </html>

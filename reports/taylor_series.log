@@ -17,20 +17,29 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import numpy as np
-import galsim
+#### FOLDED CELL
+%matplotlib inline
 import matplotlib.pyplot as plt
-from shrbk.data import get_galaxy_image
+from IPython.display import Markdown as md
+from sympy import Symbol, series, lambdify, latex
+from sympy.functions import *
+from ipywidgets import interactive_output
+import ipywidgets as widgets
+from sympy.parsing.sympy_parser import parse_expr
+import numpy as np
+
+x = Symbol('x')
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m<ipython-input-1-61b5ceaf3e8a>[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 2[0;31m [0;32mimport[0m [0mgalsim[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      3[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0;32mfrom[0m [0mshrbk[0m[0;34m.[0m[0mdata[0m [0;32mimport[0m [0mget_galaxy_image[0m[0;34m[0m[0;34m[0m[0m
+[0;32m<ipython-input-1-89dd6e5288f4>[0m in [0;36m<module>[0;34m[0m
+[1;32m      3[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;32mfrom[0m [0mIPython[0m[0;34m.[0m[0mdisplay[0m [0;32mimport[0m [0mMarkdown[0m [0;32mas[0m [0mmd[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 5[0;31m [0;32mfrom[0m [0msympy[0m [0;32mimport[0m [0mSymbol[0m[0;34m,[0m [0mseries[0m[0;34m,[0m [0mlambdify[0m[0;34m,[0m [0mlatex[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      6[0m [0;32mfrom[0m [0msympy[0m[0;34m.[0m[0mfunctions[0m [0;32mimport[0m [0;34m*[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      7[0m [0;32mfrom[0m [0mipywidgets[0m [0;32mimport[0m [0minteractive_output[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'galsim'
-ModuleNotFoundError: No module named 'galsim'
+[0;31mModuleNotFoundError[0m: No module named 'sympy'
+ModuleNotFoundError: No module named 'sympy'
 

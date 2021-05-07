@@ -107,6 +107,11 @@
    2. Running Code Examples
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro/weak_lensing.html">
+   3. Weak Lensing
+  </a>
+ </li>
 </ul>
 <p class="caption">
  <span class="caption-text">
@@ -257,18 +262,8 @@
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="../methods/ksb-variants.html">
-     2.2. KSB Variants
-    </a>
-   </li>
-   <li class="toctree-l2">
-    <a class="reference internal" href="../methods/viola2011.html">
-     2.3. Biases in, and corrections to, KSB shear measurements. Viola et al, 2010
-    </a>
-   </li>
-   <li class="toctree-l2">
     <a class="reference internal" href="../methods/moments-methods-ref.html">
-     2.4. References
+     2.2. References
     </a>
    </li>
   </ul>
@@ -350,6 +345,18 @@
     </a>
    </li>
   </ul>
+ </li>
+</ul>
+<p class="caption">
+ <span class="caption-text">
+  Appendix
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../appendix/taylor_series.html">
+   1. Taylor Series for Approximations
+  </a>
  </li>
 </ul>
 <p class="caption">
@@ -580,7 +587,7 @@
 <span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Markdown</span> <span class="k">as</span> <span class="n">md</span>
 <span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">shrbk.interact</span> <span class="kn">import</span> <span class="n">get_url</span><span class="p">,</span> <span class="n">make_html_binder_button</span>
 
-<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8</span><span class="o">.</span><span class="mi">9</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">shrbk</span><span class="o">/</span><span class="n">data</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">hostedtoolcache</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="mf">3.8.10</span><span class="o">/</span><span class="n">x64</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.8</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">shrbk</span><span class="o">/</span><span class="n">data</span><span class="o">.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">galsim</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">rotate</span>
@@ -699,9 +706,10 @@
 <p>Finally, we can define the second moment or quadrupole moments of an image as follows.</p>
 <div class="math notranslate nohighlight" id="equation-moments">
 <span class="eqno">(1.5)<a class="headerlink" href="#equation-moments" title="Permalink to this equation">¶</a></span>\[
-    Q_{xy} = \frac{\sum_{x,y} I(x,y)(x - \bar{x})(y - \bar{y})}{\sum_{x,y} I(x,y)}
+    Q_{k_1 k_2} = \frac{\sum_{x,y} I(x,y)(k_1 - \bar{k_1})(k_2 - \bar{k_2})}{\sum_{x,y} I(x,y)}
 \]</div>
-<p>Equation <a class="reference internal" href="#equation-moments">(1.5)</a> is used to determine object shapes. In the following cell we a simple implementation of this equation.</p>
+<p>where <span class="math notranslate nohighlight">\(k_1,k_2 \in \{x,y\}\)</span>, the quadrupoles are <span class="math notranslate nohighlight">\(Q_{xx},Q_{xy}\)</span>and <span class="math notranslate nohighlight">\(Q_{yy}\)</span> (with <span class="math notranslate nohighlight">\(Q_{xy}=Q_{yx}\)</span>).
+Equation <a class="reference internal" href="#equation-moments">(1.5)</a> is used to determine object shapes. In the following cell we a simple implementation of this equation.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_moments</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
@@ -933,10 +941,9 @@
 
       </div>
     </div>
-    
+  
   <script src="../_static/js/index.1c5a1a01449ed65a7b51.js"></script>
 
-
-    
+  
   </body>
 </html>
