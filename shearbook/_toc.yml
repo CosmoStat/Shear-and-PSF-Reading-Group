@@ -18,8 +18,6 @@
     - file: methods/moments-methods
       sections:
         - file: methods/ksb
-        - file: methods/ksb-variants
-        - file: methods/viola2011
         - file: methods/moments-methods-ref
     - file: model/model-intro
       sections:
