@@ -5,6 +5,7 @@
   chapters:
     - file: intro/about
     - file: intro/run_code
+    - file: intro/weak_lensing
 
 - part: Preprocessing
   chapters:
@@ -38,8 +39,6 @@
     - file: methods/moments-methods
       sections:
         - file: methods/ksb
-        - file: methods/ksb-variants
-        - file: methods/viola2011
         - file: methods/moments-methods-ref
     - file: model/model-intro
       sections:
@@ -57,6 +56,10 @@
       sections:
         - file: calibration/metadetection
         - file: calibration/calibration-ref
+
+- part: Appendix
+  chapters:
+    - file: appendix/taylor_series
 
 - part: Contributing
   chapters:
