@@ -49,3 +49,12 @@ def show_image(data, show_flux=False, centroid=None,
                 fontsize=18)
 
     plt.show()
+
+def ellipse_from_measure(measured_shear,ax):
+    q = measured_shear.observed_shape.q
+    beta = measured_shear.observed_shape.beta
+    centroid = (measured_shear.moments_centroid.x+128,measured_shear.moments_centroid.y+128)
+    sigma = measured_shear.moments_sigma
+    print(sigma)
+    ellipse = Ellipse(centroid,sigma*3,sigma*3/q,-beta.deg,color="red",fill=False,label="Measured shape")
+    ax.add_patch(ellipse)
