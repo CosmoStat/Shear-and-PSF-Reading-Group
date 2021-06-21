@@ -10,3 +10,4 @@ dependencies:
   - galsim
   - pip:
     - jupyter-book
+    - piff
