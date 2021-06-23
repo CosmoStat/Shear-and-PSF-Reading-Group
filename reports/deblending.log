@@ -20,16 +20,19 @@ nbclient.exceptions.CellExecutionError: An error occurred while executing the fo
 import numpy as np
 import galsim
 import matplotlib.pyplot as plt
+from matplotlib.patches import Ellipse
 from shrbk.data import get_galaxy_image
+from shrbk.plot import ellipse_from_measure
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m<ipython-input-1-61b5ceaf3e8a>[0m in [0;36m<module>[0;34m[0m
+[0;32m<ipython-input-1-c55622c02684>[0m in [0;36m<module>[0;34m[0m
 [1;32m      1[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
 [0;32m----> 2[0;31m [0;32mimport[0m [0mgalsim[0m[0;34m[0m[0;34m[0m[0m
 [0m[1;32m      3[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0;32mfrom[0m [0mshrbk[0m[0;34m.[0m[0mdata[0m [0;32mimport[0m [0mget_galaxy_image[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0;32mfrom[0m [0mmatplotlib[0m[0;34m.[0m[0mpatches[0m [0;32mimport[0m [0mEllipse[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0;32mfrom[0m [0mshrbk[0m[0;34m.[0m[0mdata[0m [0;32mimport[0m [0mget_galaxy_image[0m[0;34m[0m[0;34m[0m[0m
 
 [0;31mModuleNotFoundError[0m: No module named 'galsim'
 ModuleNotFoundError: No module named 'galsim'

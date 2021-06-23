@@ -498,8 +498,13 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#creating-a-blended-image">
+   2.2. Creating a blended image
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#basic-deblending">
-   2.2. Basic deblending
+   2.3. Basic deblending
   </a>
  </li>
 </ul>
@@ -518,18 +523,21 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">galsim</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Ellipse</span>
 <span class="kn">from</span> <span class="nn">shrbk.data</span> <span class="kn">import</span> <span class="n">get_galaxy_image</span>
+<span class="kn">from</span> <span class="nn">shrbk.plot</span> <span class="kn">import</span> <span class="n">ellipse_from_measure</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">61</span><span class="n">b5ceaf3e8a</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">c55622c02684</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">galsim</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">shrbk.data</span> <span class="kn">import</span> <span class="n">get_galaxy_image</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Ellipse</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">shrbk.data</span> <span class="kn">import</span> <span class="n">get_galaxy_image</span>
 
 <span class="ne">ModuleNotFoundError</span>: No module named &#39;galsim&#39;
 </pre></div>
@@ -542,37 +550,65 @@
 <h2><span class="section-number">2.1. </span>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
 <p>Blending is a phenomenon that happens in astronomical images when several objects are aligned when seen from Earth ; this causes the objects to be superposed on the images, making analysis of said objects difficult. Blending is of particular importance for weak lensing analysis, and even more so in next generation surveys which reach deeper magnitudes, tending to have more blended objects. This section is dedicated to methods which aim at recovering separate images of the objects in a blended scene ; you can find more about the impact of blending on shear measurement in <a class="reference internal" href="../bias/blending-bias.html#section-blendingbias"><span class="std std-ref">Blending bias</span></a>.</p>
 </div>
-<div class="section" id="basic-deblending">
-<h2><span class="section-number">2.2. </span>Basic deblending<a class="headerlink" href="#basic-deblending" title="Permalink to this headline">¶</a></h2>
-<p>Here we will explore one of the most basic ways of doing deblending, using the software Source Extractor (<a href="#id1"><span class="problematic" id="id2">:cite:`SExtractor`</span></a>), which assigns each pixel to a source, which of course is not a perfect solution but is relatively easy to implement. Here is what the result looks like, using the package sep (<a href="#id3"><span class="problematic" id="id4">:cite:`Barbary2016`</span></a>), a python implementation of Source Extractor. We will reuse the same examples from <a class="reference internal" href="../bias/blending-bias.html#section-blendingbias"><span class="std std-ref">Blending bias</span></a> and use shear measurement results as a comparison.</p>
+<div class="section" id="creating-a-blended-image">
+<h2><span class="section-number">2.2. </span>Creating a blended image<a class="headerlink" href="#creating-a-blended-image" title="Permalink to this headline">¶</a></h2>
+<p>First, we need to create blended images on which we can perform the deblending process. We will use Galsim to generate a simple exponential profile for galaxies, and apply shear to each of the galaxies. We will also convolve the galaxies with a simple Moffat PSF profile. Once we put the two galaxies together to form the blended scene, we perform shape measurement on the central galaxy, in order to evaluate later how performant our deblending was (as you can see, without deblending there is a large error in the measurement).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_central</span><span class="p">,</span> <span class="n">image_psf</span> <span class="o">=</span> <span class="n">get_galaxy_image</span><span class="p">(</span><span class="n">gal_flux</span><span class="o">=</span><span class="mf">1.e5</span><span class="p">,</span><span class="n">gal_r0</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span><span class="n">g1</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">g2</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">psf_beta</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">psf_re</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># First we create the image of the central galaxy</span>
+<span class="n">image_central</span><span class="p">,</span> <span class="n">image_psf</span> <span class="o">=</span> <span class="n">get_galaxy_image</span><span class="p">(</span><span class="n">gal_flux</span><span class="o">=</span><span class="mf">1.e5</span><span class="p">,</span><span class="n">gal_r0</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span><span class="n">g1</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="n">g2</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">psf_beta</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">psf_re</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
                                             <span class="n">pixel_scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="c1"># Then we create the image of the companion galaxy</span>
+<span class="c1"># The companion galaxy is dimmer (smaller gal_flux) and smaller (smaller gal_r0) than the central galaxy.</span>
+<span class="c1"># You can note that it as a different shear than the central galaxy (g1 and g2).</span>
 <span class="n">image_companion</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_galaxy_image</span><span class="p">(</span><span class="n">gal_flux</span><span class="o">=</span><span class="mf">3.e4</span><span class="p">,</span><span class="n">gal_r0</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">g1</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">g2</span><span class="o">=-</span><span class="mf">0.3</span><span class="p">,</span><span class="n">psf_beta</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">psf_re</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
                                             <span class="n">pixel_scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">shift_x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">shift_y</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># Finally we can add the two images together to create the blended scene.</span>
 <span class="n">blended_scene</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">ImageD</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
 <span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_central</span>
 <span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_companion</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_central</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Image of the central galaxy&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image_companion</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Image of the companion galaxy&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Blended scene&quot;</span><span class="p">)</span>
+
+<span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">image_central</span><span class="p">,</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
+<span class="n">ellipse_from_measure</span><span class="p">(</span><span class="n">measured_shear</span><span class="p">,</span><span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results on the central galaxy : g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Relative error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
 
 <span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">blended_scene</span><span class="p">,</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results : g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
+<span class="n">ellipse_from_measure</span><span class="p">(</span><span class="n">measured_shear</span><span class="p">,</span><span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results on the blended scene : g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Relative error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/deblending_3_0.png" src="../_images/deblending_3_0.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results : g1 =  0.10958495736122131 , g2 =  0.2798094153404236
-Shear measurement error : δg1 =  9.585 %, δg2 =  39.905 %
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10.079394340515137
+Shear measurement results on the central galaxy : g1 =  0.10282425582408905 , g2 =  0.20562252402305603
+Relative error : δg1 =  2.824 %, δg2 =  2.811 %
+10.361898422241211
+Shear measurement results on the blended scene : g1 =  0.10958495736122131 , g2 =  0.2798094153404236
+Relative error : δg1 =  9.585 %, δg2 =  39.905 %
 </pre></div>
 </div>
+<img alt="../_images/deblending_3_1.png" src="../_images/deblending_3_1.png" />
 </div>
 </div>
-<p>sep gives as a result a catalog containing the objects and a segmentation map associating each pixel with one of the galaxies (or to an empty area). We show the segmentation map obtained below.</p>
+</div>
+<div class="section" id="basic-deblending">
+<h2><span class="section-number">2.3. </span>Basic deblending<a class="headerlink" href="#basic-deblending" title="Permalink to this headline">¶</a></h2>
+<p>Now, we can explore one of the most basic ways of doing deblending, using the software Source Extractor (<span id="id1">[<a class="reference internal" href="../bias/bias-ref.html#id10">BertinArnouts96</a>]</span>), which assigns each pixel to a source, which of course is not a perfect solution but is relatively easy to implement. Here is what the result looks like, using the package <code class="docutils literal notranslate"><span class="pre">sep</span></code> (<span id="id2">[<a class="reference internal" href="../bias/bias-ref.html#id11">Bar16</a>]</span>), a python implementation of Source Extractor. <code class="docutils literal notranslate"><span class="pre">sep</span></code> gives as a result a catalog containing the objects and a segmentation map associating each pixel with one of the galaxies (or to an empty area). We show the segmentation map obtained below.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sep</span>
@@ -584,76 +620,86 @@ Shear measurement error : δg1 =  9.585 %, δg2 =  39.905 %
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">segmentation</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Blended scene&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">segmentation</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Segmentation&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="../_images/deblending_6_0.png" src="../_images/deblending_6_0.png" />
-<img alt="../_images/deblending_6_1.png" src="../_images/deblending_6_1.png" />
 </div>
 </div>
+<p>Usin this segmentation map, we can extract a deblended image of the central galaxy, by keeping only the pixels associated with this galaxy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">masked_scene</span> <span class="o">=</span> <span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">segmentation</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_scene</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_scene</span><span class="p">)</span>
+
 <span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">galsim</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">masked_scene</span><span class="p">),</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
+<span class="n">ellipse_from_measure</span><span class="p">(</span><span class="n">measured_shear</span><span class="p">,</span><span class="n">ax</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results : g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Deblended central galaxy&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/deblending_7_0.png" src="../_images/deblending_7_0.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results : g1 =  0.10152844339609146 , g2 =  0.19612617790699005
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10.056253433227539
+Shear measurement results : g1 =  0.10152844339609146 , g2 =  0.19612617790699005
 Shear measurement error : δg1 =  1.528 %, δg2 =  -1.937 %
 </pre></div>
 </div>
+<img alt="../_images/deblending_8_1.png" src="../_images/deblending_8_1.png" />
 </div>
 </div>
-<p>As you can see, the recovered image is close to the original galaxy and shape measurement is not really affected once the galaxy is deblended. However, this first example was manageable because the two galaxies were only blended a little. Let’s see the result when the galaxies overlap more completely.</p>
+<p>As you can see, the recovered image is close to the original galaxy and shape measurement is accurate again once the galaxy is deblended. However, this first example was manageable because the two galaxies were only blended a little. Let’s see the result when the galaxies overlap more completely.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">image_companion</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_galaxy_image</span><span class="p">(</span><span class="n">gal_flux</span><span class="o">=</span><span class="mf">3.e4</span><span class="p">,</span><span class="n">gal_r0</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">g1</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">g2</span><span class="o">=-</span><span class="mf">0.3</span><span class="p">,</span><span class="n">psf_beta</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">psf_re</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We keep the same galaxies as in the first exemple, except the companion is much closer.</span>
+<span class="n">image_companion</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_galaxy_image</span><span class="p">(</span><span class="n">gal_flux</span><span class="o">=</span><span class="mf">3.e4</span><span class="p">,</span><span class="n">gal_r0</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span><span class="n">g1</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span><span class="n">g2</span><span class="o">=-</span><span class="mf">0.3</span><span class="p">,</span><span class="n">psf_beta</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span><span class="n">psf_re</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
                                             <span class="n">pixel_scale</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span><span class="n">shift_x</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">shift_y</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">blended_scene</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">ImageD</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
 <span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_central</span>
 <span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_companion</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">blended_scene</span><span class="p">,</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results : g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Blended scene&quot;</span><span class="p">)</span>
 
 <span class="n">img</span> <span class="o">=</span> <span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span>
 <span class="n">cat</span><span class="p">,</span><span class="n">segmentation</span> <span class="o">=</span> <span class="n">sep</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">segmentation_map</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">segmentation</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">segmentation</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Segmentation&quot;</span><span class="p">)</span>
 
 <span class="n">masked_scene</span> <span class="o">=</span> <span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">segmentation</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_scene</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_scene</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Deblended central galaxy&quot;</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">blended_scene</span><span class="p">,</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results on the blended scene : g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Relative error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
+
 <span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">galsim</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">masked_scene</span><span class="p">),</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results : g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results on the deblended galaxy: g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/deblending_9_0.png" src="../_images/deblending_9_0.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results : g1 =  -0.03829635679721832 , g2 =  0.4417387545108795
-Shear measurement error : δg1 =  -138.296 %, δg2 =  120.869 %
-</pre></div>
-</div>
-<img alt="../_images/deblending_9_2.png" src="../_images/deblending_9_2.png" />
-<img alt="../_images/deblending_9_3.png" src="../_images/deblending_9_3.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results : g1 =  0.1317169964313507 , g2 =  0.13085855543613434
+<img alt="../_images/deblending_10_0.png" src="../_images/deblending_10_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results on the blended scene : g1 =  -0.03829635679721832 , g2 =  0.4417387545108795
+Relative error : δg1 =  -138.296 %, δg2 =  120.869 %
+Shear measurement results on the deblended galaxy: g1 =  0.1317169964313507 , g2 =  0.13085855543613434
 Shear measurement error : δg1 =  31.717 %, δg2 =  -34.571 %
 </pre></div>
 </div>
@@ -668,33 +714,31 @@ Shear measurement error : δg1 =  31.717 %, δg2 =  -34.571 %
 <span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_central</span>
 <span class="n">blended_scene</span> <span class="o">+=</span> <span class="n">image_companion</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">blended_scene</span><span class="p">,</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results : g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Blended scene&quot;</span><span class="p">)</span>
 
 <span class="n">img</span> <span class="o">=</span> <span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span>
 <span class="n">cat</span><span class="p">,</span><span class="n">segmentation</span> <span class="o">=</span> <span class="n">sep</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">img</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">segmentation_map</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">segmentation</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">segmentation</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Segmentation&quot;</span><span class="p">)</span>
 
 <span class="n">masked_scene</span> <span class="o">=</span> <span class="n">blended_scene</span><span class="o">.</span><span class="n">array</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">segmentation</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_scene</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">masked_scene</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Deblended central galaxy&quot;</span><span class="p">)</span>
+
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">galsim</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">masked_scene</span><span class="p">),</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results : g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
+
+<span class="n">measured_shear</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">hsm</span><span class="o">.</span><span class="n">EstimateShear</span><span class="p">(</span><span class="n">blended_scene</span><span class="p">,</span><span class="n">image_psf</span><span class="p">,</span><span class="n">shear_est</span><span class="o">=</span><span class="s1">&#39;KSB&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shear measurement results on the blended scene : g1 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span><span class="p">,</span><span class="s2">&quot;, g2 = &quot;</span><span class="p">,</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Relative error : </span><span class="se">\u03B4</span><span class="s2">g1 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g1</span> <span class="o">-</span> <span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%, </span><span class="se">\u03B4</span><span class="s2">g2 = &quot;</span><span class="p">,</span><span class="nb">round</span><span class="p">((</span><span class="n">measured_shear</span><span class="o">.</span><span class="n">corrected_g2</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">/</span><span class="mf">0.2</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="s2">&quot;%&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/deblending_11_0.png" src="../_images/deblending_11_0.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results : g1 =  -0.053492192178964615 , g2 =  0.30959129333496094
-</pre></div>
-</div>
-<img alt="../_images/deblending_11_2.png" src="../_images/deblending_11_2.png" />
-<img alt="../_images/deblending_11_3.png" src="../_images/deblending_11_3.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results : g1 =  -0.05296389013528824 , g2 =  0.30788126587867737
+<img alt="../_images/deblending_12_0.png" src="../_images/deblending_12_0.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shear measurement results on the blended scene : g1 =  -0.053492192178964615 , g2 =  0.30959129333496094
+Relative error : δg1 =  -153.492 %, δg2 =  54.796 %
 </pre></div>
 </div>
 </div>
