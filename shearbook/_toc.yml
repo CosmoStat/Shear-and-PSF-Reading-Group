@@ -17,7 +17,9 @@ parts:
   chapters:
   - file: psf/psf-intro
     sections:
-    - file: psf/psf-origins-nb
+    - file: psf/1-intro/definitions
+    - file: psf/1-intro/contributions
+    - file: psf/1-intro/examples
   - file: psf/psf-modelling
     sections:
     - file: psf/star-selection
