@@ -1,0 +1,69 @@
+format: jb-book
+root: home
+parts:
+- caption: Introduction
+  numbered: true
+  chapters:
+  - file: intro/about
+  - file: intro/run_code
+  - file: intro/weak_lensing
+- caption: Preprocessing
+  numbered: true
+  chapters:
+  - file: preprocessing/astrometry
+  - file: preprocessing/deblending
+- caption: Point Spread Function
+  numbered: true
+  chapters:
+  - file: psf/psf-intro
+    sections:
+    - file: psf/psf-origins-nb
+  - file: psf/psf-modelling
+    sections:
+    - file: psf/star-selection
+    - file: psf/non-parametric-model
+    - file: psf/parametric-model
+    - file: psf/psf-models-ref
+  - file: psf/psf-validation
+    sections:
+    - file: psf/rho-statistics
+    - file: psf/psf-validation-ref
+- caption: Shape Measurement
+  numbered: true
+  chapters:
+  - file: moments/moments-intro
+    sections:
+    - file: moments/moments-basic
+    - file: moments/moments-weighted
+    - file: moments/moments-append
+    - file: moments/moments-ref
+  - file: methods/moments-methods
+    sections:
+    - file: methods/ksb
+    - file: methods/moments-methods-ref
+  - file: model/model-intro
+    sections:
+    - file: model/model-ref
+- caption: Bias and Calibration
+  numbered: true
+  chapters:
+  - file: bias/bias-intro
+    sections:
+    - file: bias/model-bias
+    - file: bias/noise-bias
+    - file: bias/blending-bias
+    - file: bias/bias-ref
+  - file: calibration/calibration-intro
+    sections:
+    - file: calibration/metadetection
+    - file: calibration/calibration-ref
+- caption: Appendix
+  numbered: true
+  chapters:
+  - file: appendix/taylor_series
+- caption: Contributing
+  numbered: true
+  chapters:
+  - file: contrib/contributors
+  - file: contrib/guidelines
+  - file: contrib/style
