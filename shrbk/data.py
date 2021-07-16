@@ -1,4 +1,5 @@
 import numpy as np
+import galsim
 from scipy.ndimage import rotate
 
 
@@ -33,3 +34,14 @@ data_dict = {'Horizontal Line': hline,
              'Diagonal Line (Down)': diag_down,
              'Circle': circle,
              'Circle (Off-Centre)': circle_off}
+
+def get_galaxy_image(gal_flux,gal_r0,g1,g2,psf_beta,psf_re,pixel_scale,shift_x=0,shift_y=0):
+    gal = galsim.Exponential(flux=gal_flux, scale_radius=gal_r0)
+    gal = gal.shear(g1=g1, g2=g2)
+    gal = gal.shift(shift_x,shift_y)
+    psf = galsim.Moffat(beta=psf_beta, flux=1., half_light_radius=psf_re)
+    gal_psf = galsim.Convolve([gal, psf])
+    image_gal_psf = galsim.ImageF(256,256)
+    image_gal_psf = gal_psf.drawImage(image_gal_psf,scale=pixel_scale)
+    image_psf = psf.drawImage(scale=pixel_scale)
+    return image_gal_psf,image_psf

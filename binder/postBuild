@@ -1,0 +1,4 @@
+set -ex
+
+# Install shrbk
+python -m pip install -e .

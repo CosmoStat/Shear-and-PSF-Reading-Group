@@ -67,3 +67,12 @@ sphinx:
   config                    :   # key-value pairs to directly over-ride the Sphinx configuration
 
 #######################################################################################
+
+bibtex_bibfiles:
+  - _bibliography/z_bias.bib
+  - _bibliography/z_calibration.bib
+  - _bibliography/z_model.bib
+  - _bibliography/z_moments.bib
+  - _bibliography/z_moments_methods.bib
+  - _bibliography/z_psf_models.bib
+  - _bibliography/z_psf_validation.bib
