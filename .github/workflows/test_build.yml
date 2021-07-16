@@ -20,7 +20,7 @@ jobs:
           environment-file: environment.yml
 
       - name: Build Book
+        shell: bash -l {0}
         run: |
-          conda activate shearbook
           conda info
           jupyter-book build shearbook
