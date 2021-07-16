@@ -11,3 +11,4 @@ dependencies:
   - pip:
     - jupyter-book
     - piff
+    - sep

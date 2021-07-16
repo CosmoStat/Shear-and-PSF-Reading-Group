@@ -27,9 +27,9 @@ $ conda env create -f environment.yml
 $ conda activate shear
 ```
 
-## Install the `shrbk` library 
+## Install the `shrbk` library
 
-`shrbk` is the library made for this book. 
+`shrbk` is the library made for this book.
 Install it ither in development mode
 
 ```bash

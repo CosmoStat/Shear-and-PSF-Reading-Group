@@ -69,3 +69,12 @@ sphinx:
   config                    :   # key-value pairs to directly over-ride the Sphinx configuration
     mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 #######################################################################################
+
+bibtex_bibfiles:
+  - _bibliography/z_bias.bib
+  - _bibliography/z_calibration.bib
+  - _bibliography/z_model.bib
+  - _bibliography/z_moments.bib
+  - _bibliography/z_moments_methods.bib
+  - _bibliography/z_psf_models.bib
+  - _bibliography/z_psf_validation.bib
