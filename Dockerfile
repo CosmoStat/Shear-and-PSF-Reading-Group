@@ -12,8 +12,6 @@ RUN cd Shear-and-PSF-Reading-Group && \
 
 ENV PATH /opt/conda/envs/shearbook/bin:$PATH
 
-RUN echo "path: $PATH"
-
 RUN echo "path: $PATH" && \
     cd Shear-and-PSF-Reading-Group && \
     python setup.py install
