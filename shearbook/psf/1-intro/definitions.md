@@ -13,7 +13,7 @@ The variations that change as a function of the focal plane positions. These are
 
 - __Spectral__
 
-The PSF is also a function of the wavelength. The PSF at a specific wavelength is usually called a monochromatic PSF. The observations of our telescope are integrated at all the wavelength ponderated by the filter's bandpass that is being used. Thus, outputing polychromatic observations. Depending if the filter's bandpass is narrow or large and the given error requirements, the modelling of the PSF spectral variations might be required or can be neglected. 
+The PSF is a function of the wavelength. The PSF at a specific wavelength is usually called a monochromatic PSF. The observations of our telescope are integrated at all the wavelengths allowed by the filter's bandpass used. As a consequence, our observations are polychromatic. Depending if the filter's bandpass is narrow or large and the given error requirements, the modelling of the PSF spectral variations might be required (e.g. [Euclid](https://www.euclid-ec.org)) or can be neglected (e.g. [DES](https://www.darkenergysurvey.org)). 
 
 - __Temporal__
 
