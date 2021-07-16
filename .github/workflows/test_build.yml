@@ -18,7 +18,6 @@ jobs:
         with:
           activate-environment: shearbook
           environment-file: environment.yml
-          auto-activate-base: false
 
       - name: Build Book
         run: |
