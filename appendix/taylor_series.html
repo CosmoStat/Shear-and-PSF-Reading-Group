@@ -530,18 +530,21 @@
 <p>Taylor series are commonly used in physics to approximate functions making them easier to handle specially when solving equations. In this notebook we give a visual example on how it works and the biases that it introduces.</p>
 <div class="section" id="theoretical-formula">
 <h2><span class="section-number">14.1. </span>Theoretical Formula<a class="headerlink" href="#theoretical-formula" title="Permalink to this headline">¶</a></h2>
-<p>Consider a function <span class="math notranslate nohighlight">\(f\)</span> that is <span class="math notranslate nohighlight">\(n\)</span> times differentiable in a point <span class="math notranslate nohighlight">\(a\)</span>. Then by Taylor’s theorem, for any point <span class="math notranslate nohighlight">\(x\)</span> in the domain of f, we have the Taylor expansion about the point <span class="math notranslate nohighlight">\(a\)</span> is defined as:
-\begin{equation}
+<p>Consider a function <span class="math notranslate nohighlight">\(f\)</span> that is <span class="math notranslate nohighlight">\(n\)</span> times differentiable in a point <span class="math notranslate nohighlight">\(a\)</span>. Then by Taylor’s theorem, for any point <span class="math notranslate nohighlight">\(x\)</span> in the domain of f, we have the Taylor expansion about the point <span class="math notranslate nohighlight">\(a\)</span> is defined as:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-24095d54-d683-4f35-a55e-d7703b027800">
+<span class="eqno">(14.1)<a class="headerlink" href="#equation-24095d54-d683-4f35-a55e-d7703b027800" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 f(x) = f(a) + \sum_{k=1}^n \frac{f^{k}(a)}{k!}(x-a)^k + o\left((x-a)^n\right) \quad,
-\end{equation}
-where <span class="math notranslate nohighlight">\(f^{(k)}\)</span> is the derivative of order <span class="math notranslate nohighlight">\(k\)</span> of <span class="math notranslate nohighlight">\(f\)</span>. Usually, we consider <span class="math notranslate nohighlight">\(a=0\)</span> which gives:
-\begin{equation}
+\end{equation}\]</div>
+<p>where <span class="math notranslate nohighlight">\(f^{(k)}\)</span> is the derivative of order <span class="math notranslate nohighlight">\(k\)</span> of <span class="math notranslate nohighlight">\(f\)</span>. Usually, we consider <span class="math notranslate nohighlight">\(a=0\)</span> which gives:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-10c7f5ee-bb9d-4cba-a553-f424e96f1867">
+<span class="eqno">(14.2)<a class="headerlink" href="#equation-10c7f5ee-bb9d-4cba-a553-f424e96f1867" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 f(x) = f(0) + \sum_{k=1}^n \frac{f^{k}(0)}{k!}(x)^k + o\left((x)^n\right) \quad.
-\end{equation}</p>
-<p>For example, the exponential, <span class="math notranslate nohighlight">\(e\)</span> is infinitely differentiable with <span class="math notranslate nohighlight">\(e^{(k)}=e\)</span> and <span class="math notranslate nohighlight">\(e^0=1\)</span>. This gives us the following Taylor expansion:
-\begin{equation}
+\end{equation}\]</div>
+<p>For example, the exponential, <span class="math notranslate nohighlight">\(e\)</span> is infinitely differentiable with <span class="math notranslate nohighlight">\(e^{(k)}=e\)</span> and <span class="math notranslate nohighlight">\(e^0=1\)</span>. This gives us the following Taylor expansion:</p>
+<div class="amsmath math notranslate nohighlight" id="equation-66ec81ce-2121-415a-8a1d-68834b64fd24">
+<span class="eqno">(14.3)<a class="headerlink" href="#equation-66ec81ce-2121-415a-8a1d-68834b64fd24" title="Permalink to this equation">¶</a></span>\[\begin{equation}
 e(x) = 1 + \sum_{k=1}^\infty \frac{x^k}{k!} \quad.
-\end{equation}</p>
+\end{equation}\]</div>
 </div>
 <div class="section" id="visualising-taylor-expansion-approximation-and-its-bias">
 <h2><span class="section-number">14.2. </span>Visualising Taylor Expansion Approximation and its Bias<a class="headerlink" href="#visualising-taylor-expansion-approximation-and-its-bias" title="Permalink to this headline">¶</a></h2>
@@ -560,20 +563,6 @@ e(x) = 1 + \sum_{k=1}^\infty \frac{x^k}{k!} \quad.
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1603</span><span class="o">/</span><span class="mf">2789222957.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Markdown</span> <span class="k">as</span> <span class="n">md</span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">series</span><span class="p">,</span> <span class="n">lambdify</span><span class="p">,</span> <span class="n">latex</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="kn">from</span> <span class="nn">sympy.functions</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interactive_output</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;sympy&#39;
 </pre></div>
 </div>
 </div>
@@ -598,8 +587,8 @@ e(x) = 1 + \sum_{k=1}^\infty \frac{x^k}{k!} \quad.
 </div>
 </div>
 </div>
-<p>The Taylor expansion of  {{ latex_func }} is :
-{{latex_taylor}}</p>
+<p>The Taylor expansion of   is :
+</p>
 <p>Now let’s plot the function and its expansion while considering a point, noted <span class="math notranslate nohighlight">\(p\)</span>, to study the biais that we introduce when we approximate the function by its expansion:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
