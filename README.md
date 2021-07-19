@@ -8,24 +8,40 @@ The following steps will help you get set up to contribute to the book.
 
 To build the book you will need the following packages.
 
-- [numpy](https://numpy.org/)
-- [scipy](https://www.scipy.org/)
-- [matplotlib](https://matplotlib.org/)
 - [Jupyter](https://jupyter.org/)
 - [Jupyter Book](https://jupyterbook.org/intro.html)
+- [Matplotlib](https://matplotlib.org/)
+- [NumPy](https://numpy.org/)
+- [Piff](https://github.com/rmjarvis/Piff)
+- [SciPy](https://www.scipy.org/)
+- [SEP](https://sep.readthedocs.io/)
+- [SymPy](https://www.sympy.org/)
 
-You can install them as follows
+### Conda Environment
 
-```bash
-$ python -m pip install -r requirements.txt
-```
-
-alternatively you can build the `shear` conda environment.
+You can build and activate the `shearbook` conda environment, which includes all the required dependencies as follows.
 
 ```bash
 $ conda env create -f environment.yml
-$ conda activate shear
+$ conda activate shearbook
 ```
+
+### Docker Image
+
+You can also build a Docker image containing the Conda environment as follows.
+
+```bash
+$ docker build . -t shearbook
+```
+
+Then to launch a Docker container, where you can build the book.
+
+```bash
+$ docker run -it shearbook
+$ cd Shear-and-PSF-Reading-Group
+$ conda activate shearbook
+```
+
 
 ## Install the `shrbk` library
 
