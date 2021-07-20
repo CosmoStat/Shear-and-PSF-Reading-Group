@@ -43,7 +43,7 @@ The following steps should be followed to make a pull request:
 1. Pull the latest updates to the original repository.
 
 ```bash
-  git pull upstream master
+  git pull upstream develop
 ```
 
 2. Create a new branch for your modifications.
