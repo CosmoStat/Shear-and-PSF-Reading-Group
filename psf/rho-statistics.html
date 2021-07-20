@@ -23,7 +23,7 @@
 
     
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/sphinx-book-theme.acff12b8f9c144ce68a297486a2fa670.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.e8e5499552300ddf5d7adccae7cc3b70.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
@@ -49,6 +49,8 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="8.2. References" href="psf-validation-ref.html" />
@@ -497,6 +499,29 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction-to-rho-statistics">
+   8.1.1. Introduction to Rho statistics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#derivation-of-the-rho-statistics">
+   8.1.2. Derivation of the Rho statistics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#interpretation">
+   8.1.3. Interpretation
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -505,8 +530,383 @@
         
               <div>
                 
-  <div class="section" id="rho-statistics">
+  <div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Markdown</span>
+<span class="kn">from</span> <span class="nn">shrbk.interact</span> <span class="kn">import</span> <span class="n">get_url</span><span class="p">,</span> <span class="n">make_html_binder_button</span>
+
+<span class="c1"># Provide binder badge</span>
+<span class="n">Markdown</span><span class="p">(</span><span class="n">make_html_binder_button</span><span class="p">(</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;rho-statistics.ipynb&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_4455</span><span class="o">/</span><span class="mf">1673201622.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Markdown</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">shrbk.interact</span> <span class="kn">import</span> <span class="n">get_url</span><span class="p">,</span> <span class="n">make_html_binder_button</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> 
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="c1"># Provide binder badge</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">Markdown</span><span class="p">(</span><span class="n">make_html_binder_button</span><span class="p">(</span><span class="n">get_url</span><span class="p">(</span><span class="s1">&#39;rho-statistics.ipynb&#39;</span><span class="p">)))</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;shrbk&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="rho-statistics">
 <h1><span class="section-number">8.1. </span>Rho Statistics<a class="headerlink" href="#rho-statistics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction-to-rho-statistics">
+<h2><span class="section-number">8.1.1. </span>Introduction to Rho statistics<a class="headerlink" href="#introduction-to-rho-statistics" title="Permalink to this headline">¶</a></h2>
+<p>Rho statistics are a way to quantify the error on shear correlations due to the PSF. The first two were introduced by Rowe in 2010 (<span id="id1">[<a class="reference internal" href="psf-validation-ref.html#id3">Row10</a>]</span>), although they were named <span class="math notranslate nohighlight">\(D_1\)</span> and <span class="math notranslate nohighlight">\(D_2\)</span>. In this section, we will use the same formalism as Jarvis et al. did in a paper for DES <span id="id2">[<a class="reference internal" href="psf-validation-ref.html#id2">JSZ+16</a>]</span>, with 5 rho statistics, denoted <span class="math notranslate nohighlight">\(\rho_1\)</span> through <span class="math notranslate nohighlight">\(\rho_5\)</span>.
+When measuring the PSF, one can only get measurements at the positions of stars, and thus not directly at the positions of the galaxies for which the shape is measured. This means that the PSF must be interpolated. This interpolation will lead to correlated errors on galaxies which are close to each other. As these errors are not random, independent errors, they cannot be considered as simply an additional source of noise that can be added to the uncertainty on the shear. We expect that they will introduce a systematic error on the shear, linked to the two-point correlation functions of these errors.</p>
+<p>Here after, we will denote the true ellipticity of the PSF (defined using the second moments) <span class="math notranslate nohighlight">\(\epsilon_\text{PSF}\)</span>, and the true size of the PSF <span class="math notranslate nohighlight">\(T_\text{PSF}\)</span> (see the derivation for an exact definition) ; we also define <span class="math notranslate nohighlight">\(\delta \epsilon_\text{PSF}\)</span> and <span class="math notranslate nohighlight">\(T_\text{PSF}\)</span> the errors in ellipticity and size between the model and the true PSF.</p>
+<p>We define the five rho statistics as :
+$<span class="math notranslate nohighlight">\(\begin{align*}
+\rho_1(\theta)&amp; = &lt;\delta \epsilon_\text{PSF}^* (x) \delta \epsilon_\text{PSF} (x+\theta)&gt; \\
+\rho_2(\theta)&amp; = &lt;\epsilon_\text{PSF}^* (x) \delta \epsilon_\text{PSF} (x+\theta)&gt; \\
+\rho_3(\theta)&amp; = &lt;\left(\epsilon_\text{PSF}^* \frac{\delta T_\text{PSF}}{T_\text{PSF}}\right) (x) \left(\epsilon_\text{PSF} \frac{\delta T_\text{PSF}}{T_\text{PSF}}\right) (x+\theta)&gt; \\
+\rho_4(\theta)&amp; = &lt;\delta \epsilon_\text{PSF}^* (x) \left(\epsilon_\text{PSF} \frac{\delta T_\text{PSF}}{T_\text{PSF}}\right) (x+\theta)&gt; \\
+\rho_5(\theta)&amp; = &lt;\epsilon_\text{PSF}^* (x) \left(\epsilon_\text{PSF} \frac{\delta T_\text{PSF}}{T_\text{PSF}}\right) (x+\theta)&gt;
+\end{align*}\)</span>$</p>
+<p>They are computed at the location of the stars only, as we can only observe the PSF at these locations.</p>
+</div>
+<div class="section" id="derivation-of-the-rho-statistics">
+<h2><span class="section-number">8.1.2. </span>Derivation of the Rho statistics<a class="headerlink" href="#derivation-of-the-rho-statistics" title="Permalink to this headline">¶</a></h2>
+<p>You can find below a derivation of the rho statistics.</p>
+<div class="dropdown admonition">
+<p class="admonition-title">Derivation</p>
+<p>Under certain assumptions, we can assume that the second order moments of the observed galaxy (<span class="math notranslate nohighlight">\(I_{obs}\)</span>) correspond to the addition of the second order moments of the “true” galaxy (<span class="math notranslate nohighlight">\(I_{\text{gal}}\)</span>) and of the PSF (<span class="math notranslate nohighlight">\(I_{\text{PSF}}\)</span>), meaning that we can write
+<span class="math notranslate nohighlight">\(\begin{equation}
+I_{\text{gal}} = I_{obs} - I_{\text{PSF}}.
+\end{equation}\)</span>
+We can then see how the ellipticity of the galaxy relates to the ellipticity of the PSF, by writing
+<span class="math notranslate nohighlight">\(\begin{equation} 
+\epsilon_{\text{gal}} = \frac{I_{11,\text{gal}} - I_{22,\text{gal}} + 2iI_{12,\text{gal}}}{I_{11,\text{gal}} + I_{22,\text{gal}}}
+\end{equation}\)</span>
+and replacing the moments with the previous formula we can obtain
+<span class="math notranslate nohighlight">\(\begin{equation} 
+\epsilon_{\text{gal}} = \frac{\epsilon_{obs}T_{obs} - \epsilon_{\text{PSF}}T_{\text{PSF}}}{T_{obs} - T_{\text{PSF}}}
+\end{equation}\)</span>
+where <span class="math notranslate nohighlight">\(T = I_{11}+I_{22}\)</span> (<span class="math notranslate nohighlight">\(\sqrt{T}\)</span> can be considered to be a sort of radius).
+To get the contribution of the PSF, we can do a partial differentiation, considering that errors relative to <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(\epsilon_{\text{PSF}}\)</span> will be small :
+<span class="math notranslate nohighlight">\(\begin{equation}
+\delta\epsilon_{\text{gal}} = \frac{\partial \epsilon_{\text{gal}}}{\partial T_{\text{PSF}}} \delta T_{\text{PSF}}
+                       + \frac{\partial \epsilon_{\text{gal}}}{\partial \epsilon_{\text{PSF}}} \delta \epsilon_{\text{PSF}}
+\end{equation}\)</span></p>
+<p>We can compute the derivatives:
+<span class="math notranslate nohighlight">\(\begin{equation}
+\frac{\partial \epsilon_{\text{gal}}}{\partial T_{\text{PSF}}} = 
+\frac{\epsilon_{obs}T_{obs} - \epsilon_{\text{PSF}}T_{obs}}{(T_{obs}-T_{\text{PSF}})^2}
+= \frac{\epsilon_{\text{gal}}-\epsilon_{\text{PSF}}}{T_{\text{gal}}}
+\end{equation}\)</span></p>
+<p>(the second step is done by adding <span class="math notranslate nohighlight">\(-\epsilon_{\text{PSF}}T_{\text{PSF}}+\epsilon_{\text{PSF}}T_{\text{PSF}}\)</span> to the numerator) and
+<span class="math notranslate nohighlight">\(\begin{equation}
+\frac{\partial \epsilon_{\text{gal}}}{\partial \epsilon_{\text{PSF}}} = -\frac{T_{\text{PSF}}}{T_{obs}-T_{\text{PSF}}} = -\frac{T_{\text{PSF}}}{T_{\text{gal}}}
+\end{equation}\)</span></p>
+<p>We can thus write</p>
+<p><span class="math notranslate nohighlight">\(\begin{equation}
+\delta\epsilon_{\text{gal}} = (\epsilon_{\text{gal}}-\epsilon_{\text{PSF}})\frac{T_{\text{PSF}}}{T_{\text{gal}}}\frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}} - \frac{T_{\text{PSF}}}{T_{\text{gal}}}\delta \epsilon_{\text{PSF}}
+\end{equation}\)</span></p>
+<p>From there, we use the estimator <span class="math notranslate nohighlight">\(\hat{\epsilon}_{\text{gal}} = \epsilon_{\text{gal}} + \delta \epsilon_{\text{gal}} + \alpha \epsilon_{\text{PSF}}\)</span> (<span class="math notranslate nohighlight">\(\delta \epsilon_{\text{gal}}\)</span> represents the systematic error, while <span class="math notranslate nohighlight">\(\alpha \epsilon_{\text{PSF}}\)</span> represents the impact of the \text{PSF} shape in the shape measurement algorithm, which can be non-zero even if the \text{PSF} is perfectly modelled). We can then have an estimator for the shear correlation :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align}
+\hat{\xi}^+ (\theta) &amp;= &lt;\hat{\epsilon}_{\text{gal}}^*(x) \hat{\epsilon}_{\text{gal}}(x+\theta)&gt; \\
+	                 &amp;= &lt;(\epsilon_{\text{gal}}^*(x) + \delta \epsilon_{\text{gal}}^*(x) + \alpha \epsilon_{\text{PSF}}^*)(\epsilon_{\text{gal}}(x+\theta) + \delta \epsilon_{\text{gal}}(x+\theta) + \alpha \epsilon_{\text{PSF}})&gt; \\
+	                 &amp;= \underbrace{&lt;\epsilon_{\text{gal}}^*(x)\epsilon_{\text{gal}}(x+\theta)&gt;}_{\xi^+(\theta)} + &lt;\epsilon_{\text{gal}}^*(x) \alpha \epsilon_{\text{PSF}}(x+\theta)&gt; + &lt;\epsilon_{\text{gal}}^*(x) \delta \epsilon_{\text{gal}}(x+\theta)&gt; \\
+	                 &amp; \quad + &lt;\alpha \epsilon_{\text{PSF}}^*(x) \epsilon_{\text{gal}}(x+\theta)&gt; + &lt;\alpha^2 \epsilon_{\text{PSF}}^*(x) \epsilon_{\text{PSF}}(x+\theta)&gt; + &lt;\alpha \epsilon_{\text{PSF}}^*(x) \delta\epsilon_{\text{gal}}(x+\theta)&gt; \\
+	                 &amp; \quad + &lt;\delta \epsilon_{\text{gal}}^*(x)\epsilon_{\text{gal}}(x+\theta)&gt; + &lt;\delta \epsilon_{\text{gal}}^*(x)  \alpha \epsilon_{\text{PSF}}(x+\theta)&gt; + &lt;\delta \epsilon_{\text{gal}}^*(x)\delta \epsilon_{\text{gal}}(x+\theta)&gt;
+\end{align}\end{split}\]</div>
+<p>We thus wish to estimate <span class="math notranslate nohighlight">\(\delta \xi^+(\theta)\)</span>. From now on we will omit the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(x+\theta\)</span> so as to avoid cluttering the computations. We will also make two hypothesis :</p>
+<ul class="simple">
+<li><p>H1 : the galaxy and the PSF are not correlated, ie <span class="math notranslate nohighlight">\(&lt;\epsilon_{\text{gal}}\epsilon_{\text{PSF}}&gt;\)</span> and <span class="math notranslate nohighlight">\(&lt;\epsilon_{\text{gal}}\delta\epsilon_{\text{PSF}}&gt;\)</span> terms are <span class="math notranslate nohighlight">\(0\)</span>.</p></li>
+<li><p>H2 : separation of T and <span class="math notranslate nohighlight">\(\epsilon\)</span></p></li>
+</ul>
+<p>Following H1, we can already eliminate 2 terms. Since <span class="math notranslate nohighlight">\(\alpha\)</span> is supposed to be small, we will also drop the term containing <span class="math notranslate nohighlight">\(\alpha^2\)</span>. Finally, the symmetry of the correlation reduces the number of terms to three. Let us compute the three remaining terms :</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+&lt;\epsilon_{\text{gal}}^* \delta \epsilon_{\text{gal}}&gt; &amp;= &lt;\epsilon_{\text{gal}}^* ((\epsilon_{\text{gal}}-\epsilon_{\text{PSF}})\frac{T_{\text{PSF}}}{T_{\text{gal}}} \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}- \frac{T_{\text{PSF}}}{T_{\text{gal}}} \delta \epsilon_{\text{PSF}}) \\
+&amp;= &lt;\epsilon^*_{\text{gal}} \epsilon_{\text{gal}} \frac{T_{\text{PSF}}}{T_{\text{gal}}} \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}&gt; - \underbrace{&lt;\epsilon^*_{\text{gal}} \epsilon_{\text{PSF}} \frac{T_{\text{PSF}}}{T_{\text{gal}}} \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}&gt;}_{0~ (H1)} - \underbrace{&lt;\epsilon^*_{\text{gal}} \delta \epsilon_{\text{PSF}} \frac{T_{\text{PSF}}}{T_{\text{gal}}}&gt;}_{0~ (H1)} \\
+&amp;= &lt;\frac{T_{\text{PSF}}}{T_{\text{gal}}} \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}&gt; \xi^+(\theta) \\
+&lt;\delta \epsilon^*_{\text{gal}}\epsilon_{\text{gal}}&gt; &amp;= &lt;\frac{T_{\text{PSF}}}{T_{\text{gal}}} \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}&gt; \xi^+(\theta)\\
+&lt;\alpha \epsilon_{\text{PSF}}^* \delta \epsilon_{\text{gal}}&gt; &amp;= &lt;\alpha\epsilon_{\text{PSF}}^* ((\epsilon_{\text{gal}}-\epsilon_{\text{PSF}})\frac{T_{\text{PSF}}}{T_{\text{gal}}} \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}- \frac{T_{\text{PSF}}}{T_{\text{gal}}} \delta \epsilon_{\text{PSF}}) \\
+&amp;= \underbrace{&lt;\alpha\epsilon_{\text{PSF}}^* \epsilon_{\text{gal}} \frac{T_{\text{PSF}}}{T_{\text{gal}}} \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}&gt;}_{0~ (H1)} - &lt;\alpha \frac{T_{\text{PSF}}}{T_{\text{gal}}} \underbrace{\epsilon_{\text{PSF}}^* \epsilon_{\text{PSF}}  \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}}_{\rho_5}&gt; - &lt;\alpha \underbrace{\epsilon_{\text{PSF}}^* \delta \epsilon_{\text{PSF}}}_{\rho_2} \frac{T_{\text{PSF}}}{T_{\text{gal}}}&gt; \\
+&amp;= - \alpha \left&lt; \frac{T_{\text{PSF}}}{T_{\text{gal}}}\right&gt; \rho_5(\theta) - \alpha \left&lt; \frac{T_{\text{PSF}}}{T_{\text{gal}}}\right&gt; \rho_2(\theta)\\
+&lt;\alpha \epsilon_{\text{PSF}}^* \delta \epsilon_{\text{gal}}&gt; &amp;= - \alpha \left&lt; \frac{T_{\text{PSF}}}{T_{\text{gal}}}\right&gt; \rho_5(\theta) - \alpha \left&lt; \frac{T_{\text{PSF}}}{T_{\text{gal}}}\right&gt; \rho_2(\theta)\\
+&lt;\delta \epsilon^*_{\text{gal}} \delta \epsilon_{\text{gal}}&gt; &amp;=  &lt;((\epsilon_{\text{gal}}^*-\epsilon_{\text{PSF}}^*)\frac{T_{\text{PSF}}}{T_{\text{gal}}} \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}- \frac{T_{\text{PSF}}}{T_{\text{gal}}} \delta \epsilon^*_{\text{PSF}})((\epsilon_{\text{gal}}-\epsilon_{\text{PSF}})\frac{T_{\text{PSF}}}{T_{\text{gal}}} \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}- \frac{T_{\text{PSF}}}{T_{\text{gal}}} \delta \epsilon_{\text{PSF}})&gt; \\
+&amp;= &lt;\left(\frac{T_{\text{PSF}}}{T_{\text{gal}}}\right)^2 (\underbrace{\epsilon_{\text{gal}}^* \epsilon_{\text{gal}}}_{\xi^+} - \underbrace{\epsilon_{\text{PSF}}^* \epsilon_{\text{gal}}}_{0~ (H1)} - \underbrace{\epsilon_{\text{gal}}^* \epsilon_{\text{PSF}}}_{0~ (H1)} + \underbrace{\epsilon_{\text{PSF}}^* \epsilon_{\text{PSF}})\left(\frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}\right)^2}_{\rho_3}&gt; \\
+&amp;  \quad - &lt;(\underbrace{\epsilon_{\text{gal}}^* \delta \epsilon_{\text{PSF}}}_{0~ (H1)} - \underbrace{\epsilon_{\text{PSF}}^* \delta \epsilon_{\text{PSF}}) \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}}_{\rho_4} \left(\frac{T_{\text{PSF}}}{T_{\text{gal}}}\right)^2&gt; \\
+&amp; \quad -&lt; (\underbrace{\delta \epsilon_{\text{PSF}}^* \epsilon_{\text{gal}}}_{0~ (H1)} - \underbrace{\delta \epsilon_{\text{PSF}}^* \epsilon_{\text{PSF}})  \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}}_{\rho_4} \left(\frac{T_{\text{PSF}}}{T_{\text{gal}}}\right)^2&gt; \\
+&amp;  \quad + &lt;\left(\frac{T_{\text{PSF}}}{T_{\text{gal}}}\right)^2 \underbrace{\delta \epsilon_{\text{PSF}}^* \delta \epsilon_{\text{PSF}}}_{\rho_1}&gt; \\
+&amp; = \left&lt;\frac{T_{\text{PSF}}}{T_{\text{gal}}}\right&gt;^2 \rho_1(\theta) + \left&lt;\frac{T_{\text{PSF}}}{T_{\text{gal}}}\right&gt;^2 \rho_3(\theta) + 2 \left&lt;\frac{T_{\text{PSF}}}{T_{\text{gal}}}\right&gt;^2 \rho_4(\theta) \\
+&amp; \quad + \underbrace{&lt;\left(\frac{\delta T_{\text{PSF}}}{T_{\text{gal}}}\right)^2&gt; \xi_+(\theta)}_{\text{negligible}}
+\end{align*}\end{split}\]</div>
+<p>Finally, we get</p>
+<p><span class="math notranslate nohighlight">\(\begin{align*}
+\delta \xi^+(\theta) &amp;= 2&lt;\frac{T_{\text{PSF}}}{T_{\text{gal}}} \frac{\delta T_{\text{PSF}}}{T_{\text{PSF}}}&gt; \xi^+(\theta) + \left&lt;\frac{T_{\text{PSF}}}{T_{\text{gal}}}\right&gt;^2 \rho_1(\theta) + \left&lt;\frac{T_{\text{PSF}}}{T_{\text{gal}}}\right&gt;^2 \rho_3(\theta) + 2 \left&lt;\frac{T_{\text{PSF}}}{T_{\text{gal}}}\right&gt;^2 \rho_4(\theta) \\ 
+&amp;\quad - 2\alpha \left&lt; \frac{ T_{\text{PSF}}}{T_{\text{gal}}}\right&gt; \rho_5(\theta) - 2\alpha \left&lt; \frac{ T_{\text{PSF}}}{T_{\text{gal}}}\right&gt; \rho_2(\theta)
+\end{align*}\)</span></p>
+<p>We can notice that the formula here is slightly different from the one in the Jarvis paper, as there are factors of two in front of <span class="math notranslate nohighlight">\(\rho_2\)</span>,<span class="math notranslate nohighlight">\(\rho_4\)</span> and <span class="math notranslate nohighlight">\(\rho_5\)</span>; however these are ultimately unimportant since the precise coefficients will be measured from the data anyway.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Some papers do not use the exact same statistics ; for instance, <span id="id3">[<a class="reference internal" href="psf-validation-ref.html#id4">GHA+21</a>]</span> makes a similar derivation and obtains a consistent result but regroups the terms differently ; they also do not have the terms involving <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
+</div>
+</div>
+<div class="section" id="interpretation">
+<h2><span class="section-number">8.1.3. </span>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this headline">¶</a></h2>
+<p>To get a better sense of what the statistics mean and how they differ from each other, we will be making experiments using the <a class="reference external" href="https://github.com/rmjarvis/Piff">Piff package</a>, which is used for PSF modelling and allows us to easily compute the rho statistics. We will try to show how introducing an error in the model is repercuted in the rho statistics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">galsim</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">fitsio</span>
+<span class="kn">import</span> <span class="nn">piff</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">22</span><span class="p">})</span>
+
+<span class="n">output_dir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.4</span><span class="p">,</span><span class="n">g1</span> <span class="o">=</span> <span class="mf">0.15</span><span class="p">,</span><span class="n">g2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">du</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">dv</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="n">flux</span> <span class="o">=</span> <span class="mf">123.45</span><span class="p">,</span><span class="n">stamp_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span><span class="n">n_stars</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span><span class="n">point_array</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">randomize_ell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Build an input image and catalog used by a few tests below.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">wcs</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">PixelScale</span><span class="p">(</span><span class="mf">0.263</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">stamp_size</span><span class="p">,</span> <span class="n">stamp_size</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="n">wcs</span><span class="p">)</span>
+
+    <span class="c1"># Where to put the stars.</span>
+    <span class="k">if</span> <span class="n">point_array</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">point_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span><span class="n">stamp_size</span><span class="o">-</span><span class="mi">33</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_stars</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="n">x_list</span> <span class="o">=</span> <span class="n">point_array</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y_list</span> <span class="o">=</span> <span class="n">point_array</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="c1"># Draw a Gaussian PSF at each location on the image.</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span> <span class="n">y_list</span><span class="p">):</span>
+        <span class="n">psf</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span><span class="o">.</span><span class="n">shear</span><span class="p">(</span><span class="n">g1</span><span class="o">=</span><span class="n">g1</span><span class="o">+</span><span class="n">randomize_ell</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.01</span><span class="p">),</span> <span class="n">g2</span><span class="o">=</span><span class="n">g2</span><span class="p">)</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">du</span><span class="p">,</span><span class="n">dv</span><span class="p">)</span> <span class="o">*</span> <span class="n">flux</span> <span class="c1">#*(stamp_size-x)/stamp_size</span>
+        <span class="n">image2</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">stamp_size</span><span class="p">,</span> <span class="n">stamp_size</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="n">wcs</span><span class="p">)</span>
+        <span class="n">bounds</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">BoundsI</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">31</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">32</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="mi">31</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">32</span><span class="p">))</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">PositionD</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">y</span><span class="o">-</span><span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">-</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">psf</span><span class="o">.</span><span class="n">drawImage</span><span class="p">(</span><span class="n">image</span><span class="o">=</span><span class="n">image2</span><span class="p">[</span><span class="n">bounds</span><span class="p">],</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;no_pixel&#39;</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">)</span>
+        <span class="n">image</span><span class="p">[</span><span class="n">bounds</span><span class="p">]</span> <span class="o">+=</span> <span class="n">image2</span><span class="p">[</span><span class="n">bounds</span><span class="p">]</span>
+    <span class="n">image</span><span class="o">.</span><span class="n">addNoise</span><span class="p">(</span><span class="n">galsim</span><span class="o">.</span><span class="n">GaussianNoise</span><span class="p">(</span><span class="n">rng</span><span class="o">=</span><span class="n">galsim</span><span class="o">.</span><span class="n">BaseDeviate</span><span class="p">(</span><span class="mi">1234</span><span class="p">),</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="c1"># Write out the image to a file</span>
+    <span class="n">image_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="s1">&#39;test_stats_image.fits&#39;</span><span class="p">)</span>
+    <span class="n">image</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+
+    <span class="c1"># Write out the catalog to a file</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="p">[</span> <span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;f8&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;f8&#39;</span><span class="p">)</span> <span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_list</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_list</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_list</span>
+    <span class="n">cat_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="s1">&#39;test_stats_cat.fits&#39;</span><span class="p">)</span>
+    <span class="n">fitsio</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">cat_file</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>First, we need to generate a field containing stars. Here, we will have a uniform PSF over the field so that each star is identical.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stamp_size</span> <span class="o">=</span> <span class="mi">13500</span>
+<span class="n">n_stars</span> <span class="o">=</span> <span class="mi">5000</span>
+<span class="n">point_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">33</span><span class="p">,</span><span class="n">stamp_size</span><span class="o">-</span><span class="mi">33</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_stars</span><span class="p">,</span><span class="mi">2</span><span class="p">)),</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">setup</span><span class="p">(</span><span class="n">stamp_size</span><span class="o">=</span><span class="n">stamp_size</span><span class="p">,</span><span class="n">n_stars</span><span class="o">=</span><span class="n">n_stars</span><span class="p">,</span><span class="n">point_array</span><span class="o">=</span><span class="n">point_array</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rho-statistics_7_0.png" src="../_images/rho-statistics_7_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">logger</span> <span class="o">=</span> <span class="n">piff</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">image_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="s1">&#39;test_stats_image.fits&#39;</span><span class="p">)</span>
+<span class="n">cat_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span><span class="s1">&#39;test_stats_cat.fits&#39;</span><span class="p">)</span>
+<span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;input&#39;</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;image_file_name&#39;</span> <span class="p">:</span> <span class="n">image_file</span><span class="p">,</span>
+        <span class="s1">&#39;cat_file_name&#39;</span> <span class="p">:</span> <span class="n">cat_file</span><span class="p">,</span>
+        <span class="s1">&#39;stamp_size&#39;</span> <span class="p">:</span> <span class="mi">30</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Test rho statistics directly.</span>
+<span class="n">min_sep</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">max_sep</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">bin_size</span> <span class="o">=</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_single</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">rho</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">marker</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># Add a single rho stat to the plot.</span>
+        <span class="n">meanr</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">meanr</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">rho</span><span class="o">.</span><span class="n">bin_size</span> <span class="o">*</span> <span class="n">offset</span><span class="p">)</span>
+        <span class="n">xip</span> <span class="o">=</span> <span class="n">rho</span><span class="o">.</span><span class="n">xip</span>
+        <span class="n">sig</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rho</span><span class="o">.</span><span class="n">varxip</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">meanr</span><span class="p">,</span> <span class="n">xip</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\rho_</span><span class="si">{}</span><span class="s1">(\theta)$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">meanr</span><span class="p">,</span> <span class="o">-</span><span class="n">xip</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">meanr</span><span class="p">[</span><span class="n">xip</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">],</span> <span class="n">xip</span><span class="p">[</span><span class="n">xip</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="n">sig</span><span class="p">[</span><span class="n">xip</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="n">marker</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">meanr</span><span class="p">[</span><span class="n">xip</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="n">xip</span><span class="p">[</span><span class="n">xip</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">],</span> <span class="n">yerr</span><span class="o">=</span><span class="n">sig</span><span class="p">[</span><span class="n">xip</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="n">marker</span><span class="p">,</span>
+                    <span class="n">fillstyle</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">mfc</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+        
+<span class="k">def</span> <span class="nf">compute_rho_stats_mean</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span><span class="n">g1</span><span class="p">,</span><span class="n">g2</span><span class="p">,</span><span class="n">du</span><span class="p">,</span><span class="n">dv</span><span class="p">,</span><span class="n">flux</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">galsim_psf</span> <span class="o">=</span> <span class="n">galsim</span><span class="o">.</span><span class="n">Gaussian</span><span class="p">(</span><span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">)</span><span class="o">.</span><span class="n">shear</span><span class="p">(</span><span class="n">g1</span><span class="o">=</span><span class="n">g1</span><span class="p">,</span> <span class="n">g2</span><span class="o">=</span><span class="n">g2</span><span class="p">)</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">du</span><span class="p">,</span><span class="n">dv</span><span class="p">)</span> <span class="o">*</span> <span class="n">flux</span>
+    <span class="n">model_psf</span> <span class="o">=</span> <span class="n">piff</span><span class="o">.</span><span class="n">GSObjectModel</span><span class="p">(</span><span class="n">galsim_psf</span><span class="p">)</span>
+    <span class="n">model_interp</span> <span class="o">=</span> <span class="n">piff</span><span class="o">.</span><span class="n">Mean</span><span class="p">()</span>
+    <span class="n">psf</span> <span class="o">=</span> <span class="n">piff</span><span class="o">.</span><span class="n">SimplePSF</span><span class="p">(</span><span class="n">model_psf</span><span class="p">,</span><span class="n">model_interp</span><span class="p">)</span>
+    <span class="n">orig_stars</span><span class="p">,</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">pointing</span> <span class="o">=</span> <span class="n">piff</span><span class="o">.</span><span class="n">Input</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">],</span> <span class="n">logger</span><span class="p">)</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">piff</span><span class="o">.</span><span class="n">RhoStats</span><span class="p">(</span><span class="n">min_sep</span><span class="o">=</span><span class="n">min_sep</span><span class="p">,</span> <span class="n">max_sep</span><span class="o">=</span><span class="n">max_sep</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="n">bin_size</span><span class="p">,</span> <span class="n">sep_units</span><span class="o">=</span><span class="s2">&quot;arcsec&quot;</span><span class="p">)</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">psf</span><span class="p">,</span> <span class="n">orig_stars</span><span class="p">)</span>
+
+    <span class="n">rhos</span> <span class="o">=</span> <span class="p">[</span><span class="n">stats</span><span class="o">.</span><span class="n">rho1</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">rho2</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">rho3</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">rho4</span><span class="p">,</span> <span class="n">stats</span><span class="o">.</span><span class="n">rho5</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\theta$ (arcsec)&#39;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\rho(\theta)$&#39;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">min_sep</span><span class="p">,</span><span class="n">max_sep</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">nonposy</span><span class="o">=</span><span class="s1">&#39;clip&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\theta$ (arcsec)&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\rho(\theta)$&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">min_sep</span><span class="p">,</span><span class="n">max_sep</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">nonposy</span><span class="o">=</span><span class="s1">&#39;clip&#39;</span><span class="p">)</span>
+        <span class="n">plot_single</span><span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">rhos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">plot_single</span><span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">rhos</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">plot_single</span><span class="p">(</span><span class="n">ax1</span><span class="p">,</span><span class="n">rhos</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="s2">&quot;green&quot;</span><span class="p">,</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">plot_single</span><span class="p">(</span><span class="n">ax2</span><span class="p">,</span><span class="n">rhos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">plot_single</span><span class="p">(</span><span class="n">ax2</span><span class="p">,</span><span class="n">rhos</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span><span class="s2">&quot;x&quot;</span><span class="p">,</span><span class="n">num</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        
+    <span class="k">return</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rho</span><span class="o">.</span><span class="n">xip</span><span class="p">))</span> <span class="k">for</span> <span class="n">rho</span> <span class="ow">in</span> <span class="n">rhos</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>First, let’s compute the rho statistics with a reference PSF (slightly different from the original graph so as to get a cleaner plot). To simplify, we will average the rho statistics over all scales in order to compare different situations ; since the true PSF and the model should be the same everywhere, we expect them to be approximateley constant anyway.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.42</span>
+<span class="n">g1</span> <span class="o">=</span> <span class="mf">0.15</span>
+<span class="n">g2</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">du</span> <span class="o">=</span> <span class="mf">0.</span>  <span class="c1"># in arcsec</span>
+<span class="n">dv</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">flux</span> <span class="o">=</span> <span class="mf">123.45</span>
+<span class="n">ref_rho_stats</span> <span class="o">=</span> <span class="n">compute_rho_stats_mean</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span><span class="n">g1</span><span class="p">,</span><span class="n">g2</span><span class="p">,</span><span class="n">du</span><span class="p">,</span><span class="n">dv</span><span class="p">,</span><span class="n">flux</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean rho statistics : &quot;</span><span class="p">,</span><span class="n">ref_rho_stats</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reading in 1 images
+Getting wcs from image file ./output/test_stats_image.fits
+Reading image file ./output/test_stats_image.fits
+Reading star catalog ./output/test_stats_cat.fits.
+Processing catalog 0 with 5000 stars
+Read a total of 5000 stars from 1 image
+/home/thuiop/Documents/stageAPC/Shear-and-PSF-Reading-Group/env/lib64/python3.7/site-packages/ipykernel_launcher.py:29: MatplotlibDeprecationWarning: The &#39;nonposy&#39; parameter of __init__() has been renamed &#39;nonpositive&#39; since Matplotlib 3.3; support for the old name will be dropped two minor releases later.
+/home/thuiop/Documents/stageAPC/Shear-and-PSF-Reading-Group/env/lib64/python3.7/site-packages/ipykernel_launcher.py:34: MatplotlibDeprecationWarning: The &#39;nonposy&#39; parameter of __init__() has been renamed &#39;nonpositive&#39; since Matplotlib 3.3; support for the old name will be dropped two minor releases later.
+</pre></div>
+</div>
+<img alt="../_images/rho-statistics_11_1.png" src="../_images/rho-statistics_11_1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean rho statistics :  [2.5590926591492516e-05, 0.0006785157602205058, 8.469582860874487e-05, 3.877320601654588e-05, 0.0013022010557144023]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s see what happens if we give it a higher ellipticity, say by increasing the first component of the ellipticity (denoted g1 in the code). We expect that this will increase the <span class="math notranslate nohighlight">\(\delta\epsilon_\text{PSF}\)</span> terms, while the <span class="math notranslate nohighlight">\(\epsilon_\text{PSF}\)</span> will not change (as the real PSF stays the same) ; thus we should expect that only <span class="math notranslate nohighlight">\(\rho_1\)</span>, <span class="math notranslate nohighlight">\(\rho_2\)</span> and <span class="math notranslate nohighlight">\(\rho_4\)</span> will increase, and <span class="math notranslate nohighlight">\(\rho_1\)</span> the most of all  (please note that <span class="math notranslate nohighlight">\(\delta T_\text{PSF}\)</span> should not change by much either).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.42</span>
+<span class="n">g1</span> <span class="o">=</span> <span class="mf">0.17</span>
+<span class="n">g2</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">du</span> <span class="o">=</span> <span class="mf">0.</span>  <span class="c1"># in arcsec</span>
+<span class="n">dv</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">flux</span> <span class="o">=</span> <span class="mf">123.45</span>
+<span class="n">high_ellipticity_rho_stats</span> <span class="o">=</span> <span class="n">compute_rho_stats_mean</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span><span class="n">g1</span><span class="p">,</span><span class="n">g2</span><span class="p">,</span><span class="n">du</span><span class="p">,</span><span class="n">dv</span><span class="p">,</span><span class="n">flux</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean rho statistics : &quot;</span><span class="p">,</span><span class="n">high_ellipticity_rho_stats</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ratio compared to reference : &quot;</span><span class="p">,[</span><span class="n">high_ellipticity_rho_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">ref_rho_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reading in 1 images
+Getting wcs from image file ./output/test_stats_image.fits
+Reading image file ./output/test_stats_image.fits
+Reading star catalog ./output/test_stats_cat.fits.
+Processing catalog 0 with 5000 stars
+Read a total of 5000 stars from 1 image
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean rho statistics :  [0.00019727433668392385, 0.0020020268022177042, 8.529093619015561e-05, 0.00013013887123203773, 0.001306930731654299]
+Ratio compared to reference :  [7.708760993027349, 2.9505973473144977, 1.0070264095786803, 3.3564124456590703, 1.0036320627441835]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indeed, we obtain a result that matches expectations. Let’s now see the impact of changing the size of the PSF (without changing the ellipticity). This should only affect <span class="math notranslate nohighlight">\(\rho_3\)</span>, <span class="math notranslate nohighlight">\(\rho_4\)</span> and <span class="math notranslate nohighlight">\(\rho_5\)</span> since <span class="math notranslate nohighlight">\(\rho_1\)</span> and <span class="math notranslate nohighlight">\(\rho_2\)</span> do not contain the <span class="math notranslate nohighlight">\(\delta T_\text{PSF}\)</span> factor, which evaluates the error in size (and again, <span class="math notranslate nohighlight">\(\rho_3\)</span> should be the most impacted).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.44</span>
+<span class="n">g1</span> <span class="o">=</span> <span class="mf">0.15</span>
+<span class="n">g2</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">du</span> <span class="o">=</span> <span class="mf">0.</span>  <span class="c1"># in arcsec</span>
+<span class="n">dv</span> <span class="o">=</span> <span class="mf">0.</span>
+<span class="n">flux</span> <span class="o">=</span> <span class="mf">123.45</span>
+<span class="n">high_size_rho_stats</span> <span class="o">=</span> <span class="n">compute_rho_stats_mean</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span><span class="n">g1</span><span class="p">,</span><span class="n">g2</span><span class="p">,</span><span class="n">du</span><span class="p">,</span><span class="n">dv</span><span class="p">,</span><span class="n">flux</span><span class="p">,</span><span class="n">plot</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean rho statistics : &quot;</span><span class="p">,</span><span class="n">high_size_rho_stats</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ratio compared to reference : &quot;</span><span class="p">,[</span><span class="n">high_size_rho_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">ref_rho_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reading in 1 images
+Getting wcs from image file ./output/test_stats_image.fits
+Reading image file ./output/test_stats_image.fits
+Reading star catalog ./output/test_stats_cat.fits.
+Processing catalog 0 with 5000 stars
+Read a total of 5000 stars from 1 image
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean rho statistics :  [2.1938800858592285e-05, 0.0006197287874065584, 0.00026221554669173186, 6.523429271697407e-05, 0.0023192674711321488]
+Ratio compared to reference :  [0.8572882572327667, 0.913359458599985, 3.095967664512087, 1.6824580533561324, 1.781036392924572]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="sa">r</span><span class="s2">&quot;$\rho_1$&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$\rho_2$&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$\rho_3$&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$\rho_4$&quot;</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$\rho_5$&quot;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Reference&quot;</span><span class="p">)</span>
+<span class="c1">#plt.scatter(x,[1.0 for i in range(5)],marker=&quot;o&quot;,s=100,color=&quot;blue&quot;,label=&quot;Reference&quot;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,[</span><span class="n">high_ellipticity_rho_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">ref_rho_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Higher model ellipticity&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,[</span><span class="n">high_size_rho_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">ref_rho_stats</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)],</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;magenta&quot;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Higher model size&quot;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Rho statistics values (compared to reference)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/rho-statistics_16_0.png" src="../_images/rho-statistics_16_0.png" />
+</div>
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">

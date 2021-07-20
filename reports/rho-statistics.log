@@ -17,21 +17,21 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import numpy as np
-import galsim
-import matplotlib.pyplot as plt
-from matplotlib.patches import Ellipse
-from shrbk.data import get_galaxy_image
-from shrbk.plot import ellipse_from_measure
+from IPython.display import Markdown
+from shrbk.interact import get_url, make_html_binder_button
+
+# Provide binder badge
+Markdown(make_html_binder_button(get_url('rho-statistics.ipynb')))
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/tmp/ipykernel_4416/1549219563.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      3[0m [0;32mimport[0m [0mmatplotlib[0m[0;34m.[0m[0mpyplot[0m [0;32mas[0m [0mplt[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0;32mfrom[0m [0mmatplotlib[0m[0;34m.[0m[0mpatches[0m [0;32mimport[0m [0mEllipse[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 5[0;31m [0;32mfrom[0m [0mshrbk[0m[0;34m.[0m[0mdata[0m [0;32mimport[0m [0mget_galaxy_image[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      6[0m [0;32mfrom[0m [0mshrbk[0m[0;34m.[0m[0mplot[0m [0;32mimport[0m [0mellipse_from_measure[0m[0;34m[0m[0;34m[0m[0m
+[0;32m/tmp/ipykernel_4455/1673201622.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;32mfrom[0m [0mIPython[0m[0;34m.[0m[0mdisplay[0m [0;32mimport[0m [0mMarkdown[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 2[0;31m [0;32mfrom[0m [0mshrbk[0m[0;34m.[0m[0minteract[0m [0;32mimport[0m [0mget_url[0m[0;34m,[0m [0mmake_html_binder_button[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      3[0m [0;34m[0m[0m
+[1;32m      4[0m [0;31m# Provide binder badge[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0mMarkdown[0m[0;34m([0m[0mmake_html_binder_button[0m[0;34m([0m[0mget_url[0m[0;34m([0m[0;34m'rho-statistics.ipynb'[0m[0;34m)[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
 [0;31mModuleNotFoundError[0m: No module named 'shrbk'
 ModuleNotFoundError: No module named 'shrbk'
