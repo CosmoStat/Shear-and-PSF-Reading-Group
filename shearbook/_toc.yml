@@ -4,61 +4,61 @@ parts:
 - caption: Introduction
   numbered: true
   chapters:
-  - file: intro/about
-  - file: intro/run_code
-  - file: intro/weak_lensing
+  - file: 1-intro/about
+  - file: 1-intro/run_code
+  - file: 1-intro/weak_lensing
 - caption: Preprocessing
   numbered: true
   chapters:
-  - file: preprocessing/astrometry
-  - file: preprocessing/deblending
+  - file: 2-preprocessing/astrometry
+  - file: 2-preprocessing/deblending
 - caption: Point Spread Function
   numbered: true
   chapters:
-  - file: psf/psf-intro
+  - file: 3-psf/psf-intro
     sections:
-    - file: psf/1-intro/definitions
-    - file: psf/1-intro/contributions
-    - file: psf/1-intro/examples
-  - file: psf/psf-modelling
+    - file: 3-psf/1-intro/definitions
+    - file: 3-psf/1-intro/contributions
+    - file: 3-psf/1-intro/examples
+  - file: 3-psf/psf-modelling
     sections:
-    - file: psf/star-selection
-    - file: psf/non-parametric-model
-    - file: psf/parametric-model
-    - file: psf/psf-models-ref
-  - file: psf/psf-validation
+    - file: 3-psf/2-modelling/star-selection
+    - file: 3-psf/2-modelling/non-parametric-model
+    - file: 3-psf/2-modelling/parametric-model
+    - file: 3-psf/2-modelling/psf-models-ref
+  - file: 3-psf/psf-validation
     sections:
-    - file: psf/rho-statistics
-    - file: psf/psf-validation-ref
+    - file: 3-psf/3-validation/rho-statistics
+    - file: 3-psf/3-validation/psf-validation-ref
 - caption: Shape Measurement
   numbered: true
   chapters:
-  - file: moments/moments-intro
+  - file: 4-shape/shape-moments
     sections:
-    - file: moments/moments-basic
-    - file: moments/moments-weighted
-    - file: moments/moments-append
-    - file: moments/moments-ref
-  - file: methods/moments-methods
+    - file: 4-shape/1-moments/moments-basic
+    - file: 4-shape/1-moments/moments-weighted
+    - file: 4-shape/1-moments/moments-append
+    - file: 4-shape/1-moments/moments-ref
+  - file: 4-shape/shape-methods
     sections:
-    - file: methods/ksb
-    - file: methods/moments-methods-ref
-  - file: model/model-intro
+    - file: 4-shape/2-methods/ksb
+    - file: 4-shape/2-methods/moments-methods-ref
+  - file: 4-shape/shape-model
     sections:
-    - file: model/model-ref
+    - file: 4-shape/3-model/model-ref
 - caption: Bias and Calibration
   numbered: true
   chapters:
-  - file: bias/bias-intro
+  - file: 5-bias-cal/bias-intro
     sections:
-    - file: bias/model-bias
-    - file: bias/noise-bias
-    - file: bias/blending-bias
-    - file: bias/bias-ref
-  - file: calibration/calibration-intro
+    - file: 5-bias-cal/1-bias/model-bias
+    - file: 5-bias-cal/1-bias/noise-bias
+    - file: 5-bias-cal/1-bias/blending-bias
+    - file: 5-bias-cal/1-bias/bias-ref
+  - file: 5-bias-cal/calibration-intro
     sections:
-    - file: calibration/metadetection
-    - file: calibration/calibration-ref
+    - file: 5-bias-cal/2-calibration/metadetection
+    - file: 5-bias-cal/2-calibration/calibration-ref
 - caption: Appendix
   numbered: true
   chapters:
