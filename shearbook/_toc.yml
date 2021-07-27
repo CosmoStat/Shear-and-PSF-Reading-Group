@@ -28,8 +28,9 @@ parts:
     - file: psf/psf-models-ref
   - file: psf/psf-validation
     sections:
-    - file: psf/rho-statistics
-    - file: psf/psf-validation-ref
+    - file: psf/3-validation/intro
+    - file: psf/3-validation/rho-statistics
+    - file: psf/3-validation/psf-validation-ref
 - caption: Shape Measurement
   numbered: true
   chapters:
